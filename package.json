@@ -1,0 +1,23 @@
+{
+  "name": "nw-app",
+  "single-instance": true,
+  "chromium-args": "--disable-webgl --disable-3d-apis --disable-plugins --disable-plugins-discovery --disable-xslt --disable-audio-track-processing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "author": "Kilhog",
+  "window": {
+    "toolbar": false,
+    "frame": false,
+    "position": "center",
+    "width": 800,
+    "show": true,
+    "height": 500
+  },
+  "license": "MIT",
+  "dependencies": {
+    "MD5": "^1.2.1",
+    "strike-api": "^0.2.0",
+    "transmission": "^0.4.2"
+  }
+}

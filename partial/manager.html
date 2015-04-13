@@ -1,0 +1,31 @@
+<div style="margin-top: 20px" class="page-header">
+  <h1 style="margin-top: 0">Auto Download Manager</h1>
+</div>
+
+<tabset justified="true">
+  <tab heading="Mes séries en retard">
+    <div ng-repeat="show in episodesUnseen.shows track by $index">
+      <h4>{{show.title}}</h4>
+      <ul style="-webkit-columns: 2">
+        <li ng-repeat="unseen in show.unseen">
+          <span ng-click="seenEpisode($parent.$index, $index)" style="cursor: pointer" tooltip-placement="top" tooltip="Marquer comme vu" class="label label-default">
+            <i class="fa fa-eye"></i>
+           </span>
+          &nbsp;
+          <span ng-click="downloadEpisode(unseen)" style="cursor: pointer" tooltip-placement="top" tooltip="Télécharger" class="label label-success">
+            <i class="fa fa-cloud-download"></i>
+          </span>
+          &nbsp;
+          <span class="label label-primary">S{{unseen.season | numberFixedLen:2}}E{{unseen.episode | numberFixedLen:2}}</span> {{unseen.title}}</li>
+      </ul>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <button ng-disabled="!user.token" ng-click="synchroEpisodesUnseen()" class="btn btn-primary col-sm-4">Synchroniser</button>
+      <div class="col-sm-4"></div>
+    </div>
+    <br/>
+  </tab>
+  <tab heading="Mes séries surveillées"></tab>
+</tabset>
