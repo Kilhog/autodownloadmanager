@@ -122,7 +122,6 @@ apiBetaseries.prototype.synchroEpisodesUnseen = function(func) {
     } else {
       self.Notification.error('Synchronisation échouée');
     }
-
     if(func) {
       func();
     }
@@ -146,9 +145,6 @@ apiBetaseries.prototype.seenEpisode = function(episode, func) {
 
   callAPI('/episodes/watched', 'POST', {'id': episode.id, token: self.scope.user.token}, function(res) {
     console.log(res);
-    if(func) {
-      func();
-    }
   });
 };
 
