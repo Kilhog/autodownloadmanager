@@ -132,7 +132,7 @@ apiBetaseries.prototype.synchroEpisodesIncoming = function(func) {
   var self = this;
 
   callAPI('/planning/general', 'GET', {token: self.scope.user.token}, function(res){
-    console.log(res);
+
   })
 
   if(func) {
@@ -144,7 +144,9 @@ apiBetaseries.prototype.seenEpisode = function(episode, func) {
   var self = this;
 
   callAPI('/episodes/watched', 'POST', {'id': episode.id, token: self.scope.user.token}, function(res) {
-    console.log(res);
+      if(func) {
+        func();
+      }
   });
 };
 

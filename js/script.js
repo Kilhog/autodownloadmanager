@@ -114,6 +114,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   $scope.seenEpisode = function(index, index2) {
     apiBT.seenEpisode($scope.episodesUnseen.shows[index].unseen[index2], function(){
       $scope.episodesUnseen.shows[index].unseen.splice(index2, 1);
+      $scope.$apply();
     });
   };
 
