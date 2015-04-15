@@ -11,6 +11,7 @@
     "MD5": "^1.2.1",
     "strike-api": "^0.2.0",
     "transmission": "^0.4.2",
-    "bootstrap": "^3.3.4"
+    "bootstrap": "^3.3.4",
+    "font-awesome": "^4.3.0"
   }
 }
