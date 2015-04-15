@@ -1,6 +1,6 @@
 # Auto Download Manager
 
-Auto Download Manager est un outil qui permet de télécharger vos séries automtiquement.
+Auto Download Manager est un outil qui permet de télécharger vos séries automatiquement.
 
 ## Procédure d'installation
 
