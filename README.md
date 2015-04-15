@@ -17,7 +17,7 @@ Après l'installation vérifiez que npm est bien installé en ouvrant un termina
 Créez un dossier, ensuite ouvrez un terminal et faites :
 
 	cd /path/to/my/folder
-	git clone https://***@bitbucket.org/***/autodownloadmanager.git
+	git clone https://***@bitbucket.org/***/autodownloadmanager.git .
 	
 Remplacez l'adresse du dépot par la votre (présent dans le dépot BitBucket). 
 
