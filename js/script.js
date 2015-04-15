@@ -83,6 +83,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   });
 
   $scope.closeWindow = function() {
+    ipc.send('hide-window');
     apiBT.disconnectToApi(function () {
       ipc.send('button-close-window');
     });
