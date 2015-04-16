@@ -33,17 +33,6 @@ Ouvrez un terminal et faites :
 Ouvrez un terminal et faites :
 
 	cd /path/to/my/folder
-	
-Windows 
-
-	./node_modules/atom-shell/dist/atom.exe .
-	
-Linux
-
-	./node_modules/atom-shell/dist/atom .
-
-Mac OS X
-
-	./node_modules/atom-shell/dist/Atom.app/Contents/MacOS/Atom .
-	
+	gulp
+		
 Et voila ça fait des Chocapic !
