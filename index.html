@@ -4,11 +4,7 @@
 	<meta charset="utf-8">
 	<title>APP</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Le styles -->
-	<link rel="stylesheet" href="./css/styles.css">
-	<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.css">
+	<link rel="stylesheet" href="./dist/styles/bundle.css">
 </head>
 
 <body ng-app="demo-app">
@@ -34,14 +30,9 @@
 		<div ui-view=""></div>
 	</div> <!-- /container -->
 
-	<!-- Le javascript -->
 	<script>
-		var $ = require('./node_modules/jquery/dist/jquery.min.js');
+		var $ = require('./dist/js/jquery.min.js');
 	</script>
-	<script src="./node_modules/angular/angular.min.js"></script>
-	<script src="./node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
-	<script src="./node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.min.js"></script>
-	<script src="./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.js"></script>
-	<script src="./js/script.js"></script>
+	<script src="./dist/js/script.min.js"></script>
 </body>
 </html>

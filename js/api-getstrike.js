@@ -1,48 +1,51 @@
-var fs = require("fs");
-var strike = require('strike-api');
-var shell = require('shell');
+(function() {
 
-function apiGetStrike($scope, apiTR, Notification) {
-  this.scope = $scope;
-  this.apiTR = apiTR;
-  this.Notification = Notification;
-}
+  var fs = require("fs");
+  var strike = require('strike-api');
+  var shell = require('shell');
 
-apiGetStrike.prototype.search = function(phrase, func) {
-  var self = this;
+  function apiGetStrike($scope, apiTR, Notification) {
+    this.scope = $scope;
+    this.apiTR = apiTR;
+    this.Notification = Notification;
+  }
 
-  phrase = phrase.replace("Marvel's","Marvels");
+  apiGetStrike.prototype.search = function(phrase, func) {
+    var self = this;
 
-  strike.search(phrase).then(function(res) {
+    phrase = phrase.replace("Marvel's","Marvels");
 
-    var status = res.statuscode;
-    var results = res.torrents;
+    strike.search(phrase).then(function(res) {
 
-    for(var i in results) {
-      if(results[i].torrent_title.indexOf("720p") > -1) {
-        func(results[i]);
-        return false;
-      }
-    }
-  });
-};
+      var status = res.statuscode;
+      var results = res.torrents;
 
-apiGetStrike.prototype.searchAndDownload = function(serie, saison, episode) {
-  var self = this;
-
-  self.search(serie + ' S' + saison + 'E' + episode, function(torrent) {
-    if(torrent) {
-      if(torrent.magnet_uri) {
-        if(self.scope.transmission.obj) {
-          self.apiTR.addMagnet(torrent.magnet_uri, function(){
-            self.Notification.success('Torrent ajouté');
-          });
-        } else {
-          shell.openExternal(torrent.magnet_uri);
+      for(var i in results) {
+        if(results[i].torrent_title.indexOf("720p") > -1) {
+          func(results[i]);
+          return false;
         }
       }
-    }
-  });
-};
+    });
+  };
 
-exports.apiGetStrike = apiGetStrike;
+  apiGetStrike.prototype.searchAndDownload = function(serie, saison, episode) {
+    var self = this;
+
+    self.search(serie + ' S' + saison + 'E' + episode, function(torrent) {
+      if(torrent) {
+        if(torrent.magnet_uri) {
+          if(self.scope.transmission.obj) {
+            self.apiTR.addMagnet(torrent.magnet_uri, function(){
+              self.Notification.success('Torrent ajouté');
+            });
+          } else {
+            shell.openExternal(torrent.magnet_uri);
+          }
+        }
+      }
+    });
+  };
+
+  exports.apiGetStrike = apiGetStrike;
+})();
