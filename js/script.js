@@ -3,6 +3,8 @@
 var apiBetaseries = require("./dist/js/api-betaseries");
 var apiGetStrike = require("./dist/js/api-getstrike");
 var apiTransmission = require("./dist/js/api-transmission");
+var apiDblite = require("./dist/js/api-dblite");
+
 var ipc = require('ipc');
 var BTaccess = require('./BTaccess.json');
 var TRaccess = require('./TRaccess.json');
@@ -57,6 +59,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   var apiTR = new apiTransmission.apiTransmission($scope, "TRaccess.json", Notification);
   var apiBT = new apiBetaseries.apiBetaseries("BTaccess.json", $scope, Notification);
   var apiST = new apiGetStrike.apiGetStrike($scope, apiTR, Notification);
+  var apiDB = new apiDblite.apiDblite();
 
   $scope.BTnom = BTaccess.login;
   $scope.BTpassword = BTaccess.password;
