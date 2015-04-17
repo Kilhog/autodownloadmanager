@@ -86,7 +86,13 @@ gulp.task('default', ['move-css','move-js'], function() {
 	var sys = require('sys');
 	var exec = require('child_process').exec;
 	function puts(error, stdout, stderr) { sys.puts(stdout) }
-	exec("./node_modules/atom-shell/dist/Atom.app/Contents/MacOS/Atom .", puts);
+	if(process.platform == 'darwin') {
+                exec("./node_modules/atom-shell/dist/Atom.app/Contents/MacOS/Atom .", puts);
+        } else if (process.platform == 'linux') {
+                exec("./node_modules/atom-shell/dist/atom .", puts);
+        } else if (process.platform == 'win32') {
+                exec("./node_modules/atom-shell/dist/atom.exe .", puts);
+        }
 })
 
 gulp.task('compile', ['min-css','min-js'], function() {
