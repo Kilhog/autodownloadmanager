@@ -39,7 +39,6 @@ Ouvrez un terminal et faites :
 Ouvrez un terminal et faites :
 
 	cd /path/to/my/folder
-
 	gulp
 
 ou
