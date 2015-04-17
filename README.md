@@ -28,6 +28,12 @@ Ouvrez un terminal et faites :
 	cd /path/to/my/folder
 	npm install
 
+### Installation de gulp en global
+
+Ouvrez un terminal et faites :
+
+	npm install -g gulp
+
 ### Lancement d'atom-shell
 
 Ouvrez un terminal et faites :
