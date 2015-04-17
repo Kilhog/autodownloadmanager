@@ -39,6 +39,12 @@ Ouvrez un terminal et faites :
 Ouvrez un terminal et faites :
 
 	cd /path/to/my/folder
+	
 	gulp
-		
+
+ou
+
+	gulp compile
+
+(Pour concatener et minifier les fichiers)	
 Et voila ça fait des Chocapic !
