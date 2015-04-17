@@ -5,6 +5,8 @@ var shell = require('gulp-shell')
 var concat = require('gulp-concat');
 var clean = require('gulp-clean');
 var uglify = require('gulp-uglify');
+var sys = require('sys');
+var exec = require('child_process').exec;
 
 var css = [
   	'./css/styles.css', 
@@ -21,6 +23,18 @@ var js = [
 	'./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.js',
 	'./js/script.js'
 ]
+
+function launch() {
+	function puts(error, stdout, stderr) { sys.puts(stdout) }
+
+	if(process.platform == 'darwin') {
+		exec("./node_modules/atom-shell/dist/Atom.app/Contents/MacOS/Atom .", puts);
+	} else if (process.platform == 'linux') {
+		exec("./node_modules/atom-shell/dist/atom .", puts);
+	} else if (process.platform == 'win32') {
+		exec("./node_modules/atom-shell/dist/atom.exe .", puts);
+	}
+};
 
 gulp.task('clean-min-css', function(){
 	return gulp.src('dist/styles/bundle.css', {read: false}).pipe(clean());
@@ -79,27 +93,11 @@ gulp.task('move-api', function(){
 })
 
 gulp.task('default', ['move-css','move-js'], function() {
-	var sys = require('sys');
-	var exec = require('child_process').exec;
-	function puts(error, stdout, stderr) { sys.puts(stdout) }
-	if(process.platform == 'darwin') {
-                exec("./node_modules/atom-shell/dist/Atom.app/Contents/MacOS/Atom .", puts);
-        } else if (process.platform == 'linux') {
-                exec("./node_modules/atom-shell/dist/atom .", puts);
-        } else if (process.platform == 'win32') {
-                exec("./node_modules/atom-shell/dist/atom.exe .", puts);
-        }
+	launch();
 })
 
 gulp.task('compile', ['min-css','min-js'], function() {
-	var sys = require('sys');
-	var exec = require('child_process').exec;
-	function puts(error, stdout, stderr) { sys.puts(stdout) }
-	if(process.platform == 'darwin') {
-		exec("./node_modules/atom-shell/dist/Atom.app/Contents/MacOS/Atom .", puts);
-	} else if (process.platform == 'linux') {
-		exec("./node_modules/atom-shell/dist/atom .", puts);
-	} else if (process.platform == 'win32') {
-		exec("./node_modules/atom-shell/dist/atom.exe .", puts);
-	}
+	launch();
 })
+
+
