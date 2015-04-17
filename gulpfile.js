@@ -6,27 +6,35 @@ var concat = require('gulp-concat');
 var clean = require('gulp-clean');
 var uglify = require('gulp-uglify');
 
+var css = [
+  	'./css/styles.css', 
+  	'./node_modules/bootstrap/dist/css/bootstrap.min.css', 
+  	'./node_modules/font-awesome/css/font-awesome.min.css', 
+  	'./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.css'
+];
+
+var js = [
+	'./node_modules/jquery/dist/jquery.min.js',
+	'./node_modules/angular/angular.min.js',
+	'./node_modules/angular-ui-router/release/angular-ui-router.min.js',
+	'./node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.min.js',
+	'./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.js',
+	'./js/script.js'
+]
+
 gulp.task('clean-min-css', function(){
 	return gulp.src('dist/styles/bundle.css', {read: false}).pipe(clean());
 });
 
 gulp.task('min-css', ['clean-min-css'],function() {
-  return gulp.src([
-  	'./css/styles.css', 
-  	'./node_modules/bootstrap/dist/css/bootstrap.min.css', 
-  	'./node_modules/font-awesome/css/font-awesome.min.css', 
-  	'./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.css'])
+  return gulp.src(css)
   .pipe(concatCss('styles/bundle.css'))
   .pipe(minifyCSS({keepBreaks:false,keepSpecialComments:0}))
   .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('move-css', ['clean-min-css'],function() {
-  return gulp.src([
-  	'./css/styles.css', 
-  	'./node_modules/bootstrap/dist/css/bootstrap.min.css', 
-  	'./node_modules/font-awesome/css/font-awesome.min.css', 
-  	'./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.css'])
+  return gulp.src(css)
   .pipe(concatCss('styles/bundle.css'))
   .pipe(gulp.dest('dist/'));
 });
@@ -45,26 +53,14 @@ gulp.task('clean-min-js', function(){
 });
 
 gulp.task('min-js',['clean-min-js','move-jquery','min-api'], function(){
-	return gulp.src([
-		'./node_modules/jquery/dist/jquery.min.js',
-		'./node_modules/angular/angular.min.js',
-		'./node_modules/angular-ui-router/release/angular-ui-router.min.js',
-		'./node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.min.js',
-		'./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.js',
-		'./js/script.js'])
+	return gulp.src(js)
 	.pipe(concat('js/script.min.js'))
 	.pipe(uglify())
 	.pipe(gulp.dest('dist/'));
 });
 
 gulp.task('move-js',['clean-min-js','move-jquery','move-api'], function(){
-	return gulp.src([
-		'./node_modules/jquery/dist/jquery.min.js',
-		'./node_modules/angular/angular.min.js',
-		'./node_modules/angular-ui-router/release/angular-ui-router.min.js',
-		'./node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.min.js',
-		'./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.js',
-		'./js/script.js'])
+	return gulp.src(js)
 	.pipe(concat('js/script.min.js'))
 	.pipe(gulp.dest('dist/'));
 });
