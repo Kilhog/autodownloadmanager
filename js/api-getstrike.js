@@ -20,6 +20,8 @@
       var status = res.statuscode;
       var results = res.torrents;
 
+      console.log(results)
+
       for(var i in results) {
         if(results[i].torrent_title.indexOf("720p") > -1) {
           func(results[i]);

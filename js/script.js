@@ -4,6 +4,7 @@ var apiBetaseries = require("./dist/js/api-betaseries");
 var apiGetStrike = require("./dist/js/api-getstrike");
 var apiTransmission = require("./dist/js/api-transmission");
 var apiDblite = require("./dist/js/api-dblite");
+var apiAddicted = require("./dist/js/api-addicted");
 
 var ipc = require('ipc');
 var BTaccess = require('./BTaccess.json');
@@ -60,6 +61,9 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   var apiBT = new apiBetaseries.apiBetaseries("BTaccess.json", $scope, Notification);
   var apiST = new apiGetStrike.apiGetStrike($scope, apiTR, Notification);
   var apiDB = new apiDblite.apiDblite();
+  var apiAD = new apiAddicted.apiAddicted($scope);
+
+  apiAD.search();
 
   $scope.BTnom = BTaccess.login;
   $scope.BTpassword = BTaccess.password;
