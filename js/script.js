@@ -63,12 +63,14 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   //var apiDB = new apiDblite.apiDblite();
   var apiAD = new apiAddicted.apiAddicted($scope);
 
-  apiAD.search();
-
   $scope.BTnom = BTaccess.login;
   $scope.BTpassword = BTaccess.password;
   $scope.TRhost = TRaccess.host;
   $scope.TRport = TRaccess.port;
+
+  function gen_name_episode(serie, saison, episode) {
+    return episode.show.title + " S" + $filter('numberFixedLen')(episode.season, 2) + "E" + $filter('numberFixedLen')(episode.episode, 2)
+  }
 
   $scope.connectBetaseries = function (nom, password) {
     apiBT.saveAccess(nom, password, function () {
@@ -116,7 +118,22 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   };
 
   $scope.downloadEpisode = function(episode) {
-    apiST.searchAndDownload(episode.show.title, $filter('numberFixedLen')(episode.season, 2), $filter('numberFixedLen')(episode.episode, 2));
+    var name = gen_name_episode(episode.show.title, episode.season, episode.episode)
+    apiST.searchAndDownload(name);
+  };
+
+  $scope.downloadStr = function(episode) {
+    var name = gen_name_episode(episode.show.title, episode.season, episode.episode)
+
+    apiAD.search(name, function(res) {
+      if(res != '') {
+        apiAD.downloadStr(res, name.trim(),function() {
+          Notification.success('Sous-titre récupéré');
+        });
+      } else {
+        Notification.error('Fail addicted');
+      }
+    });
   };
 
   $scope.seenEpisode = function(index, index2) {

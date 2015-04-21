@@ -31,10 +31,10 @@
     });
   };
 
-  apiGetStrike.prototype.searchAndDownload = function(serie, saison, episode) {
+  apiGetStrike.prototype.searchAndDownload = function(query) {
     var self = this;
 
-    self.search(serie + ' S' + saison + 'E' + episode, function(torrent) {
+    self.search(query, function(torrent) {
       if(torrent) {
         if(torrent.magnet_uri) {
           if(self.scope.transmission.obj) {

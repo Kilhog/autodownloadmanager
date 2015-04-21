@@ -16,6 +16,10 @@
             <i class="fa fa-cloud-download"></i>
           </span>
           &nbsp;
+          <span ng-click="downloadStr(unseen)" style="cursor: pointer" tooltip-placement="top" tooltip="Sous-titres" class="label label-info">
+            <i class="fa fa-align-center"></i>
+          </span>
+          &nbsp;
           <span class="label label-primary">S{{unseen.season | numberFixedLen:2}}E{{unseen.episode | numberFixedLen:2}}</span> {{unseen.title}}</li>
       </ul>
     </div>
