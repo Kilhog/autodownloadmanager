@@ -9,8 +9,8 @@ html, body {
 
 body > div {
   height: 100%;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+  -webkit-overflow-scrolling: hidden;
 }
 
 .ui-notification {
