@@ -132,13 +132,6 @@
   apiBetaseries.prototype.synchroEpisodesIncoming = function(func) {
     var self = this;
 
-    callAPI('/planning/general', 'GET', {token: self.scope.user.token}, function(res){
-
-    })
-
-    if(func) {
-      func();
-    }
   };
 
   apiBetaseries.prototype.seenEpisode = function(episode, func) {

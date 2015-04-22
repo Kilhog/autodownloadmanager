@@ -69,7 +69,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   $scope.TRport = TRaccess.port;
 
   function gen_name_episode(serie, saison, episode) {
-    return episode.show.title + " S" + $filter('numberFixedLen')(episode.season, 2) + "E" + $filter('numberFixedLen')(episode.episode, 2)
+    return serie + " S" + $filter('numberFixedLen')(saison, 2) + "E" + $filter('numberFixedLen')(episode, 2)
   }
 
   $scope.connectBetaseries = function (nom, password) {
@@ -86,7 +86,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     if(!buttonCloseIsBind) {
       $('#close-window-button').click(function(){
         $scope.closeWindow();
-      })
+      });
       buttonCloseIsBind = true;
     }
   });
@@ -96,7 +96,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     apiBT.disconnectToApi(function () {
       ipc.send('button-close-window');
     });
-  }
+  };
 
   $scope.synchroAll = function() {
     $scope.synchroEpisodesUnseen();
