@@ -3,11 +3,10 @@
 var apiBetaseries = require("./dist/js/api-betaseries");
 var apiGetStrike = require("./dist/js/api-getstrike");
 var apiTransmission = require("./dist/js/api-transmission");
-//var apiDblite = require("./dist/js/api-dblite");
+var apiDblite = require("./dist/js/api-dblite");
 var apiAddicted = require("./dist/js/api-addicted");
 
 var ipc = require('ipc');
-var BTaccess = require('./BTaccess.json');
 var TRaccess = require('./TRaccess.json');
 var justOpen = true;
 var buttonCloseIsBind = false;
@@ -57,14 +56,12 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   $scope.episodesIncoming = $scope.episodesIncoming || {};
   $scope.transmission = $scope.transmission || {obj: null};
 
+  var apiDB = new apiDblite.apiDblite();
   var apiTR = new apiTransmission.apiTransmission($scope, "TRaccess.json", Notification);
-  var apiBT = new apiBetaseries.apiBetaseries("BTaccess.json", $scope, Notification);
+  var apiBT = new apiBetaseries.apiBetaseries(apiDB, $scope, Notification);
   var apiST = new apiGetStrike.apiGetStrike($scope, apiTR, Notification);
-  //var apiDB = new apiDblite.apiDblite();
   var apiAD = new apiAddicted.apiAddicted($scope);
 
-  $scope.BTnom = BTaccess.login;
-  $scope.BTpassword = BTaccess.password;
   $scope.TRhost = TRaccess.host;
   $scope.TRport = TRaccess.port;
 
@@ -151,6 +148,10 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
 
   $scope.disconnectTransmission = function() {
     apiTR.disconnectToApi();
+  };
+
+  $scope.changeTarget = function(origin) {
+    console.log(origin)
   };
 
   $timeout(function(){

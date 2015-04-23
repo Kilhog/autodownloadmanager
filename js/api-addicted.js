@@ -49,7 +49,11 @@
                 var nb_download_now = array_stat[1].replace('Downloads', '').replace('Download', '').trim();
 
                 if(nb_download_now >= nb_download) {
-                  url_with_more_download = $res('div#container95m table.tabel95 tr:nth-child(2) td:nth-child(2) table tr').get(index).children[8].children[2].attribs.href;
+                  if($res('div#container95m table.tabel95 tr:nth-child(2) td:nth-child(2) table tr').get(index).children[8].children[2].attribs == null) {
+                    url_with_more_download = $res('div#container95m table.tabel95 tr:nth-child(2) td:nth-child(2) table tr').get(index).children[8].children[2].next.next.next.attribs.href;
+                  } else {
+                    url_with_more_download = $res('div#container95m table.tabel95 tr:nth-child(2) td:nth-child(2) table tr').get(index).children[8].children[2].attribs.href;
+                  }
                   nb_download = nb_download_now;
                 }
               }

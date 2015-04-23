@@ -5,7 +5,9 @@
 <tabset justified="true">
   <tab heading="Mes séries en retard">
     <div ng-repeat="show in episodesUnseen.shows track by $index">
-      <h4>{{show.title}}</h4>
+      <h4>
+        <a style="cursor: pointer" ng-click="changeTarget(show.title)">{{show.title}}</a>
+      </h4>
       <ul style="-webkit-columns: 2">
         <li ng-repeat="unseen in show.unseen">
           <span ng-click="seenEpisode($parent.$index, $index)" style="cursor: pointer" tooltip-placement="top" tooltip="Marquer comme vu" class="label label-default">

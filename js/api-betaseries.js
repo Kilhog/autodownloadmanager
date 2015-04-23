@@ -47,8 +47,8 @@
     req.end();
   }
 
-  function apiBetaseries(fileName, $scope, Notification) {
-    this.fileName = fileName;
+  function apiBetaseries(db, $scope, Notification) {
+    this.db = db;
     this.scope = $scope;
     this.Notification = Notification;
   }
@@ -56,33 +56,34 @@
   apiBetaseries.prototype.connectToApi = function(func) {
     var self = this;
 
-    var BTaccess = {};
-    fs.readFile('./BTaccess.json', 'utf8', function (err,data) {
-      BTaccess = JSON.parse(data);
+    this.db.req("SELECT * FROM params WHERE nom = ?", ['BTaccess'], function(err, rows) {
+      if(rows.length > 0) {
+        BTaccess = JSON.parse(rows[0][2]);
 
-      callAPI('/members/auth', 'POST', {
-        'login': BTaccess.login,
-        'password': md5(BTaccess.password)
-      }, function(data) {
-        if(data.errors.length == 0) {
-          self.scope.user['hash'] = data.hash;
-          self.scope.user['token'] = data.token;
-          self.scope.user['user'] = data.user;
-          self.scope.$apply();
+        callAPI('/members/auth', 'POST', {
+          'login': BTaccess.login,
+          'password': md5(BTaccess.password)
+        }, function(data) {
+          if(data.errors.length == 0) {
+            self.scope.user['hash'] = data.hash;
+            self.scope.user['token'] = data.token;
+            self.scope.user['user'] = data.user;
+            self.scope.$apply();
 
-          if(self.scope.user.token) {
-            self.Notification.success('Connecté à Betaseries');
+            if(self.scope.user.token) {
+              self.Notification.success('Connecté à Betaseries');
+            } else {
+              self.Notification.error('Identifiants Betaseries incorrect');
+            }
           } else {
             self.Notification.error('Identifiants Betaseries incorrect');
           }
-        } else {
-          self.Notification.error('Identifiants Betaseries incorrect');
-        }
 
-        if(func) {
-          func();
-        }
-      });
+          if(func) {
+            func();
+          }
+        });
+      }
     });
   };
 
@@ -107,8 +108,9 @@
       login: login,
       password: password
     };
-    fs.writeFile( "BTaccess.json", JSON.stringify( BTaccess ), "utf8" , function() {
-      func();
+
+    this.db.req("INSERT INTO params (nom, value) VALUES (?, ?)", ['BTaccess', JSON.stringify(BTaccess)], function(err, rows) {
+      func(err, rows);
     });
   };
 
