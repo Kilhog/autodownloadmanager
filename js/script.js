@@ -49,7 +49,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     }
     return num;
   };
-}).controller('mainCtrl', ["$scope", "$timeout", "$filter", "Notification" ,function ($scope, $timeout, $filter, Notification) {
+}).controller('mainCtrl', ["$scope", "$timeout", "$filter", "Notification","$modal" ,function ($scope, $timeout, $filter, Notification, $modal) {
 
   $scope.user = $scope.user || {};
   $scope.episodesUnseen = $scope.episodesUnseen || {};
@@ -59,7 +59,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   var apiDB = new apiDblite.apiDblite();
   var apiTR = new apiTransmission.apiTransmission($scope, "TRaccess.json", Notification);
   var apiBT = new apiBetaseries.apiBetaseries(apiDB, $scope, Notification);
-  var apiST = new apiGetStrike.apiGetStrike($scope, apiTR, Notification);
+  var apiST = new apiGetStrike.apiGetStrike($scope, apiTR, Notification, apiDB);
   var apiAD = new apiAddicted.apiAddicted($scope);
 
   $scope.TRhost = TRaccess.host;
@@ -103,6 +103,15 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   $scope.synchroEpisodesUnseen = function () {
     $scope.synchroInProgress = true;
     apiBT.synchroEpisodesUnseen(function() {
+      $.each($scope.episodesUnseen.shows, function(index, elm) {
+        apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [elm.title], function(err, data) {
+          if(data.length > 0) {
+            if(data[0][2] != elm.title) {
+              elm.torrentName = data[0][2];
+            }
+          }
+        });
+      });
       $scope.synchroInProgress = false;
     });
   };
@@ -115,12 +124,20 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   };
 
   $scope.downloadEpisode = function(episode) {
-    var name = gen_name_episode(episode.show.title, episode.season, episode.episode)
-    apiST.searchAndDownload(name);
+    apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [episode.show.title], function(err, data) {
+      var target = episode.show.title;
+
+      if(data.length > 0) {
+        target = data[0][2];
+      }
+
+      var name = gen_name_episode(target, episode.season, episode.episode);
+      apiST.searchAndDownload(name);
+    });
   };
 
   $scope.downloadStr = function(episode) {
-    var name = gen_name_episode(episode.show.title, episode.season, episode.episode)
+    var name = gen_name_episode(episode.show.title, episode.season, episode.episode);
 
     apiAD.search(name, function(res) {
       if(res != '') {
@@ -150,8 +167,27 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     apiTR.disconnectToApi();
   };
 
-  $scope.changeTarget = function(origin) {
-    console.log(origin)
+  $scope.changeTarget = function (origin) {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'partial/modal_change_target.html',
+      controller: 'ModalChangeTargetCtrl',
+      resolve: {
+        origin: function () {
+          return origin;
+        },
+        apiDB: function() {
+          return apiDB;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (allName) {
+      console.log(allName);
+      apiST.createNewTarget(origin, allName.torrentName);
+    }, function () {
+
+    });
   };
 
   $timeout(function(){

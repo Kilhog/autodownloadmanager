@@ -22,7 +22,7 @@
     });
   };
 
-  apiDblite.prototype.req = function(sql, params, func) {
+  apiDblite.prototype.query = function(sql, params, func) {
     var self = this;
 
     self.db.query(sql, params, function(err, rows){

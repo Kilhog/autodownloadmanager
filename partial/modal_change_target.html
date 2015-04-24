@@ -1,0 +1,26 @@
+<div class="modal-header dialog-header-notify">
+  <button type="button" class="close" ng-click="cancel()">×</button>
+  <h4 class="modal-title text-info ng-binding">
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Changement du nom pour la recherche
+  </h4>
+</div>
+<div class="modal-body text-info ng-binding" ng-bind-html-unsafe="msg">
+  <form>
+    <div class="form-group">
+      <label for="originName">Nom d'origine</label>
+      <input type="text" class="form-control" id="originName" ng-model="origin" disabled>
+    </div>
+    <div class="form-group">
+      <label for="torrentName">Torrent</label>
+      <input type="text" class="form-control" id="torrentName" ng-model="torrentname">
+    </div>
+    <div class="form-group">
+      <label for="subName">Sous-titre</label>
+      <input type="text" id="subName" class="form-control" ng-model="subname">
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

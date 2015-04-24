@@ -21,8 +21,9 @@ var js = [
 	'./node_modules/angular-ui-router/release/angular-ui-router.min.js',
 	'./node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.min.js',
 	'./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.js',
-	'./js/script.js'
-]
+	'./js/script.js',
+	'./js/modal_change_target.js'
+];
 
 function launch() {
 	function puts(error, stdout, stderr) { sys.puts(stdout) }

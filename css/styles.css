@@ -18,3 +18,9 @@ body > div {
 }
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 body { padding-top: 50px; }
+
+.prevent-line-break {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

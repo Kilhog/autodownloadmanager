@@ -56,7 +56,7 @@
   apiBetaseries.prototype.connectToApi = function(func) {
     var self = this;
 
-    this.db.req("SELECT * FROM params WHERE nom = ?", ['BTaccess'], function(err, rows) {
+    this.db.query("SELECT * FROM params WHERE nom = ?", ['BTaccess'], function(err, rows) {
       if(rows.length > 0) {
         BTaccess = JSON.parse(rows[0][2]);
 
@@ -109,7 +109,7 @@
       password: password
     };
 
-    this.db.req("INSERT INTO params (nom, value) VALUES (?, ?)", ['BTaccess', JSON.stringify(BTaccess)], function(err, rows) {
+    this.db.query("INSERT INTO params (nom, value) VALUES (?, ?)", ['BTaccess', JSON.stringify(BTaccess)], function(err, rows) {
       func(err, rows);
     });
   };
