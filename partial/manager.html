@@ -9,7 +9,7 @@
         <a style="cursor: pointer" ng-click="changeTarget(show.title)" tooltip-placement="right" tooltip-html-unsafe="<div class='prevent-line-break'>Torrent : {{show.torrentName}}</div>">{{show.title}}</a>
       </h4>
       <ul style="-webkit-columns: 2">
-        <li ng-repeat="unseen in show.unseen">
+        <li ng-repeat="unseen in show.unseen" class="prevent-line-break">
           <span ng-click="seenEpisode($parent.$index, $index)" style="cursor: pointer" tooltip-placement="top" tooltip="Marquer comme vu" class="label label-default">
             <i class="fa fa-eye"></i>
            </span>
