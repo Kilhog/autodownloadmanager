@@ -190,6 +190,14 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     });
   };
 
+  $scope.generateTooltipTitle = function(torrentName) {
+    if(torrentName) {
+      if(torrentName.trim() != '') {
+        return '<div class="prevent-line-break">Torrent : ' + torrentName + '</div>'
+      }
+    }
+  };
+
   $timeout(function(){
     if(!$scope.user.token && justOpen) {
       apiBT.connectToApi();
