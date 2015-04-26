@@ -4,7 +4,7 @@
   var https = require('https');
   var md5 = require('MD5');
 
-  function callAPI(endpoint, method, data, success) {
+  function callAPI(endpoint, method, data, success, error) {
     var dataString = JSON.stringify(data);
     var headers = {
       Accept: 'application/json',
@@ -41,6 +41,12 @@
         var responseObject = JSON.parse(responseString);
         success(responseObject);
       });
+    });
+
+    req.on('error', function(err) {
+      if(error) {
+        error();
+      }
     });
 
     req.write(dataString);
@@ -95,6 +101,10 @@
       delete self.scope.user.token;
       delete self.scope.user.user;
       self.scope.$apply();
+      if(func) {
+        func()
+      }
+    }, function(){
       if(func) {
         func()
       }
