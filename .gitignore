@@ -3,3 +3,4 @@ node_modules/
 nwjs.app/
 nwjc
 dist/
+db/adm.sqlite
