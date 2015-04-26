@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var concatCss = require('gulp-concat-css');
 var minifyCSS = require('gulp-minify-css');
-var shell = require('gulp-shell')
 var concat = require('gulp-concat');
 var clean = require('gulp-clean');
 var uglify = require('gulp-uglify');
@@ -26,16 +25,18 @@ var js = [
 ];
 
 function launch() {
-	function puts(error, stdout, stderr) { sys.puts(stdout) }
+	function puts(error, stdout, stderr) { 
+		sys.puts(stdout); 
+	}
 
 	if(process.platform == 'darwin') {
-		exec("./node_modules/atom-shell/dist/Atom.app/Contents/MacOS/Atom .", puts);
+		exec("./node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron .", puts);
 	} else if (process.platform == 'linux') {
-		exec("./node_modules/atom-shell/dist/atom .", puts);
+		exec("./node_modules/electron-prebuilt/dist/Electron .", puts);
 	} else if (process.platform == 'win32') {
-		exec("./node_modules/atom-shell/dist/atom.exe .", puts);
+		exec("./node_modules/electron-prebuilt/dist/Electron.exe .", puts);
 	}
-};
+}
 
 gulp.task('clean-min-css', function(){
 	return gulp.src('dist/styles/bundle.css', {read: false}).pipe(clean());
@@ -85,20 +86,20 @@ gulp.task('min-api', function(){
 		'./js/api-*'])
 	.pipe(uglify())
 	.pipe(gulp.dest('dist/js/'));
-})
+});
 
 gulp.task('move-api', function(){
 	return gulp.src([
 		'./js/api-*'])
 	.pipe(gulp.dest('dist/js/'));
-})
+});
 
 gulp.task('default', ['move-css','move-js'], function() {
 	launch();
-})
+});
 
 gulp.task('compile', ['min-css','min-js'], function() {
 	launch();
-})
+});
 
 
