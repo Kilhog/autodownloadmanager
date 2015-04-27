@@ -4,6 +4,8 @@
     dblite.bin = "./lib/sqlite3/win32/sqlite3.exe";
   } else if(process.platform == "darwin") {
     dblite.bin = "./lib/sqlite3/darwin/sqlite3";
+  } else if(process.platform == "linux") {
+    dblite.bin = "./lib/sqlite3/linux/sqlite3";
   }
 
   var fs = require('fs');
