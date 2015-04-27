@@ -60,7 +60,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   var apiTR = new apiTransmission.apiTransmission($scope, "TRaccess.json", Notification);
   var apiBT = new apiBetaseries.apiBetaseries(apiDB, $scope, Notification);
   var apiST = new apiGetStrike.apiGetStrike($scope, apiTR, Notification, apiDB);
-  var apiAD = new apiAddicted.apiAddicted($scope);
+  var apiAD = new apiAddicted.apiAddicted($scope, apiDB);
 
   $scope.TRhost = TRaccess.host;
   $scope.TRport = TRaccess.port;
@@ -111,6 +111,14 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
             }
           }
         });
+
+        apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [elm.title], function(err, data) {
+          if(data.length > 0) {
+            if(data[0][2] != elm.title) {
+              elm.subName = data[0][2];
+            }
+          }
+        });
       });
       $scope.synchroInProgress = false;
     });
@@ -137,16 +145,24 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   };
 
   $scope.downloadStr = function(episode) {
-    var name = gen_name_episode(episode.show.title, episode.season, episode.episode);
+    apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [episode.show.title], function(err, data) {
+      var target = episode.show.title;
 
-    apiAD.search(name, function(res) {
-      if(res != '') {
-        apiAD.downloadStr(res, name.trim(),function() {
-          Notification.success('Sous-titre récupéré');
-        });
-      } else {
-        Notification.error('Fail addicted');
+      if(data.length > 0) {
+        target = data[0][2];
       }
+
+      var name = gen_name_episode(target, episode.season, episode.episode);
+
+      apiAD.search(name, function (res) {
+        if (res != '') {
+          apiAD.downloadStr(res, name.trim(), function () {
+            Notification.success('Sous-titre récupéré');
+          });
+        } else {
+          Notification.error('Fail addicted');
+        }
+      });
     });
   };
 
@@ -185,17 +201,27 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     modalInstance.result.then(function (allName) {
       console.log(allName);
       apiST.createNewTarget(origin, allName.torrentName);
+      apiAD.createNewTarget(origin, allName.subName);
     }, function () {
 
     });
   };
 
-  $scope.generateTooltipTitle = function(torrentName) {
+  $scope.generateTooltipTitle = function(torrentName, subName) {
+    var tooltip = "";
     if(torrentName) {
       if(torrentName.trim() != '') {
-        return '<div class="prevent-line-break">Torrent : ' + torrentName + '</div>'
+        tooltip = '<div class="prevent-line-break">Torrent : ' + torrentName + '</div>'
       }
     }
+
+    if(subName) {
+      if(subName.trim() != '') {
+        tooltip += '<div class="prevent-line-break">Sub : ' + subName + '</div>'
+      }
+    }
+
+    return tooltip;
   };
 
   $timeout(function(){

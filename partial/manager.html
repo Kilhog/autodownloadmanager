@@ -6,7 +6,7 @@
   <tab heading="Mes séries en retard">
     <div ng-repeat="show in episodesUnseen.shows track by $index">
       <h4>
-        <a style="cursor: pointer" ng-click="changeTarget(show.title)" tooltip-placement="right" tooltip-html-unsafe="{{generateTooltipTitle(show.torrentName)}}">{{show.title}}</a>
+        <a style="cursor: pointer" ng-click="changeTarget(show.title)" tooltip-placement="right" tooltip-html-unsafe="{{generateTooltipTitle(show.torrentName, show.subName)}}">{{show.title}}</a>
       </h4>
       <ul style="-webkit-columns: 2">
         <li ng-repeat="unseen in show.unseen" class="prevent-line-break">

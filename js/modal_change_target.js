@@ -14,6 +14,16 @@ app.controller('ModalChangeTargetCtrl', ["$scope", "$timeout", "$filter", "Notif
     }
   });
 
+  apiDB.query("SELECT * FROM search_for_sub WHERE origin = ?", [origin], function(err, data) {
+    if(data == 0) {
+      $scope.subname = origin;
+    } else {
+      $scope.subname = data[0][2];
+    }
+
+    $scope.$apply();
+  });
+
   $scope.ok = function() {
     console.log($scope.subname);
     $modalInstance.close({torrentName: $scope.torrentname, subName: $scope.subname});
