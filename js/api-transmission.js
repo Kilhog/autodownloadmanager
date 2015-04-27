@@ -22,15 +22,23 @@
       TRaccess = JSON.parse(data);
 
       self.scope.transmission.obj = new Transmission(TRaccess);
-      self.scope.$apply();
+      self.scope.transmission.obj.session(function(err, arg) {
+        if(err) {
+          delete self.scope.transmission.obj;
+        }
 
-      if(self.scope.transmission.obj) {
-        self.Notification.success('Connecté à Transmission')
-      }
+        self.scope.$apply();
 
-      if(func) {
-        func();
-      }
+        if(self.scope.transmission.obj) {
+          self.Notification.success('Connecté à Transmission');
+        } else {
+          self.Notification.error('Erreur lors de la connection à Transmission');
+        }
+
+        if(func) {
+          func();
+        }
+      });
     });
   };
 
