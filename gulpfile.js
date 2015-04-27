@@ -32,9 +32,9 @@ function launch() {
 	if(process.platform == 'darwin') {
 		exec("./node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron .", puts);
 	} else if (process.platform == 'linux') {
-		exec("./node_modules/electron-prebuilt/dist/Electron .", puts);
+		exec("./node_modules/electron-prebuilt/dist/electron .", puts);
 	} else if (process.platform == 'win32') {
-		exec("./node_modules/electron-prebuilt/dist/Electron.exe .", puts);
+		exec("./node_modules/electron-prebuilt/dist/electron.exe .", puts);
 	}
 }
 
