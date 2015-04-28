@@ -61,6 +61,17 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   var apiST = new apiGetStrike.apiGetStrike($scope, apiTR, Notification, apiDB);
   var apiAD = new apiAddicted.apiAddicted($scope, apiDB);
 
+  $scope.episodeQuality = $scope.episodeQuality || getEpisodeQuality();
+
+  function getEpisodeQuality() {
+    apiDB.query('SELECT * FROM params WHERE nom = ?', ['episodeQuality'], function(err, rows) {
+      if(rows.length > 0) {
+        $scope.episodeQuality = rows[0][2];
+        $scope.$apply();
+      }
+    });
+  }
+
   function gen_name_episode(serie, saison, episode) {
     return serie + " S" + $filter('numberFixedLen')(saison, 2) + "E" + $filter('numberFixedLen')(episode, 2)
   }
@@ -217,6 +228,13 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     }
 
     return tooltip;
+  };
+
+  $scope.changeQuality = function() {
+    apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function(err, rows){});
+    apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function(err, rows) {
+      Notification.success('Changement enregistré');
+    });
   };
 
   $timeout(function(){

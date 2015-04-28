@@ -20,10 +20,18 @@
       var results = res.torrents;
 
       for(var i in results) {
-        if(results[i].torrent_title.indexOf("720p") > -1) {
-          func(results[i]);
-          find = true;
-          return false;
+        if(self.scope.episodeQuality == '480p') {
+          if(results[i].torrent_title.indexOf("720p") == -1) {
+            func(results[i]);
+            find = true;
+            return false;
+          }
+        } else {
+          if(results[i].torrent_title.indexOf("720p") > -1) {
+            func(results[i]);
+            find = true;
+            return false;
+          }
         }
       }
 

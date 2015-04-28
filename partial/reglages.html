@@ -68,4 +68,25 @@
     </div>
     <div class="col-sm-2"></div>
   </div>
+
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+      <div class="row">
+        <h2>Qualité des épisodes</h2>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="episodeQuality" class="col-sm-2 control-label">Qualité</label>
+            <div class="col-sm-10">
+              <select id="episodeQuality" ng-model="episodeQuality" class="form-control" ng-change="changeQuality(episodeQuality)">
+                <option value="480p" ng-selected="episodeQuality == '480p'">480p</option>
+                <option value="720p" ng-selected="episodeQuality == '720p' || !episodeQuality">720p</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
 </div>
