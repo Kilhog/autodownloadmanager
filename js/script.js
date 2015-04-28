@@ -7,7 +7,6 @@ var apiDblite = require("./dist/js/api-dblite");
 var apiAddicted = require("./dist/js/api-addicted");
 
 var ipc = require('ipc');
-var TRaccess = require('./TRaccess.json');
 var justOpen = true;
 var buttonCloseIsBind = false;
 
@@ -57,13 +56,10 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   $scope.transmission = $scope.transmission || {obj: null};
 
   var apiDB = new apiDblite.apiDblite();
-  var apiTR = new apiTransmission.apiTransmission($scope, "TRaccess.json", Notification);
+  var apiTR = new apiTransmission.apiTransmission($scope, apiDB, Notification);
   var apiBT = new apiBetaseries.apiBetaseries(apiDB, $scope, Notification);
   var apiST = new apiGetStrike.apiGetStrike($scope, apiTR, Notification, apiDB);
   var apiAD = new apiAddicted.apiAddicted($scope, apiDB);
-
-  $scope.TRhost = TRaccess.host;
-  $scope.TRport = TRaccess.port;
 
   function gen_name_episode(serie, saison, episode) {
     return serie + " S" + $filter('numberFixedLen')(saison, 2) + "E" + $filter('numberFixedLen')(episode, 2)
@@ -227,6 +223,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
   $timeout(function(){
     if(!$scope.user.token && justOpen) {
       apiBT.connectToApi();
+      apiTR.connectToApi();
       justOpen = false;
     }
   }, 0);

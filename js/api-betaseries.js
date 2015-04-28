@@ -64,7 +64,7 @@
 
     this.db.query("SELECT * FROM params WHERE nom = ?", ['BTaccess'], function(err, rows) {
       if(rows.length > 0) {
-        BTaccess = JSON.parse(rows[0][2]);
+        var BTaccess = JSON.parse(rows[0][2]);
 
         callAPI('/members/auth', 'POST', {
           'login': BTaccess.login,
@@ -118,6 +118,8 @@
       login: login,
       password: password
     };
+
+    this.db.query("DELETE FROM params WHERE nom = ?", ['BTaccess'], function(err, rows) {});
 
     this.db.query("INSERT INTO params (nom, value) VALUES (?, ?)", ['BTaccess', JSON.stringify(BTaccess)], function(err, rows) {
       func(err, rows);

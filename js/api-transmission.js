@@ -3,9 +3,9 @@
   var fs = require("fs");
   var Transmission = require('transmission');
 
-  function apiTransmission($scope, filename, Notification) {
+  function apiTransmission($scope, db, Notification) {
     this.scope = $scope;
-    this.fileName = filename;
+    this.db = db;
     this.Notification = Notification;
   }
 
@@ -16,29 +16,31 @@
 
   apiTransmission.prototype.connectToApi = function(func) {
     var self = this;
-    var TRaccess = {};
 
-    fs.readFile('./' + self.fileName, 'utf8', function (err,data) {
-      TRaccess = JSON.parse(data);
+    this.db.query("SELECT * FROM params WHERE nom = ?", ['TRaccess'], function(err, rows) {
+      console.log(rows);
+      if(rows.length > 0) {
+        var TRaccess = JSON.parse(rows[0][2]);
 
-      self.scope.transmission.obj = new Transmission(TRaccess);
-      self.scope.transmission.obj.session(function(err, arg) {
-        if(err) {
-          delete self.scope.transmission.obj;
-        }
+        self.scope.transmission.obj = new Transmission(TRaccess);
+        self.scope.transmission.obj.session(function(err, arg) {
+          if(err) {
+            delete self.scope.transmission.obj;
+          }
 
-        self.scope.$apply();
+          self.scope.$apply();
 
-        if(self.scope.transmission.obj) {
-          self.Notification.success('Connecté à Transmission');
-        } else {
-          self.Notification.error('Erreur lors de la connection à Transmission');
-        }
+          if(self.scope.transmission.obj) {
+            self.Notification.success('Connecté à Transmission');
+          } else {
+            self.Notification.error('Erreur lors de la connection à Transmission');
+          }
 
-        if(func) {
-          func();
-        }
-      });
+          if(func) {
+            func();
+          }
+        });
+      }
     });
   };
 
@@ -59,8 +61,11 @@
       host: host,
       port: port
     };
-    fs.writeFile( "TRaccess.json", JSON.stringify( TRaccess ), "utf8" , function() {
-      func();
+
+    this.db.query("DELETE FROM params WHERE nom = ?", ['TRaccess'], function(err, rows) {});
+
+    this.db.query("INSERT INTO params (nom, value) VALUES (?, ?)", ['TRaccess', JSON.stringify(TRaccess)], function(err, rows) {
+      func(err, rows);
     });
   };
 
