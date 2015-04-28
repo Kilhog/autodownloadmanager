@@ -195,7 +195,6 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     });
 
     modalInstance.result.then(function (allName) {
-      console.log(allName);
       apiST.createNewTarget(origin, allName.torrentName);
       apiAD.createNewTarget(origin, allName.subName);
     }, function () {
@@ -222,7 +221,11 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
 
   $timeout(function(){
     if(!$scope.user.token && justOpen) {
-      apiBT.connectToApi();
+      apiBT.connectToApi(function() {
+        if(!$scope.synchroInProgress) {
+          $scope.synchroEpisodesUnseen();
+        }
+      });
       apiTR.connectToApi();
       justOpen = false;
     }
