@@ -18,7 +18,6 @@
     var self = this;
 
     this.db.query("SELECT * FROM params WHERE nom = ?", ['TRaccess'], function(err, rows) {
-      console.log(rows);
       if(rows.length > 0) {
         var TRaccess = JSON.parse(rows[0][2]);
 

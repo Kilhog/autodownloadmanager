@@ -25,7 +25,6 @@ app.controller('ModalChangeTargetCtrl', ["$scope", "$timeout", "$filter", "Notif
   });
 
   $scope.ok = function() {
-    console.log($scope.subname);
     $modalInstance.close({torrentName: $scope.torrentname, subName: $scope.subname});
   };
 
