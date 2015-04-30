@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="./dist/styles/bundle.css">
 </head>
 
-<body ng-app="tabsDemo1">
+<body ng-app="adm-app">
 
 <!--
 	<nav style="border-radius: 0; -webkit-app-region: drag" class="navbar navbar-default navbar-inverse navbar-fixed-top">
@@ -31,7 +31,25 @@
 		<div ui-view=""></div>
 	</div> &lt;!&ndash; /container &ndash;&gt;
 -->
-
+	<div layout="column" layout-fill>
+		<md-toolbar style="-webkit-app-region: drag">
+			<div class="md-toolbar-tools">
+				<span>ADM</span>
+				<span flex>
+					<md-tabs style="position: relative; top: 8px; left: 20px;">
+						<md-tab ng-href="#/main/manager" style="-webkit-app-region: no-drag;color:white;" label="Manager"></md-tab>
+						<md-tab ng-href="#/main/reglages" style="-webkit-app-region: no-drag;color:white;" label="Réglages"></md-tab>
+					</md-tabs>
+				</span>
+				<md-button style="-webkit-app-region: no-drag;">
+					<i id="close-window-button" class="fa fa-times"></i>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-content>
+			<div ui-view=""></div>
+		</md-content>
+	</div>
 
 	<script>
 		var $ = require('./dist/js/jquery.min.js');
