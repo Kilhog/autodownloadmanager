@@ -35,10 +35,10 @@
 		<md-toolbar style="-webkit-app-region: drag">
 			<div class="md-toolbar-tools">
 				<span>ADM</span>
-				<span flex>
-					<md-tabs style="position: relative; top: 8px; left: 20px;">
-						<md-tab ng-href="#/main/manager" style="-webkit-app-region: no-drag;color:white;" label="Manager"></md-tab>
-						<md-tab ng-href="#/main/reglages" style="-webkit-app-region: no-drag;color:white;" label="Réglages"></md-tab>
+				<span ng-controller="TabsCtrl" flex>
+					<md-tabs md-selected="selectedTabIndex" style="position: relative; top: 8px; left: 20px;">
+						<md-tab class="tab-navbar" label="Manager"></md-tab>
+						<md-tab class="tab-navbar" label="Réglages"></md-tab>
 					</md-tabs>
 				</span>
 				<md-button style="-webkit-app-region: no-drag;">

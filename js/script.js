@@ -58,4 +58,11 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
 }).controller('mainCtrl', ["$scope", "$timeout", "$filter",
   function ($scope, $timeout, $filter, Notification, $modal) {
 
-  }]);
+}]).controller('TabsCtrl', ['$scope', '$location', function($scope, $location) {
+  $scope.$watch('selectedTabIndex', function(current, old) {
+    switch(current) {
+      case 0: $location.url("/main/manager"); break;
+      case 1: $location.url("/main/reglages"); break;
+    }
+  });
+}]);
