@@ -4,10 +4,9 @@
   var strike = require('strike-api');
   var shell = require('shell');
 
-  function apiGetStrike($scope, apiTR, Notification, apiDB) {
+  function apiGetStrike($scope, apiTR, apiDB) {
     this.scope = $scope;
     this.apiTR = apiTR;
-    this.Notification = Notification;
     this.apiDB = apiDB;
   }
 
@@ -36,10 +35,10 @@
       }
 
       if(!find) {
-        self.Notification.error('Aucun torrent trouvé !');
+        self.scope.showSimpleToast('Aucun torrent trouvé !');
       }
     }, function(){
-      self.Notification.error('Aucun torrent trouvé !');
+      self.scope.showSimpleToast('Aucun torrent trouvé !');
     });
   };
 
@@ -50,7 +49,7 @@
         if(torrent.magnet_uri) {
           if(self.scope.transmission.obj) {
             self.apiTR.addMagnet(torrent.magnet_uri, function(){
-              self.Notification.success('Torrent ajouté');
+              self.scope.showSimpleToast('Torrent ajouté');
             });
           } else {
             shell.openExternal(torrent.magnet_uri);
