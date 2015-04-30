@@ -9,19 +9,21 @@ var exec = require('child_process').exec;
 
 var css = [
   	'./css/styles.css', 
-  	'./node_modules/bootstrap/dist/css/bootstrap.min.css', 
-  	'./node_modules/font-awesome/css/font-awesome.min.css', 
-  	'./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.css'
+  	'./node_modules/font-awesome/css/font-awesome.min.css',
+    './bower_components/angular-material/angular-material.min.css'
 ];
 
 var js = [
-	'./node_modules/jquery/dist/jquery.min.js',
-	'./node_modules/angular/angular.min.js',
-	'./node_modules/angular-ui-router/release/angular-ui-router.min.js',
-	'./node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.min.js',
-	'./lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.js',
-	'./js/script.js',
-	'./js/modal_change_target.js'
+  './node_modules/jquery/dist/jquery.min.js',
+  './bower_components/angular/angular.min.js',
+  './bower_components/angular-animate/angular-animate.min.js',
+  './bower_components/angular-aria/angular-aria.min.js',
+  './bower_components/angular-material/angular-material.min.js',
+  './node_modules/angular-ui-router/release/angular-ui-router.min.js',
+  './node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.min.js',
+  './lib/alexcrack-angular-ui-notification-438f94e/dist/angular-ui-notification.min.js',
+  './js/script.js',
+  './js/modal_change_target.js'
 ];
 
 function launch() {
