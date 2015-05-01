@@ -1,92 +1,92 @@
 <div>
-  <div style="margin-top: 20px" class="page-header">
-    <h1 style="margin-top: 0">Réglages</h1>
-  </div>
+  <div layout="row" layout-wrap>
+    <div flex="5"></div>
+    <div flex="95">
+      <h1 class="md-display-1">Réglages</h1>
+    </div>
 
-  <div class="row">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
-      <div class="row">
-        <h2>Betaseries</h2>
-        <form ng-if="!user.user.login" class="form-horizontal">
-          <div class="form-group">
-            <label for="BTnom" class="col-sm-2 control-label">Utilisateur</label>
-            <div class="col-sm-10">
-              <input type="text" ng-model="BTnom" class="form-control" id="BTnom" placeholder="Nom d'utilisateur">
-            </div>
+    <div flex="100">
+      <md-toolbar class="md-primary md-hue-1">
+        <h1 class="md-toolbar-tools">
+          Betaseries
+        </h1>
+      </md-toolbar>
+
+      <md-content layout-padding ng-if="!user.user.login">
+        <form>
+          <div layout layout-sm="column">
+            <md-input-container flex>
+              <label>Utilisateur</label>
+              <input ng-model="BTnom">
+            </md-input-container>
+            <md-input-container flex>
+              <label>Password</label>
+              <input type="password" ng-model="BTpassword">
+            </md-input-container>
           </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
-              <input type="password" ng-model="BTpassword" class="form-control" id="inputPassword3" placeholder="Password">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-12">
-              <button ng-click="connectBetaseries(BTnom, BTpassword)" type="submit" class="btn btn-default">Se connecter</button>
-            </div>
+          <div>
+            <md-button class="md-raised md-primary" ng-click="connectBetaseries(BTnom, BTpassword)">Se connecter</md-button>
           </div>
         </form>
-        <div ng-if="user.user.login">
-          <i class="fa fa-check-circle"></i> Vous etes connecté en tant que {{user.user.login}} <br/>
-          <button ng-click="disconnectBetaseries()" class="btn btn-default">Se déconnecter</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-2"></div>
-  </div>
+      </md-content>
 
-  <div class="row">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
-      <div class="row">
-        <h2>Transmission</h2>
-        <form ng-if="!transmission.obj" class="form-horizontal">
-          <div class="form-group">
-            <label for="TRhost" class="col-sm-2 control-label">Host</label>
-            <div class="col-sm-10">
-              <input type="text" ng-model="TRhost" class="form-control" id="TRhost" placeholder="Host">
-            </div>
+      <md-content ng-if="user.user.login" layout-padding>
+        <i class="fa fa-check-circle"></i> Vous etes connecté en tant que {{user.user.login}} <br/><br/>
+        <md-button ng-click="disconnectBetaseries()" class="md-raised md-primary">Se déconnecter</md-button>
+      </md-content>
+
+      <br/>
+      <br/>
+
+      <md-toolbar class="md-primary md-hue-1">
+        <h1 class="md-toolbar-tools">
+          Transmission
+        </h1>
+      </md-toolbar>
+
+      <md-content ng-if="!transmission.obj" layout-padding>
+        <form>
+          <div layout layout-sm="column">
+            <md-input-container flex>
+              <label>Host</label>
+              <input ng-model="TRhost">
+            </md-input-container>
+            <md-input-container flex>
+              <label>Port</label>
+              <input type="number" ng-model="TRport">
+            </md-input-container>
           </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Port</label>
-            <div class="col-sm-10">
-              <input type="text" ng-model="TRport" class="form-control" id="TRport" placeholder="Port">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-12">
-              <button ng-click="connectTransmission(TRhost, TRport)" type="submit" class="btn btn-default">Se connecter</button>
-            </div>
+          <div>
+            <md-button ng-click="connectTransmission(TRhost, TRport)" class="md-raised md-primary">Se connecter</md-button>
           </div>
         </form>
-        <div ng-if="transmission.obj">
-          <i class="fa fa-check-circle"></i> Vous etes connecté à Transmission <br/>
-          <button ng-click="disconnectTransmission()" class="btn btn-default">Se déconnecter</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-2"></div>
-  </div>
+      </md-content>
 
-  <div class="row">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
-      <div class="row">
-        <h2>Qualité des épisodes</h2>
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label for="episodeQuality" class="col-sm-2 control-label">Qualité</label>
-            <div class="col-sm-10">
-              <select id="episodeQuality" ng-model="episodeQuality" class="form-control" ng-change="changeQuality(episodeQuality)">
-                <option value="480p" ng-selected="episodeQuality == '480p'">480p</option>
-                <option value="720p" ng-selected="episodeQuality == '720p' || !episodeQuality">720p</option>
-              </select>
-            </div>
+      <md-content ng-if="transmission.obj" layout-padding>
+        <i class="fa fa-check-circle"></i> Vous etes connecté à Transmission <br/><br/>
+        <md-button ng-click="disconnectTransmission()" class="md-raised md-primary">Se déconnecter</md-button>
+      </md-content>
+
+      <br/>
+      <br/>
+
+      <md-toolbar class="md-primary md-hue-1">
+        <h1 class="md-toolbar-tools">
+          Qualité des épisodes
+        </h1>
+      </md-toolbar>
+
+      <md-content>
+        <form>
+          <div layout layout="column">
+            <md-radio-group style="border: none;" ng-model="episodeQuality" ng-change="changeQuality(episodeQuality)">
+              <md-radio-button value="480p" class="md-primary" ng-selected="episodeQuality == '480p'">480p</md-radio-button>
+              <md-radio-button value="720p" class="md-primary" ng-selected="episodeQuality == '720p' || !episodeQuality">720p</md-radio-button>
+            </md-radio-group>
           </div>
         </form>
-      </div>
+      </md-content>
+
     </div>
-    <div class="col-sm-2"></div>
   </div>
 </div>
