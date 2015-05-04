@@ -19,7 +19,8 @@ var js = [
   './bower_components/angular-aria/angular-aria.min.js',
   './bower_components/angular-material/angular-material.min.js',
   './node_modules/angular-ui-router/release/angular-ui-router.min.js',
-  './js/script.js'
+  './js/script.js',
+  './js/modal_change_target.js'
 ];
 
 function launch() {

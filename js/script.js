@@ -55,8 +55,8 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     }
     return num;
   };
-}).controller('mainCtrl', ["$scope", "$timeout", "$filter", "$mdToast",
-  function ($scope, $timeout, $filter, $mdToast) {
+}).controller('mainCtrl', ["$scope", "$timeout", "$filter", "$mdToast", "$mdDialog",
+  function ($scope, $timeout, $filter, $mdToast, $mdDialog) {
 
     $scope.user = $scope.user || {};
     $scope.episodesUnseen = $scope.episodesUnseen || {};
@@ -208,9 +208,20 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       apiTR.disconnectToApi();
     };
 
-    $scope.changeTarget = function (origin) {
+    $scope.changeTarget = function (ev, origin) {
 
-      var modalInstance = $modal.open({
+      $mdDialog.show({
+        controller: 'ModalChangeTargetCtrl',
+        templateUrl: 'partial/modal_change_target.html',
+        targetEvent: ev
+      })
+      .then(function(answer) {
+        $scope.alert = 'You said the information was "' + answer + '".';
+      }, function() {
+        $scope.alert = 'You cancelled the dialog.';
+      });
+
+      /* var modalInstance = $modal.open({
         templateUrl: 'partial/modal_change_target.html',
         controller: 'ModalChangeTargetCtrl',
         resolve: {
@@ -228,7 +239,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         apiAD.createNewTarget(origin, allName.subName);
       }, function () {
 
-      });
+      }); */
     };
 
     $scope.generateTooltipTitle = function(torrentName, subName) {
