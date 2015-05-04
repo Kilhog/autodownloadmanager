@@ -2,6 +2,8 @@ var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var ipc = require('ipc');
 
+app.commandLine.appendSwitch('--enable-viewport-meta', 'true');
+
 // Report crashes to our server.
 require('crash-reporter').start();
 // Keep a global reference of the window object, if you don't, the window will
