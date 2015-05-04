@@ -34,7 +34,7 @@ function launch() {
 	} else if (process.platform == 'linux') {
 		exec("./node_modules/electron-prebuilt/dist/electron .", puts);
 	} else if (process.platform == 'win32') {
-		exec("./node_modules/electron-prebuilt/dist/electron.exe .", puts);
+		exec(".\\node_modules\\electron-prebuilt\\dist\\electron.exe .\\", puts);
 	}
 }
 
