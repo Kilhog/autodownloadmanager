@@ -1,6 +1,7 @@
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var ipc = require('ipc');
+var dialog = require('dialog');
 
 // Report crashes to our server.
 require('crash-reporter').start();
@@ -31,7 +32,6 @@ app.on('ready', function() {
   })
 
     ipc.on('dialog-selection-dossier', function(event, arg){
-        var dialog = require('dialog');
         var res = dialog.showOpenDialog({ properties: [ 'openDirectory', 'multiSelections' ], title: 'Choisir un dossier pour les sous-titres'});
         event.sender.send('dialog-selection-dossier-reply', res);
     });

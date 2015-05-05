@@ -3,6 +3,7 @@
   var querystring = require('querystring');
   var curl = require('curlrequest');
   var cheerio = require('cheerio');
+    var path = require('path');
 
   function apiAddicted($scope, apiDB) {
     this.scope = $scope;
@@ -22,7 +23,7 @@
     };
 
     curl.request(options, function (err, buffer) {
-        var path = require('path');
+
 
         self.scope.checkStrFolderPath();
 

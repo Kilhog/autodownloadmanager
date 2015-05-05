@@ -237,12 +237,14 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
         ipc.on('dialog-selection-dossier-reply', function (arg) {
             var strPath = arg[0];
             //Stockage de ma variable
-            apiDB.query('DELETE FROM params WHERE nom = ?', ['strFolder'], function(err, rows){});
-            apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['strFolder', strPath], function(err, rows) {
-                Notification.success('Dossier sous titres modifié');
-                $scope.pathDownloadFolder = strPath;
-                $scope.$apply();
+            apiDB.query('DELETE FROM params WHERE nom = ?', ['strFolder'], function(err, rows){
+                apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['strFolder', strPath], function(err, rows) {
+                    Notification.success('Dossier sous titres modifié');
+                    $scope.pathDownloadFolder = strPath;
+                    $scope.$apply();
+                });
             });
+
         });
 
 
