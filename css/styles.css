@@ -27,6 +27,13 @@ body > div {
     padding:0px 10px;
 }
 
+.logo-icon{
+    float: left;
+    position: relative;
+    left: -30px;
+    opacity: 0.8;
+}
+
 #reduce-window-button{margin-right: 10px;}
 
 #close-window-button:HOVER{background-color: rgba(207, 0, 0, 0.78);}
