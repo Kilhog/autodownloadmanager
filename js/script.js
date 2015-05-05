@@ -213,7 +213,15 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       $mdDialog.show({
         controller: 'ModalChangeTargetCtrl',
         templateUrl: 'partial/modal_change_target.html',
-        targetEvent: ev
+        targetEvent: ev,
+        resolve: {
+          origin: function () {
+            return origin;
+          },
+          apiDB: function() {
+            return apiDB;
+          }
+        }
       })
       .then(function(answer) {
         $scope.alert = 'You said the information was "' + answer + '".';
