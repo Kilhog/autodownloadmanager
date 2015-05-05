@@ -38,9 +38,9 @@ body > div {
 }
 
 /* Couleur icon Manager */
-.i-see{color:#cddc39;}
-.i-download{color: #8d9c2a;}
-.i-str{color: #5e6816;}
+.i-see{color: #ccdb3b;}
+.i-download{color: #bcc726;}
+.i-str{color: #95a020;}
 
 /* Saison et titre épisode */
 .season-and-episode-identifier{
