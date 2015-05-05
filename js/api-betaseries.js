@@ -76,12 +76,12 @@
             self.scope.$apply();
 
             if(self.scope.user.token) {
-              self.scope.showSimpleToast('Connecté à Betaseries');
+              self.scope.displayCustomToast('success', 'Connecté à Betaseries');
             } else {
-              self.scope.showSimpleToast('Identifiants Betaseries incorrect');
+              self.scope.displayCustomToast('error', 'Identifiants Betaseries incorrect');
             }
           } else {
-            self.scope.showSimpleToast('Identifiants Betaseries incorrect');
+            self.scope.displayCustomToast('error', 'Identifiants Betaseries incorrect');
           }
 
           if(func) {

@@ -274,6 +274,15 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       });
     };
 
+      //Permet de personaliser les Toast (type error pour toast a fond rouge et success pour toast a fond vert)
+      $scope.displayCustomToast = function(type, msg) {
+
+          $mdToast.show({
+              template: '<md-toast class="md-toast ' + type +'">' + msg + '</md-toast>',
+              position: 'bottom right'
+          });
+      };
+
     $timeout(function(){
       if(!$scope.user.token && justOpen) {
         apiBT.connectToApi(function() {

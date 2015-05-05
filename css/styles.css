@@ -60,3 +60,12 @@ body > div {
 
 /* Vue des réglages */
 #reglages-content .btn-center {dispay:block;margin-right: auto;margin-left: auto;}
+
+/* Custom Toast */
+.md-toast.error {
+    background-color: darkred;
+}
+
+.md-toast.success {
+    background-color: green;
+}

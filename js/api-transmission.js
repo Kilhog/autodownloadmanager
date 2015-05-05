@@ -29,9 +29,9 @@
           self.scope.$apply();
 
           if(self.scope.transmission.obj) {
-            self.scope.showSimpleToast('Connecté à Transmission');
+            self.scope.displayCustomToast('success', 'Connecté à Transmission');
           } else {
-            self.scope.showSimpleToast('Erreur lors de la connection à Transmission');
+            self.scope.displayCustomToast('error','Erreur lors de la connection à Transmission');
           }
 
           if(func) {
