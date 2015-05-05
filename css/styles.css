@@ -21,6 +21,8 @@ body > div {
 }
 
 /* Global UI */
+.i-app{color: #bcc726;}
+.i-default{color: #bcc726;}
 #ui-view{
     padding:0px 10px;
 }
@@ -48,3 +50,6 @@ body > div {
 .season-and-episode-identifier{
     color:#aaa;
 }
+
+/* Vue des réglages */
+#reglages-content .btn-center {dispay:block;margin-right: auto;margin-left: auto;}
