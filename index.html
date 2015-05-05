@@ -19,10 +19,10 @@
 						<md-tab class="tab-navbar" label="Réglages"></md-tab>
 					</md-tabs>
 				</span>
-                <md-button id="reduce-window-button" style="-webkit-app-region: no-drag;">
+                <md-button id="reduce-window-button" aria-label="Reduire" style="-webkit-app-region: no-drag;">
                     <i class="fa fa-minus"></i>
                 </md-button>
-				<md-button id="close-window-button" style="-webkit-app-region: no-drag;">
+				<md-button id="close-window-button" aria-label="Fermer" style="-webkit-app-region: no-drag;">
 					<i class="fa fa-times"></i>
 				</md-button>
 			</div>
@@ -34,7 +34,6 @@
 
 	<script>
 		var $ = require('./dist/js/jquery.min.js');
-        angular.module('tabsDemoDynamicHeight', ['ngMaterial'] );
 	</script>
 	<script src="./dist/js/script.min.js"></script>
 </body>
