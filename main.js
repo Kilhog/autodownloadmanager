@@ -17,8 +17,8 @@ app.on('window-all-closed', function() {
 // initialization and ready for creating browser windows.
 app.on('ready', function() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 500, frame: false, center: true, resizable: false, title: "AutoDownloadManager"});
-  mainWindow.openDevTools({detach: true});
+  mainWindow = new BrowserWindow({width: 800, height: 800, frame: false, center: true, resizable: false, title: "AutoDownloadManager"});
+  mainWindow.openDevTools();
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
@@ -29,6 +29,12 @@ app.on('ready', function() {
   ipc.on('hide-window', function(event) {
     mainWindow.hide();
   })
+
+    ipc.on('dialog-selection-dossier', function(event, arg){
+        var dialog = require('dialog');
+        var res = dialog.showOpenDialog({ properties: [ 'openDirectory', 'multiSelections' ], title: 'Choisir un dossier pour les sous-titres'});
+        event.sender.send('dialog-selection-dossier-reply', res);
+    });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {

@@ -22,9 +22,11 @@
     };
 
     curl.request(options, function (err, buffer) {
-      var home = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+        var path = require('path');
 
-      fs.writeFile(home + "/Downloads/" + name + ".srt", buffer, function(err) {
+        self.scope.checkStrFolderPath();
+
+      fs.writeFile(self.scope.pathDownloadFolder + path.sep + name + ".srt", buffer, function(err) {
         if(func) {
           func();
         }

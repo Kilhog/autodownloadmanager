@@ -51,6 +51,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
 }).controller('mainCtrl', ["$scope", "$timeout", "$filter", "Notification","$modal" ,function ($scope, $timeout, $filter, Notification, $modal) {
 
   $scope.user = $scope.user || {};
+  $scope.pathDownloadFolder = $scope.pathDownloadFolder || "";
   $scope.episodesUnseen = $scope.episodesUnseen || {};
   $scope.episodesIncoming = $scope.episodesIncoming || {};
   $scope.transmission = $scope.transmission || {obj: null};
@@ -230,6 +231,37 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
     return tooltip;
   };
 
+    $scope.selectStrFolder = function(){
+
+        ipc.send('dialog-selection-dossier');
+        ipc.on('dialog-selection-dossier-reply', function (arg) {
+            var strPath = arg[0];
+            //Stockage de ma variable
+            apiDB.query('DELETE FROM params WHERE nom = ?', ['strFolder'], function(err, rows){});
+            apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['strFolder', strPath], function(err, rows) {
+                Notification.success('Dossier sous titres modifié');
+                $scope.pathDownloadFolder = strPath;
+                $scope.$apply();
+            });
+        });
+
+
+    };
+
+    $scope.checkStrFolderPath = function (){
+        var strPath = "";
+        apiDB.query('SELECT value FROM params WHERE nom = ?', ['strFolder'], function(err, rows){
+            if(rows.length > 0) {
+                strPath = rows[0][0];
+                $scope.pathDownloadFolder = strPath;
+                $scope.$apply();
+            }
+            else{
+                $scope.selectStrFolder();
+            }
+        });
+    };
+
   $scope.changeQuality = function() {
     apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function(err, rows){});
     apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function(err, rows) {
@@ -243,6 +275,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
         if(!$scope.synchroInProgress) {
           $scope.synchroEpisodesUnseen();
         }
+          $scope.checkStrFolderPath();
       });
       apiTR.connectToApi();
       justOpen = false;
