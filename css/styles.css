@@ -34,6 +34,8 @@ body > div {
     opacity: 0.8;
 }
 
+.synch_text{text-align: center;margin-bottom: 20px;}
+
 #reduce-window-button{margin-right: 10px;}
 
 #close-window-button:HOVER{background-color: rgba(207, 0, 0, 0.78);}

@@ -6,7 +6,13 @@
     <md-content class="md-padding">
         <md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="Mes séries en retard">
-                <md-content class="md-padding">
+                <md-content class="md-padding" >
+                    <div ng-hide="!synchroInProgress">
+                        <div layout="row" layout-sm="column" layout-align="space-around">
+                            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                        </div>
+                        <h3 class="synch_text">Synchronisation des épisodes en cours</h3>
+                    </div>
                     <div ng-repeat="show in episodesUnseen.shows track by $index">
                         <h4>
                             <a style="cursor: pointer" ng-click="changeTarget($event, show.title)">> {{show.title}}</a>
