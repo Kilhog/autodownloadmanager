@@ -16,8 +16,8 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
     $mdThemingProvider.theme('default').primaryPalette('grey',{
       'default': '800'
-    }).accentPalette('indigo',{
-      'default': '200'
+    }).accentPalette('lime',{
+      'default': '500'
     });
 
     $urlRouterProvider.otherwise('/main/manager');

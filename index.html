@@ -18,13 +18,16 @@
 						<md-tab class="tab-navbar" label="Réglages"></md-tab>
 					</md-tabs>
 				</span>
+                <md-button id="reduce-window-button" style="-webkit-app-region: no-drag;">
+                    <i class="fa fa-minus"></i>
+                </md-button>
 				<md-button id="close-window-button" style="-webkit-app-region: no-drag;">
 					<i class="fa fa-times"></i>
 				</md-button>
 			</div>
 		</md-toolbar>
 		<md-content>
-			<div ui-view=""></div>
+			<div ui-view="" id="ui-view"></div>
 		</md-content>
 	</div>
 

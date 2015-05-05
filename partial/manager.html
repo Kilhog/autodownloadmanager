@@ -1,38 +1,36 @@
-<div style="margin-top: 20px" class="page-header">
+<div class="page-header">
   <h1 style="margin-top: 0">Auto Download Manager</h1>
 </div>
 
-<tabset justified="true">
-  <tab heading="Mes séries en retard">
+<h2>Mes séries en retard</h2>
     <div ng-repeat="show in episodesUnseen.shows track by $index">
       <h4>
-        <a style="cursor: pointer" ng-click="changeTarget($event, show.title)" tooltip-placement="right" tooltip-html-unsafe="{{generateTooltipTitle(show.torrentName, show.subName)}}">{{show.title}}</a>
+        <a style="cursor: pointer" ng-click="changeTarget($event, show.title)">> {{show.title}}</a>
       </h4>
       <ul style="-webkit-columns: 2">
         <li ng-repeat="unseen in show.unseen" class="prevent-line-break">
-          <span ng-click="seenEpisode($parent.$index, $index)" style="cursor: pointer" tooltip-placement="top" tooltip="Marquer comme vu" class="label label-default">
-            <i class="fa fa-eye"></i>
+          <span ng-click="seenEpisode($parent.$index, $index)" style="cursor: pointer" tooltip-placement="top">
+            <i class="fa fa-eye i-see"></i>
            </span>
           &nbsp;
-          <span ng-click="downloadEpisode(unseen)" style="cursor: pointer" tooltip-placement="top" tooltip="Télécharger" class="label label-success">
-            <i class="fa fa-cloud-download"></i>
+          <span ng-click="downloadEpisode(unseen)" style="cursor: pointer" tooltip-placement="top">
+            <i class="fa fa-cloud-download i-download"></i>
           </span>
           &nbsp;
-          <span ng-click="downloadStr(unseen)" style="cursor: pointer" tooltip-placement="top" tooltip="Sous-titres" class="label label-info">
+          <span ng-click="downloadStr(unseen) i-str" style="cursor: pointer" aria-label="Insert Drive">
             <i class="fa fa-align-center"></i>
           </span>
           &nbsp;
-          <span class="label label-primary">S{{unseen.season | numberFixedLen:2}}E{{unseen.episode | numberFixedLen:2}}</span> {{unseen.title}}</li>
+          <span class="season-and-episode-identifier">S{{unseen.season | numberFixedLen:2}}E{{unseen.episode | numberFixedLen:2}}</span> - {{unseen.title}}</li>
       </ul>
+        <hr />
     </div>
-  </tab>
-  <tab heading="Mes séries surveillées">
+
+<h2>Mes séries surveillées</h2>
     <h4>Dans la prochaine mise à jour ;)</h4>
-  </tab>
-</tabset>
 <br/>
 
 <div layout="row" layout-align="center">
-  <md-button class="md-raised md-primary" ng-disabled="!user.token || synchroInProgress" ng-click="synchroAll()">Recharger</md-button>
+  <md-button class="md-raised md-accent" ng-disabled="!user.token || synchroInProgress" ng-click="synchroAll()">Recharger</md-button>
 </div>
 <br/>
