@@ -20,7 +20,7 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 800, frame: false, center: true, resizable: false, title: "AutoDownloadManager"});
-  mainWindow.openDevTools();
+  mainWindow.openDevTools({detach: true});
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
