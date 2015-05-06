@@ -160,9 +160,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     };
 
     $scope.synchroEpisodesIncoming = function() {
-      $scope.synchroInProgress = true;
-      apiBT.synchroEpisodesIncoming(function() {
-        $scope.synchroInProgress = false;
+        apiBT.synchroEpisodesIncoming(function() {
       });
     };
 
