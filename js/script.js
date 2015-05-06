@@ -284,7 +284,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       });
     };
 
-    $scope.selectStrFolder = function(){
+    $scope.selectStrFolder = function(func){
 
         ipc.send('dialog-selection-dossier');
         ipc.on('dialog-selection-dossier-reply', function (arg) {
@@ -295,21 +295,27 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
                     Notification.success('Dossier sous titres modifié');
                     $scope.pathDownloadFolder = strPath;
                     $scope.$apply();
+                    if(func) {
+                      func();
+                    }
                 });
             });
         });
     };
 
-    $scope.checkStrFolderPath = function (){
+    $scope.checkStrFolderPath = function (func) {
         var strPath = "";
         apiDB.query('SELECT value FROM params WHERE nom = ?', ['strFolder'], function(err, rows){
             if(rows.length > 0) {
                 strPath = rows[0][0];
                 $scope.pathDownloadFolder = strPath;
                 $scope.$apply();
+                if(func) {
+                  func();
+                }
             }
             else{
-                $scope.selectStrFolder();
+                $scope.selectStrFolder(func);
             }
         });
     };

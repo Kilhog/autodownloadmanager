@@ -23,15 +23,13 @@
     };
 
     curl.request(options, function (err, buffer) {
-
-
-        self.scope.checkStrFolderPath();
-
-      fs.writeFile(self.scope.pathDownloadFolder + path.sep + name + ".srt", buffer, function(err) {
-        if(func) {
-          func();
-        }
-      }); 
+      self.scope.checkStrFolderPath(function() {
+        fs.writeFile(self.scope.pathDownloadFolder + path.sep + name + ".srt", buffer, function(err) {
+          if(func) {
+            func();
+          }
+        });
+      });
     });
   };
 
