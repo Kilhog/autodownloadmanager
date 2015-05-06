@@ -34,6 +34,14 @@ Ouvrez un terminal et faites :
 
 	npm install -g gulp
 
+### Installation de bower en global
+
+Ouvrez un terminal et faites :
+
+	npm install -g bower
+	cd /path/to/my/folder
+	bower install
+
 ### Lancement d'atom-shell
 
 Ouvrez un terminal et faites :
