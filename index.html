@@ -12,16 +12,16 @@
 		<md-toolbar style="-webkit-app-region: drag">
 			<div class="md-toolbar-tools">
 				<div class="logo-txt">ADM</div>
-                <div class="logo-icon"><i class="fa fa-bolt i-app"></i></div>
+				<div class="logo-icon"><i class="fa fa-bolt i-app"></i></div>
 				<span ng-controller="TabsCtrl" flex>
-					<md-tabs md-selected="selectedTabIndex" style="position: relative; top: 8px; left: 20px;">
-						<md-tab class="tab-navbar" label="Manager"></md-tab>
-						<md-tab class="tab-navbar" label="Réglages"></md-tab>
+					<md-tabs class="tab-navbar" md-selected="selectedTabIndex" style="position: relative; top: 8px; left: 20px;">
+						<md-tab label="Manager"></md-tab>
+						<md-tab label="Réglages"></md-tab>
 					</md-tabs>
 				</span>
-                <md-button id="reduce-window-button" aria-label="Reduire" style="-webkit-app-region: no-drag;">
-                    <i class="fa fa-minus"></i>
-                </md-button>
+				<md-button id="reduce-window-button" aria-label="Reduire" style="-webkit-app-region: no-drag;">
+					<i class="fa fa-minus"></i>
+				</md-button>
 				<md-button id="close-window-button" aria-label="Fermer" style="-webkit-app-region: no-drag;">
 					<i class="fa fa-times"></i>
 				</md-button>

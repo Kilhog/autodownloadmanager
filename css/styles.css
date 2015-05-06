@@ -40,10 +40,12 @@ body > div {
 
 #close-window-button:HOVER{background-color: rgba(207, 0, 0, 0.78);}
 #reduce-window-button:HOVER{background-color: rgba(74, 186, 207, 0.78);}
-.tab-navbar {
-  -webkit-app-region: no-drag;
+
+.tab-navbar md-tab-item {
+  -webkit-app-region: no-drag !important;
   color:white !important;
 }
+
 .page-header{
     margin-top: 20px;
     font-style: italic;
