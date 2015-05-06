@@ -16,7 +16,7 @@
 
     var options = {
       url: this.url_addic + url_path,
-      encoding: "utf-8",
+      encoding: "ISO-8859-1",
       headers: {
         'Referer': this.url_addic
       }

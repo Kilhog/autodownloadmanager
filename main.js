@@ -3,6 +3,8 @@ var BrowserWindow = require('browser-window');  // Module to create native brows
 var ipc = require('ipc');
 var dialog = require('dialog');
 
+app.commandLine.appendSwitch('--enable-viewport-meta', 'true');
+
 // Report crashes to our server.
 require('crash-reporter').start();
 // Keep a global reference of the window object, if you don't, the window will

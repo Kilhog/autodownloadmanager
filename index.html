@@ -3,32 +3,34 @@
 <head>
 	<meta charset="utf-8">
 	<title>APP</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="./dist/styles/bundle.css">
 </head>
 
-<body ng-app="demo-app">
-
-	<nav style="border-radius: 0; -webkit-app-region: drag" class="navbar navbar-default navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">ADM</a>
+<body ng-app="adm-app">
+	<div layout="column" layout-fill>
+		<md-toolbar style="-webkit-app-region: drag">
+			<div class="md-toolbar-tools">
+				<div class="logo-txt">ADM</div>
+                <div class="logo-icon"><i class="fa fa-bolt i-app"></i></div>
+				<span ng-controller="TabsCtrl" flex>
+					<md-tabs md-selected="selectedTabIndex" style="position: relative; top: 8px; left: 20px;">
+						<md-tab class="tab-navbar" label="Manager"></md-tab>
+						<md-tab class="tab-navbar" label="Réglages"></md-tab>
+					</md-tabs>
+				</span>
+                <md-button id="reduce-window-button" aria-label="Reduire" style="-webkit-app-region: no-drag;">
+                    <i class="fa fa-minus"></i>
+                </md-button>
+				<md-button id="close-window-button" aria-label="Fermer" style="-webkit-app-region: no-drag;">
+					<i class="fa fa-times"></i>
+				</md-button>
 			</div>
-			<div>
-				<ul class="nav navbar-nav">
-					<li style="-webkit-app-region: no-drag;"><a ng-href="#/main/manager">Manager</a></li>
-					<li style="-webkit-app-region: no-drag;"><a ng-href="#/main/reglages">Réglages</a></li>
-				</ul>
-				<ul style="list-style: none;position: relative;top:4px; left: 7px; color: grey; cursor: pointer;padding-left: 0" class="pull-right">
-					<li style="-webkit-app-region: no-drag;"><i id="close-window-button" class="fa fa-times"></i></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-	<div class="container">
-		<div ui-view=""></div>
-	</div> <!-- /container -->
+		</md-toolbar>
+		<md-content>
+			<div ui-view="" id="ui-view"></div>
+		</md-content>
+	</div>
 
 	<script>
 		var $ = require('./dist/js/jquery.min.js');

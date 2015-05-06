@@ -53,10 +53,9 @@
     req.end();
   }
 
-  function apiBetaseries(db, $scope, Notification) {
+  function apiBetaseries(db, $scope) {
     this.db = db;
     this.scope = $scope;
-    this.Notification = Notification;
   }
 
   apiBetaseries.prototype.connectToApi = function(func) {
@@ -77,12 +76,12 @@
             self.scope.$apply();
 
             if(self.scope.user.token) {
-              self.Notification.success('Connecté à Betaseries');
+              self.scope.displayCustomToast('success', 'Connecté à Betaseries');
             } else {
-              self.Notification.error('Identifiants Betaseries incorrect');
+              self.scope.displayCustomToast('error', 'Identifiants Betaseries incorrect');
             }
           } else {
-            self.Notification.error('Identifiants Betaseries incorrect');
+            self.scope.displayCustomToast('error', 'Identifiants Betaseries incorrect');
           }
 
           if(func) {
@@ -133,9 +132,9 @@
         delete self.scope.episodesUnseen.shows;
         self.scope.episodesUnseen.shows = data.shows;
         self.scope.$apply();
-        self.Notification.success('Synchronisation terminée');
+        self.scope.showSimpleToast('Synchronisation terminée');
       } else {
-        self.Notification.error('Synchronisation échouée');
+        self.scope.showSimpleToast('Synchronisation échouée');
       }
       if(func) {
         func();

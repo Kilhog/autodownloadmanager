@@ -3,10 +3,9 @@
   var fs = require("fs");
   var Transmission = require('transmission');
 
-  function apiTransmission($scope, db, Notification) {
+  function apiTransmission($scope, db) {
     this.scope = $scope;
     this.db = db;
-    this.Notification = Notification;
   }
 
   apiTransmission.prototype.addMagnet = function(url, func) {
@@ -30,9 +29,9 @@
           self.scope.$apply();
 
           if(self.scope.transmission.obj) {
-            self.Notification.success('Connecté à Transmission');
+            self.scope.displayCustomToast('success', 'Connecté à Transmission');
           } else {
-            self.Notification.error('Erreur lors de la connection à Transmission');
+            self.scope.displayCustomToast('error','Erreur lors de la connection à Transmission');
           }
 
           if(func) {
