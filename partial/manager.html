@@ -1,5 +1,8 @@
-<div class="page-header">
-  <h1 style="margin-top: 0">Manager</h1>
+<div class="page-header" layout="row">
+  <h1 style="margin-top: 0" flex>
+      Manager
+  </h1>
+  <md-button style="height: 36px;" class="md-raised md-accent" ng-disabled="!user.token || synchroInProgress" ng-click="synchroAll()">Recharger</md-button>
 </div>
 
 <div>
