@@ -1,67 +1,93 @@
 * {
-  -webkit-user-select: none;
+    -webkit-user-select: none;
 }
 
 html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 body > div {
-  height: 100%;
-  overflow: auto;
-  -webkit-overflow-scrolling: hidden;
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: hidden;
 }
 
 .prevent-line-break {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* Global UI */
-.i-app{color: #bcc726;}
-.i-default{color: #bcc726;}
-#ui-view{
-    padding:0px 10px;
+.i-app {
+    color: #bcc726;
 }
 
-.logo-icon{
+.i-default {
+    color: #bcc726;
+}
+
+#ui-view {
+    padding: 0px 10px;
+}
+
+.logo-icon {
     float: left;
     position: relative;
     left: -30px;
     opacity: 0.8;
 }
 
-.synch_text{text-align: center;margin-bottom: 20px;}
-
-#close-window-button:HOVER{background-color: rgba(207, 0, 0, 0.78);}
-#reduce-window-button:HOVER{background-color: rgba(74, 186, 207, 0.78);}
-
-.tab-navbar md-tab-item {
-  -webkit-app-region: no-drag !important;
-  color:white !important;
+.synch_text {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.page-header{
+#close-window-button:HOVER {
+    background-color: rgba(207, 0, 0, 0.78);
+}
+
+#reduce-window-button:HOVER {
+    background-color: rgba(74, 186, 207, 0.78);
+}
+
+.tab-navbar md-tab-item {
+    -webkit-app-region: no-drag !important;
+    color: white !important;
+}
+
+.page-header {
     margin-top: 20px;
     font-style: italic;
     border-bottom: 1px dashed #ddd;
 }
 
 /* Couleur icon Manager */
-.i-see{color: #ccdb3b;}
-.i-download{color: #bcc726;}
-.i-str{color: #95a020;}
+.i-see {
+    color: #ccdb3b;
+}
+
+.i-download {
+    color: #bcc726;
+}
+
+.i-str {
+    color: #95a020;
+}
 
 /* Saison et titre épisode */
-.season-and-episode-identifier{
-    color:#aaa;
+.season-and-episode-identifier {
+    color: #aaa;
 }
 
 /* Vue des réglages */
-#reglages-content .btn-center {dispay:block;margin-right: auto;margin-left: auto;}
+#reglages-content .btn-center {
+    dispay: block;
+    margin-right: auto;
+    margin-left: auto;
+}
 
 /* Custom Toast */
 .md-toast.error {
@@ -73,11 +99,11 @@ body > div {
 }
 
 .fix-bug-flex {
-  display: inline-flex;
+    display: inline-flex;
 }
 
 .button-main-window {
-  -webkit-app-region: no-drag !important;
-  min-width: initial !important;
-  margin: 0 4px !important;
+    -webkit-app-region: no-drag !important;
+    min-width: initial !important;
+    margin: 0 4px !important;
 }
