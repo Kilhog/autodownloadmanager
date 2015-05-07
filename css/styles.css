@@ -36,8 +36,6 @@ body > div {
 
 .synch_text{text-align: center;margin-bottom: 20px;}
 
-#reduce-window-button{margin-right: 10px;}
-
 #close-window-button:HOVER{background-color: rgba(207, 0, 0, 0.78);}
 #reduce-window-button:HOVER{background-color: rgba(74, 186, 207, 0.78);}
 
@@ -76,4 +74,10 @@ body > div {
 
 .fix-bug-flex {
   display: inline-flex;
+}
+
+.button-main-window {
+  -webkit-app-region: no-drag !important;
+  min-width: initial !important;
+  margin: 0 4px !important;
 }
