@@ -25,10 +25,10 @@ app.controller('ModalChangeTargetCtrl', ["$scope", "$timeout", "$filter","$mdToa
   });
 
   $scope.ok = function() {
-    $modalInstance.close({torrentName: $scope.torrentname, subName: $scope.subname});
+    $mdDialog.hide({torrentName: $scope.torrentname, subName: $scope.subname});
   };
 
   $scope.cancel = function() {
-    $modalInstance.dismiss('cancel');
+    $mdDialog.cancel();
   };
 }]);

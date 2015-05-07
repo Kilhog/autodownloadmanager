@@ -222,6 +222,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         controller: 'ModalChangeTargetCtrl',
         templateUrl: 'partial/modal_change_target.html',
         targetEvent: ev,
+        clickOutsideToClose: true,
         resolve: {
           origin: function () {
             return origin;
@@ -231,31 +232,12 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
           }
         }
       })
-      .then(function(answer) {
-        $scope.alert = 'You said the information was "' + answer + '".';
-      }, function() {
-        $scope.alert = 'You cancelled the dialog.';
+      .then(function(allName) {
+          apiST.createNewTarget(origin, allName.torrentName);
+          apiAD.createNewTarget(origin, allName.subName);
+        }, function() {
+
       });
-
-      /* var modalInstance = $modal.open({
-        templateUrl: 'partial/modal_change_target.html',
-        controller: 'ModalChangeTargetCtrl',
-        resolve: {
-          origin: function () {
-            return origin;
-          },
-          apiDB: function() {
-            return apiDB;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (allName) {
-        apiST.createNewTarget(origin, allName.torrentName);
-        apiAD.createNewTarget(origin, allName.subName);
-      }, function () {
-
-      }); */
     };
 
     $scope.generateTooltipTitle = function(torrentName, subName) {
