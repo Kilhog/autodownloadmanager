@@ -103,7 +103,47 @@ body > div {
 }
 
 .button-main-window {
-    -webkit-app-region: no-drag !important;
-    min-width: initial !important;
-    margin: 0 4px !important;
+  -webkit-app-region: no-drag !important;
+  min-width: initial !important;
+  margin: 0 4px !important;
+}
+
+.logo-txt {
+  color: white;
+  position: relative;
+  z-index: 50;
+  font-size: 24px;
+}
+
+.logo-bolt-up {
+  opacity: 1;
+  z-index: 55;
+  overflow: hidden;
+  height: 14px;
+  width: 10px;
+  left: -36px;
+  top: -4px;
+}
+
+.logo-bolt-up i {
+  font-size: 25px;
+  position: relative;
+  left: 1px;
+}
+
+.logo-bolt-down {
+  left: -42px;
+  opacity: 1;
+  z-index: 45;
+  overflow: hidden;
+  top: 5px;
+  width: 11px;
+  height: 18px;
+}
+
+.logo-bolt-down i {
+  font-size: 25px;
+  position: relative;
+  top: -7px;
+  left: -3px;
 }
