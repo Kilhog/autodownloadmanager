@@ -42,7 +42,7 @@ Ouvrez un terminal et faites :
 	cd /path/to/my/folder
 	bower install
 
-### Lancement d'atom-shell
+### Lancement d'Electron
 
 Ouvrez un terminal et faites :
 
