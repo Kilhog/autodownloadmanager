@@ -1,60 +1,62 @@
 <div class="page-header" layout="row">
   <h1 style="margin-top: 0" flex>
-      Manager
+    Manager
   </h1>
-  <md-button style="height: 36px;font-style: normal;" class="md-raised md-accent" ng-disabled="!user.token || synchroInProgress" ng-click="synchroAll()">Recharger</md-button>
+  <md-button style="height: 36px;font-style: normal;" class="md-raised md-accent"
+             ng-disabled="!user.token || synchroInProgress" ng-click="synchroAll()">Recharger
+  </md-button>
 </div>
 
 <div>
+  <md-content class="md-padding">
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Mes séries en retard">
+        <md-content class="md-padding">
+          <div ng-if="synchroInProgress">
+            <div layout="row" layout-sm="column" layout-align="space-around">
+              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+            <h3 class="synch_text">Synchronisation des épisodes en cours</h3>
+          </div>
 
-
-    <md-content class="md-padding">
-        <md-tabs md-dynamic-height md-border-bottom>
-            <md-tab label="Mes séries en retard">
-                <md-content class="md-padding">
-                    <div ng-if="synchroInProgress">
-                        <div layout="row" layout-sm="column" layout-align="space-around">
-                            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-                        </div>
-                        <h3 class="synch_text">Synchronisation des épisodes en cours</h3>
-                    </div>
-
-                    <div ng-if="!synchroInProgress" ng-repeat="show in episodesUnseen.shows track by $index">
-                        <h4>
-                            <a style="cursor: pointer" ng-click="changeTarget($event, show.title)">> {{show.title}}</a>
-                        </h4>
-                        <ul style="-webkit-columns: 2">
-                            <li ng-repeat="unseen in show.unseen" class="prevent-line-break">
-                                <span class="fix-bug-flex" ng-click="seenEpisode($parent.$index, $index)" style="cursor: pointer">
-                                    <i class="fa fa-eye i-see"></i>
-                                </span>
-                                &nbsp;
-                                <span class="fix-bug-flex" ng-click="downloadEpisode(unseen)" style="cursor: pointer">
-                                    <i class="fa fa-cloud-download i-download"></i>
-                                </span>
-                                &nbsp;
-                                <span class="fix-bug-flex" ng-click="downloadStr(unseen)" style="cursor: pointer">
-                                    <i class="fa fa-align-center i-str"></i>
-                                </span>
-                                &nbsp;
-                                <span class="season-and-episode-identifier">S{{unseen.season | numberFixedLen:2}}E{{unseen.episode | numberFixedLen:2}}</span> - {{unseen.title}}
-                            </li>
-                        </ul>
-                        <hr />
-                    </div>
-
-                </md-content>
-            </md-tab>
-            <md-tab label="Mes séries surveillées">
-                <md-content class="md-padding">
-                    <p style="text-align: center;">Dans la prochaine mise à jour ;)</p>
-                </md-content>
-            </md-tab>
-        </md-tabs>
-    </md-content>
+          <div ng-if="!synchroInProgress" ng-repeat="show in episodesUnseen.shows track by $index">
+            <h4>
+              <a style="cursor: pointer" ng-click="changeTarget($event, show.title)">> {{show.title}}</a>
+            </h4>
+            <ul style="-webkit-columns: 2">
+              <li ng-repeat="unseen in show.unseen" class="prevent-line-break">
+                <span class="fix-bug-flex" ng-click="seenEpisode($parent.$index, $index)" style="cursor: pointer">
+                  <i class="fa fa-eye i-see"></i>
+                </span>
+                &nbsp;
+                <span class="fix-bug-flex" ng-click="downloadEpisode(unseen)" style="cursor: pointer">
+                  <i class="fa fa-cloud-download i-download"></i>
+                </span>
+                &nbsp;
+                <span class="fix-bug-flex" ng-click="downloadStr(unseen)" style="cursor: pointer">
+                  <i class="fa fa-align-center i-str"></i>
+                </span>
+                &nbsp;
+                <span class="season-and-episode-identifier">S{{unseen.season | numberFixedLen:2}}E{{unseen.episode | numberFixedLen:2}}</span>
+                - {{unseen.title}}
+              </li>
+            </ul>
+            <hr/>
+          </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="Mes séries surveillées">
+        <md-content class="md-padding">
+          <p style="text-align: center;">Dans la prochaine mise à jour ;)</p>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
 </div>
 
 <div layout="row" layout-align="center">
-  <md-button class="md-raised md-accent" ng-disabled="!user.token || synchroInProgress" ng-click="synchroAll()">Recharger</md-button>
+  <md-button class="md-raised md-accent" ng-disabled="!user.token || synchroInProgress" ng-click="synchroAll()">
+    Recharger
+  </md-button>
 </div>
 <br/>
