@@ -25,19 +25,19 @@
             </h4>
             <div layout="row" layout-wrap style="margin-bottom: 2px">
               <div flex="50" ng-repeat="unseen in show.unseen" class="prevent-line-break">
-                <md-button ng-click="seenEpisode($parent.$index, $index)" class="md-fab md-xs md-accent" style="margin-left: 3px !important;">
+                <md-button aria-label="Marquer comme vu" ng-click="seenEpisode($parent.$index, $index)" class="md-fab md-xs md-accent" style="margin-left: 3px !important;">
                   <md-tooltip md-direction="right" md-autohide="true">
                     Marquer comme vu
                   </md-tooltip>
                   <md-icon md-font-icon="fa fa-eye"></md-icon>
                 </md-button>
-                <md-button ng-click="downloadEpisode(unseen)" class="md-fab md-xs md-accent">
+                <md-button aria-label="Télécharger" ng-click="downloadEpisode(unseen)" class="md-fab md-xs md-accent">
                   <md-tooltip md-direction="right" md-autohide="true">
                     Télécharger
                   </md-tooltip>
                   <md-icon md-font-icon="fa fa-cloud-download"></md-icon>
                 </md-button>
-                <md-button ng-click="downloadStr(unseen)" class="md-fab md-xs md-accent">
+                <md-button aria-label="Sous-titres" ng-click="downloadStr(unseen)" class="md-fab md-xs md-accent">
                   <md-tooltip md-direction="right" md-autohide="true">
                     Sous-titres
                   </md-tooltip>
