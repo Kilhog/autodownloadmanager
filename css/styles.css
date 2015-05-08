@@ -147,3 +147,18 @@ body > div {
   top: -7px;
   left: -3px;
 }
+
+.md-xs {
+  line-height: 40px !important;
+  width: 23px !important;
+  height: 23px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 3px 2px !important;
+}
+
+.md-xs md-icon {
+  top: -2px;
+  position: relative;
+  left: -2px;
+}
