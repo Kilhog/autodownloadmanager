@@ -170,3 +170,7 @@ body > div {
   position: relative;
   left: -2px;
 }
+
+a:focus {
+  outline: 0;
+}
