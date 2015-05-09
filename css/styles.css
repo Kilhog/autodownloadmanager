@@ -45,6 +45,10 @@ body > div {
   margin-bottom: 20px;
 }
 
+.episode:HOVER{
+    cursor: pointer;
+}
+
 #close-window-button:HOVER {
   background-color: rgba(207, 0, 0, 0.78);
 }

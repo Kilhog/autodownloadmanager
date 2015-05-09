@@ -23,7 +23,7 @@
             </h4>
             <div layout="row" layout-wrap style="margin-bottom: 2px">
               <div flex="50" ng-repeat="unseen in show.unseen" class="prevent-line-break">
-                  <md-content ng-click="showListBottomSheet($parent.$index, $index, unseen)">
+                  <md-content class="episode" ng-click="showListBottomSheet($parent.$index, $index, unseen)">
                       <span class="season-and-episode-identifier">S{{unseen.season | numberFixedLen:2}}E{{unseen.episode | numberFixedLen:2}}</span> - {{unseen.title}}
                   </md-content>
               </div>

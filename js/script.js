@@ -327,9 +327,14 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
           templateUrl: 'partial/bottom-sheet-list-template.html',
           controller: 'ListBottomSheetCtrl'
         }).then(function(clickedAction) {
-            alert("toto");
             if(clickedAction == "seen"){
-              seenEpisode($parent.$index, $index)
+              $scope.seenEpisode($index, $index2);
+            }
+            if(clickedAction == "download"){
+              $scope.downloadEpisode(episode);
+            }
+            if(clickedAction == "str"){
+              $scope.downloadStr(episode);
             }
         });
       };

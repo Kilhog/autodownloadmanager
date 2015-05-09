@@ -1,6 +1,12 @@
 app.controller('ListBottomSheetCtrl', function($scope, $mdBottomSheet) {
-  $scope.SeenEpisode = function (){
+  $scope.seenEpisode = function (){
     $mdBottomSheet.hide("seen");
+  };
+  $scope.downloadEpisode = function (){
+    $mdBottomSheet.hide("download");
+  };
+  $scope.downloadStr = function (){
+    $mdBottomSheet.hide("str");
   };
 
 });
