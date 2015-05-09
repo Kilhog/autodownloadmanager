@@ -325,7 +325,12 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         $scope.alert = '';
         $mdBottomSheet.show({
           templateUrl: 'partial/bottom-sheet-list-template.html',
-          controller: 'ListBottomSheetCtrl'
+          controller: 'ListBottomSheetCtrl',
+          resolve: {
+            episode : function() {
+              return episode;
+            }
+          }
         }).then(function(clickedAction) {
             if(clickedAction == "seen"){
               $scope.seenEpisode($index, $index2);

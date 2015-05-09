@@ -20,8 +20,8 @@
             <h4>
               <a style="cursor: pointer" ng-click="changeTarget($event, show.title)">> {{show.title}}</a>
             </h4>
-            <ul ng-click="showListBottomSheet($parent.$index, $index, unseen)" style="-webkit-columns: 2;margin-bottom: 2px;margin-left: 25px;">
-              <li class="episode" ng-repeat="unseen in show.unseen" class="prevent-line-break" >
+            <ul style="-webkit-columns: 2;margin-bottom: 2px;margin-left: 25px;">
+              <li ng-click="showListBottomSheet($parent.$index, $index, unseen)" class="episode" ng-repeat="unseen in show.unseen" class="prevent-line-break" >
                       <span  class="season-and-episode-identifier">S{{unseen.season | numberFixedLen:2}}E{{unseen.episode | numberFixedLen:2}}</span> - {{unseen.title}}
               </li>
               </ul>

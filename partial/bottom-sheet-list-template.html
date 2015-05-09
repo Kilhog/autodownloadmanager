@@ -1,5 +1,5 @@
 <md-bottom-sheet class="md-list md-has-header">
-    <md-subheader>episode</md-subheader>
+    <md-subheader>S{{episode.season | numberFixedLen:2}}E{{episode.episode | numberFixedLen:2}} - {{episode.title}}</md-subheader>
     <md-list>
         <md-list-item>
             <md-button class="md-list-item-content" ng-click="seenEpisode()">
