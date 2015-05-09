@@ -23,6 +23,7 @@ body > div {
 /* Global UI */
 .i-app {
   color: #bcc726;
+
 }
 
 .i-default {
@@ -70,15 +71,18 @@ body > div {
 
 /* Couleur icon Manager */
 .i-see {
-  color: #ccdb3b;
+  color: #ccdb3b !important;
+  margin-top: 10px;
 }
 
 .i-download {
-  color: #bcc726;
+  color: #bcc726 !important;
+  margin-top: 10px;
 }
 
 .i-str {
-  color: #95a020;
+  color: #95a020 !important;
+  margin-top: 10px;
 }
 
 /* Saison et titre épisode */
