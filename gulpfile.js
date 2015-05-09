@@ -20,7 +20,8 @@ var js = [
   './bower_components/angular-material/angular-material.min.js',
   './node_modules/angular-ui-router/release/angular-ui-router.min.js',
   './js/script.js',
-  './js/modal_change_target.js'
+  './js/modal_change_target.js',
+  './js/episode_bottom_sheet.js'
 ];
 
 function launch() {

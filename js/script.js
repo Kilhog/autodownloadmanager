@@ -55,8 +55,8 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     }
     return num;
   };
-}).controller('mainCtrl', ["$scope", "$timeout", "$filter", "$mdToast", "$mdDialog",
-  function ($scope, $timeout, $filter, $mdToast, $mdDialog) {
+}).controller('mainCtrl', ["$scope", "$timeout", "$filter", "$mdToast", "$mdDialog", "$mdBottomSheet",
+  function ($scope, $timeout, $filter, $mdToast, $mdDialog, $mdBottomSheet) {
 
     $scope.user = $scope.user || {};
     $scope.pathDownloadFolder = $scope.pathDownloadFolder || "";
@@ -319,6 +319,20 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         justOpen = false;
       }
     }, 0);
+
+
+      $scope.showListBottomSheet = function($index, $index2, episode) {
+        $scope.alert = '';
+        $mdBottomSheet.show({
+          templateUrl: 'partial/bottom-sheet-list-template.html',
+          controller: 'ListBottomSheetCtrl'
+        }).then(function(clickedAction) {
+            alert("toto");
+            if(clickedAction == "seen"){
+              seenEpisode($parent.$index, $index)
+            }
+        });
+      };
 
 
   }]).controller('TabsCtrl', ['$scope', '$location', function($scope, $location) {
