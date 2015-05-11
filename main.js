@@ -25,13 +25,17 @@ app.on('ready', function() {
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
+  ipc.on('minimize-window', function(event) {
+    mainWindow.minimize();
+  });
+
   ipc.on('button-close-window', function(event) {
     mainWindow.close();
   });
 
   ipc.on('hide-window', function(event) {
     mainWindow.hide();
-  })
+  });
 
     ipc.on('dialog-selection-dossier', function(event, arg){
         var res = dialog.showOpenDialog({ properties: [ 'openDirectory', 'multiSelections' ], title: 'Choisir un dossier pour les sous-titres'});

@@ -9,6 +9,7 @@ var apiAddicted = require("./dist/js/api-addicted");
 var ipc = require('ipc');
 var justOpen = true;
 var buttonCloseIsBind = false;
+var buttonMinimizeIsBind = false;
 
 var app = angular.module('adm-app', ["ngMaterial", "ui.router"]);
 
@@ -121,6 +122,14 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         });
         buttonCloseIsBind = true;
       }
+
+      if(!buttonMinimizeIsBind){
+        $('#reduce-window-button').click(function(){
+          $scope.minimizeWindow();
+        });
+
+        buttonMinimizeIsBind = true;
+      }
     });
 
     $scope.closeWindow = function() {
@@ -128,6 +137,10 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       apiBT.disconnectToApi(function () {
         ipc.send('button-close-window');
       });
+    };
+
+    $scope.minimizeWindow = function() {
+      ipc.send('minimize-window');
     };
 
     $scope.synchroAll = function() {
