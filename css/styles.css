@@ -178,3 +178,11 @@ a:focus {
 md-dialog-content {
   overflow: visible !important;
 }
+
+.ajust-height {
+  min-height: 29px;
+}
+
+.ajust-text-height {
+  padding-top: 6px;
+}
