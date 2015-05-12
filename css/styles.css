@@ -174,3 +174,7 @@ body > div {
 a:focus {
   outline: 0;
 }
+
+md-dialog-content {
+  overflow: visible !important;
+}
