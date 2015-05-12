@@ -20,6 +20,11 @@ body > div {
   white-space: nowrap;
 }
 
+.episode-name-link {
+  outline: 0 none;
+  cursor: pointer;
+}
+
 /* Global UI */
 .i-app {
   color: #bcc726;
