@@ -316,7 +316,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   $scope.changeQuality = function() {
     apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function(err, rows){});
     apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function(err, rows) {
-      Notification.success('Changement enregistré');
+      $scope.showSimpleToast('Changement enregistré');
     });
   };
 
