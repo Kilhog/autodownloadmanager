@@ -76,9 +76,9 @@
                             <div layout="column">
                                 <md-input-container>
                                     <label>Dossier</label>
-                                    <input ng-model="pathDownloadFolder" type="text">
+                                    <input readonly ng-model="pathDownloadFolder" type="text">
                                 </md-input-container>
-                                <md-button class="btn-center md-raised md-accent">Choisir son dossier</md-button>
+                                <md-button ng-click="selectStrFolder()" class="btn-center md-raised md-accent">Choisir son dossier</md-button>
                             </div>
                         </form>
                     </md-content>
