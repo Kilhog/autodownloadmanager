@@ -345,12 +345,12 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
 
     ipc.on('dialog-selection-dossier-reply', function (arg) {
       var strPath = arg[0];
+      $scope.pathDownloadFolder = strPath;
+      $scope.$apply();
       //Stockage de ma variable
       apiDB.query('DELETE FROM params WHERE nom = ?', ['strFolder'], function (err, rows) {
         apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['strFolder', strPath], function (err, rows) {
           $scope.showSimpleToast('Dossier sous titres modifié');
-          $scope.pathDownloadFolder = strPath;
-          $scope.$apply();
         });
       });
     });
