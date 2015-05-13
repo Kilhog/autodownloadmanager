@@ -15,9 +15,9 @@ var app = angular.module('adm-app', ["ngMaterial", "ui.router"]);
 
 app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
-    $mdThemingProvider.theme('default').primaryPalette('grey',{
+    $mdThemingProvider.theme('default').primaryPalette('grey', {
       'default': '800'
-    }).accentPalette('lime',{
+    }).accentPalette('lime', {
       'default': '500'
     });
 
@@ -42,7 +42,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         url: "/manager",
         templateUrl: 'partial/manager.html'
       });
-    }
+  }
 ]).filter('numberFixedLen', function () {
   return function (n, len) {
     var num = parseInt(n, 10);
@@ -65,7 +65,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     $scope.episodesIncoming = $scope.episodesIncoming || {};
     $scope.transmission = $scope.transmission || {obj: null};
 
-    $scope.showSimpleToast = function(msg) {
+    $scope.showSimpleToast = function (msg) {
       $mdToast.show(
         $mdToast.simple()
           .content(msg)
@@ -74,14 +74,14 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       );
     };
 
-      //Permet de personaliser les Toast (type error pour toast a fond rouge et success pour toast a fond vert)
-      $scope.displayCustomToast = function(type, msg) {
+    //Permet de personaliser les Toast (type error pour toast a fond rouge et success pour toast a fond vert)
+    $scope.displayCustomToast = function (type, msg) {
 
-          $mdToast.show({
-              template: '<md-toast class="md-toast ' + type +'">' + msg + '</md-toast>',
-              position: 'bottom right'
-          });
-      };
+      $mdToast.show({
+        template: '<md-toast class="md-toast ' + type + '">' + msg + '</md-toast>',
+        position: 'bottom right'
+      });
+    };
 
     var apiDB = new apiDblite.apiDblite();
     var apiTR = new apiTransmission.apiTransmission($scope, apiDB);
@@ -92,8 +92,8 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     $scope.episodeQuality = $scope.episodeQuality || getEpisodeQuality();
 
     function getEpisodeQuality() {
-      apiDB.query('SELECT * FROM params WHERE nom = ?', ['episodeQuality'], function(err, rows) {
-        if(rows.length > 0) {
+      apiDB.query('SELECT * FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
+        if (rows.length > 0) {
           $scope.episodeQuality = rows[0][2];
           $scope.$apply();
         }
@@ -115,16 +115,16 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     };
 
 
-    $(document).ready(function(){
-      if(!buttonCloseIsBind) {
-        $('#close-window-button').click(function(){
+    $(document).ready(function () {
+      if (!buttonCloseIsBind) {
+        $('#close-window-button').click(function () {
           $scope.closeWindow();
         });
         buttonCloseIsBind = true;
       }
 
-      if(!buttonMinimizeIsBind){
-        $('#reduce-window-button').click(function(){
+      if (!buttonMinimizeIsBind) {
+        $('#reduce-window-button').click(function () {
           $scope.minimizeWindow();
         });
 
@@ -132,37 +132,37 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       }
     });
 
-    $scope.closeWindow = function() {
+    $scope.closeWindow = function () {
       ipc.send('hide-window');
       apiBT.disconnectToApi(function () {
         ipc.send('button-close-window');
       });
     };
 
-    $scope.minimizeWindow = function() {
+    $scope.minimizeWindow = function () {
       ipc.send('minimize-window');
     };
 
-    $scope.synchroAll = function() {
+    $scope.synchroAll = function () {
       $scope.synchroEpisodesUnseen();
       $scope.synchroEpisodesIncoming();
     };
 
     $scope.synchroEpisodesUnseen = function () {
       $scope.synchroInProgress = true;
-      apiBT.synchroEpisodesUnseen(function() {
-        $.each($scope.episodesUnseen.shows, function(index, elm) {
-          apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [elm.title], function(err, data) {
-            if(data.length > 0) {
-              if(data[0][2] != elm.title) {
+      apiBT.synchroEpisodesUnseen(function () {
+        $.each($scope.episodesUnseen.shows, function (index, elm) {
+          apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [elm.title], function (err, data) {
+            if (data.length > 0) {
+              if (data[0][2] != elm.title) {
                 elm.torrentName = data[0][2];
               }
             }
           });
 
-          apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [elm.title], function(err, data) {
-            if(data.length > 0) {
-              if(data[0][2] != elm.title) {
+          apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [elm.title], function (err, data) {
+            if (data.length > 0) {
+              if (data[0][2] != elm.title) {
                 elm.subName = data[0][2];
               }
             }
@@ -172,16 +172,16 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       });
     };
 
-    $scope.synchroEpisodesIncoming = function() {
-        apiBT.synchroEpisodesIncoming(function() {
+    $scope.synchroEpisodesIncoming = function () {
+      apiBT.synchroEpisodesIncoming(function () {
       });
     };
 
-    $scope.downloadEpisode = function(episode) {
-      apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [episode.show.title], function(err, data) {
+    $scope.downloadEpisode = function (episode) {
+      apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [episode.show.title], function (err, data) {
         var target = episode.show.title;
 
-        if(data.length > 0) {
+        if (data.length > 0) {
           target = data[0][2];
         }
 
@@ -190,11 +190,11 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       });
     };
 
-    $scope.downloadStr = function(episode) {
-      apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [episode.show.title], function(err, data) {
+    $scope.downloadStr = function (episode) {
+      apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [episode.show.title], function (err, data) {
         var target = episode.show.title;
 
-        if(data.length > 0) {
+        if (data.length > 0) {
           target = data[0][2];
         }
 
@@ -212,20 +212,20 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       });
     };
 
-    $scope.seenEpisode = function(index, index2) {
-      apiBT.seenEpisode($scope.episodesUnseen.shows[index].unseen[index2], function(){
+    $scope.seenEpisode = function (index, index2) {
+      apiBT.seenEpisode($scope.episodesUnseen.shows[index].unseen[index2], function () {
         $scope.episodesUnseen.shows[index].unseen.splice(index2, 1);
         $scope.$apply();
       });
     };
 
-    $scope.connectTransmission = function(host, port) {
-      apiTR.saveAccess(host, port, function(){
+    $scope.connectTransmission = function (host, port) {
+      apiTR.saveAccess(host, port, function () {
         apiTR.connectToApi();
       });
     };
 
-    $scope.disconnectTransmission = function() {
+    $scope.disconnectTransmission = function () {
       apiTR.disconnectToApi();
     };
 
@@ -240,29 +240,29 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
           origin: function () {
             return origin;
           },
-          apiDB: function() {
+          apiDB: function () {
             return apiDB;
           }
         }
       })
-      .then(function(allName) {
+        .then(function (allName) {
           apiST.createNewTarget(origin, allName.torrentName);
           apiAD.createNewTarget(origin, allName.subName);
-        }, function() {
+        }, function () {
 
-      });
+        });
     };
 
-    $scope.generateTooltipTitle = function(torrentName, subName) {
+    $scope.generateTooltipTitle = function (torrentName, subName) {
       var tooltip = "";
-      if(torrentName) {
-        if(torrentName.trim() != '') {
+      if (torrentName) {
+        if (torrentName.trim() != '') {
           tooltip = '<div class="prevent-line-break">Torrent : ' + torrentName + '</div>'
         }
       }
 
-      if(subName) {
-        if(subName.trim() != '') {
+      if (subName) {
+        if (subName.trim() != '') {
           tooltip += '<div class="prevent-line-break">Sub : ' + subName + '</div>'
         }
       }
@@ -270,60 +270,47 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       return tooltip;
     };
 
-    $scope.changeQuality = function() {
-      apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function(err, rows){});
-      apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function(err, rows) {
+    $scope.changeQuality = function () {
+      apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
+      });
+      apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function (err, rows) {
         $scope.showSimpleToast('Changement enregistré');
       });
     };
 
-    $scope.selectStrFolder = function(func){
-
-        ipc.send('dialog-selection-dossier');
-        ipc.on('dialog-selection-dossier-reply', function (arg) {
-            var strPath = arg[0];
-            //Stockage de ma variable
-            apiDB.query('DELETE FROM params WHERE nom = ?', ['strFolder'], function(err, rows){
-                apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['strFolder', strPath], function(err, rows) {
-                    Notification.success('Dossier sous titres modifié');
-                    $scope.pathDownloadFolder = strPath;
-                    $scope.$apply();
-                    if(func) {
-                      func();
-                    }
-                });
-            });
-        });
+    $scope.selectStrFolder = function (func) {
+      ipc.send('dialog-selection-dossier');
     };
 
     $scope.checkStrFolderPath = function (func) {
-        var strPath = "";
-        apiDB.query('SELECT value FROM params WHERE nom = ?', ['strFolder'], function(err, rows){
-            if(rows.length > 0) {
-                strPath = rows[0][0];
-                $scope.pathDownloadFolder = strPath;
-                $scope.$apply();
-                if(func) {
-                  func();
-                }
-            }
-            else{
-                $scope.selectStrFolder(func);
-            }
-        });
+      var strPath = "";
+      apiDB.query('SELECT value FROM params WHERE nom = ?', ['strFolder'], function (err, rows) {
+        if (rows.length > 0) {
+          strPath = rows[0][0];
+          $scope.pathDownloadFolder = strPath;
+          $scope.$apply();
+          if (func) {
+            func();
+          }
+        }
+        else {
+          $scope.selectStrFolder(func);
+        }
+      });
     };
 
-  $scope.changeQuality = function() {
-    apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function(err, rows){});
-    apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function(err, rows) {
-      $scope.showSimpleToast('Changement enregistré');
-    });
-  };
+    $scope.changeQuality = function () {
+      apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
+      });
+      apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function (err, rows) {
+        $scope.showSimpleToast('Changement enregistré');
+      });
+    };
 
-    $timeout(function(){
-      if(!$scope.user.token && justOpen) {
-        apiBT.connectToApi(function() {
-          if(!$scope.synchroInProgress) {
+    $timeout(function () {
+      if (!$scope.user.token && justOpen) {
+        apiBT.connectToApi(function () {
+          if (!$scope.synchroInProgress) {
             $scope.synchroEpisodesUnseen();
           }
           $scope.checkStrFolderPath();
@@ -333,36 +320,49 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       }
     }, 0);
 
-
-      $scope.showListBottomSheet = function($index, $index2, episode) {
-        $scope.alert = '';
-        $mdBottomSheet.show({
-          templateUrl: 'partial/bottom-sheet-list-template.html',
-          controller: 'ListBottomSheetCtrl',
-          resolve: {
-            episode : function() {
-              return episode;
-            }
+    $scope.showListBottomSheet = function ($index, $index2, episode) {
+      $scope.alert = '';
+      $mdBottomSheet.show({
+        templateUrl: 'partial/bottom-sheet-list-template.html',
+        controller: 'ListBottomSheetCtrl',
+        resolve: {
+          episode: function () {
+            return episode;
           }
-        }).then(function(clickedAction) {
-            if(clickedAction == "seen"){
-              $scope.seenEpisode($index, $index2);
-            }
-            if(clickedAction == "download"){
-              $scope.downloadEpisode(episode);
-            }
-            if(clickedAction == "str"){
-              $scope.downloadStr(episode);
-            }
+        }
+      }).then(function (clickedAction) {
+        if (clickedAction == "seen") {
+          $scope.seenEpisode($index, $index2);
+        }
+        if (clickedAction == "download") {
+          $scope.downloadEpisode(episode);
+        }
+        if (clickedAction == "str") {
+          $scope.downloadStr(episode);
+        }
+      });
+    };
+
+    ipc.on('dialog-selection-dossier-reply', function (arg) {
+      var strPath = arg[0];
+      //Stockage de ma variable
+      apiDB.query('DELETE FROM params WHERE nom = ?', ['strFolder'], function (err, rows) {
+        apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['strFolder', strPath], function (err, rows) {
+          $scope.showSimpleToast('Dossier sous titres modifié');
+          $scope.pathDownloadFolder = strPath;
+          $scope.$apply();
         });
-      };
-
-
-  }]).controller('TabsCtrl', ['$scope', '$location', function($scope, $location) {
-  $scope.$watch('selectedTabIndex', function(current, old) {
-    switch(current) {
-      case 0: $location.url("/main/manager"); break;
-      case 1: $location.url("/main/reglages"); break;
+      });
+    });
+  }]).controller('TabsCtrl', ['$scope', '$location', function ($scope, $location) {
+  $scope.$watch('selectedTabIndex', function (current, old) {
+    switch (current) {
+      case 0:
+        $location.url("/main/manager");
+        break;
+      case 1:
+        $location.url("/main/reglages");
+        break;
     }
   });
 }]);
