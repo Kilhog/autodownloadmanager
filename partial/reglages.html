@@ -32,7 +32,7 @@
                     </md-content>
                 </md-tab>
                 <md-tab label="Transmission">
-                    <md-content ng-if="!transmission.obj" layout-padding>
+                    <md-content ng-if="!transmission_obj" layout-padding>
                         <form>
                             <div layout layout-sm="column">
                                 <md-input-container flex>
@@ -50,7 +50,7 @@
                         </form>
                     </md-content>
 
-                    <md-content ng-if="transmission.obj" layout-padding>
+                    <md-content ng-if="transmission_obj" layout-padding>
                         <br />
                         <i class="i-default fa fa-check-circle"></i> Vous etes connecté à Transmission <br/><br/>
                         <div layout="row" layout-align="center">

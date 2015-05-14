@@ -8,8 +8,6 @@ var apiAddicted = require("./dist/js/api-addicted");
 
 var ipc = require('ipc');
 var justOpen = true;
-var buttonCloseIsBind = false;
-var buttonMinimizeIsBind = false;
 
 var app = angular.module('adm-app', ["ngMaterial", "ui.router"]);
 
@@ -31,13 +29,13 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         templateUrl: 'partial/main.html'
       })
       .state("main.reglages", {
-        controller: 'mainCtrl',
+        controller: 'reglagesCtrl',
         parent: 'main',
         url: "/reglages",
         templateUrl: 'partial/reglages.html'
       })
       .state("main.manager", {
-        controller: 'mainCtrl',
+        controller: 'managerCtrl',
         parent: 'main',
         url: "/manager",
         templateUrl: 'partial/manager.html'
@@ -56,39 +54,146 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     }
     return num;
   };
-}).controller('mainCtrl', ["$scope", "$timeout", "$filter", "$mdToast", "$mdDialog", "$mdBottomSheet",
-  function ($scope, $timeout, $filter, $mdToast, $mdDialog, $mdBottomSheet) {
-
-    $scope.user = $scope.user || {};
-    $scope.pathDownloadFolder = $scope.pathDownloadFolder || "";
-    $scope.episodesUnseen = $scope.episodesUnseen || {};
-    $scope.episodesIncoming = $scope.episodesIncoming || {};
-    $scope.transmission = $scope.transmission || {obj: null};
-
-    $scope.showSimpleToast = function (msg) {
-      $mdToast.show(
-        $mdToast.simple()
-          .content(msg)
-          .position('bottom right')
-          .hideDelay(3000)
-      );
-    };
-
-    //Permet de personaliser les Toast (type error pour toast a fond rouge et success pour toast a fond vert)
-    $scope.displayCustomToast = function (type, msg) {
-
+}).factory('persistContainer', function() {
+  return {};
+}).factory('toastFact', ["$mdToast", function($mdToast) {
+  return {
+    show: function(msg, type) {
       $mdToast.show({
-        template: '<md-toast class="md-toast ' + type + '">' + msg + '</md-toast>',
-        position: 'bottom right'
+        template: '<md-toast class="md-toast ' + (type || "") + '">' + msg + '</md-toast>',
+        position: 'bottom right',
+        hideDelay: 3000
+      });
+    }
+  };
+}]).controller('mainCtrl', ["$scope", "persistContainer",
+  function ($scope, persistContainer) {
+
+    /*
+      Bind boutons d'actions de la fenetre
+     */
+    $(document).ready(function () {
+      $('#close-window-button').click(function () {
+        $scope.closeWindow();
+      });
+
+      $('#reduce-window-button').click(function () {
+        $scope.minimizeWindow();
+      });
+    });
+
+    $scope.closeWindow = function () {
+      ipc.send('hide-window');
+      persistContainer.apiBT.disconnectToApi(function () {
+        ipc.send('button-close-window');
       });
     };
 
-    var apiDB = new apiDblite.apiDblite();
-    var apiTR = new apiTransmission.apiTransmission($scope, apiDB);
-    var apiBT = new apiBetaseries.apiBetaseries(apiDB, $scope);
-    var apiST = new apiGetStrike.apiGetStrike($scope, apiTR, apiDB);
+    $scope.minimizeWindow = function () {
+      ipc.send('minimize-window');
+    };
+
+    /*
+      Instanciation des api
+     */
+    persistContainer.apiDB = new apiDblite.apiDblite();
+    persistContainer.apiTR = new apiTransmission.apiTransmission(persistContainer.apiDB);
+    persistContainer.apiBT = new apiBetaseries.apiBetaseries(persistContainer.apiDB);
+
+  }]).controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer",
+  function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer) {
+
+    /**
+     * Permet d'afficher des Toasts
+     * @param msg - Message à afficher
+     * @param type 'error' || 'success' || undefined
+     */
+    $scope.displayToast = function (msg, type) {
+      toastFact.show(msg, type);
+    };
+
+    /*
+      Transmission
+     */
+
+    $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
+
+    $scope.disconnectTransmission = function () {
+      persistContainer.apiTR.disconnectToApi(function() {
+        $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
+      });
+    };
+
+    $scope.connectTransmission = function (host, port) {
+      persistContainer.apiTR.saveAccess(host, port, function () {
+        persistContainer.apiTR.connectToApi(function(res) {
+          $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
+          if(res) {
+            $scope.displayToast('Connecté à Transmission');
+          } else {
+            $scope.displayToast('Erreur lors de la connection à Transmission', 'error');
+          }
+          $scope.$apply();
+        });
+      });
+    };
+
+    /*
+      BetaSeries
+     */
+
+    $scope.user = persistContainer.apiBT.user;
+
+    $scope.connectBetaseries = function (nom, password) {
+      persistContainer.apiBT.saveAccess(nom, password, function () {
+        persistContainer.apiBT.connectToApi(function(){
+          $scope.user = persistContainer.apiBT.user;
+
+          if(persistContainer.apiBT.user.token) {
+            $scope.displayToast('Connecté à Betaseries');
+          } else {
+            $scope.displayToast('Identifiants Betaseries incorrect', 'error');
+          }
+
+          $scope.$apply();
+        });
+      });
+    };
+
+    $scope.disconnectBetaseries = function () {
+      persistContainer.apiBT.disconnectToApi(function(){
+        $scope.user = persistContainer.apiBT.user;
+        $scope.$apply();
+      });
+    };
+
+
+  }]).controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer",
+  function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer) {
+
+    $scope.pathDownloadFolder = $scope.pathDownloadFolder || "";
+    $scope.episodesIncoming = $scope.episodesIncoming || {};
+
+    /**
+     * Permet d'afficher des Toasts
+     * @param msg - Message à afficher
+     * @param type 'error' || 'success' || undefined
+     */
+    $scope.displayToast = function (msg, type) {
+      toastFact.show(msg, type);
+    };
+
+    var apiDB = persistContainer.apiDB;
+    var apiTR = persistContainer.apiTR;
+    var apiBT = persistContainer.apiBT;
+    var apiGS = new apiGetStrike.apiGetStrike($scope, apiTR, apiDB);
     var apiAD = new apiAddicted.apiAddicted($scope, apiDB);
 
+    persistContainer.apiGS = apiGS;
+    persistContainer.apiAD = apiAD;
+
+    $scope.user = apiBT.user;
+    $scope.episodesUnseen = apiBT.episodesUnseen;
     $scope.episodeQuality = $scope.episodeQuality || getEpisodeQuality();
 
     function getEpisodeQuality() {
@@ -104,45 +209,6 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       return serie + " S" + $filter('numberFixedLen')(saison, 2) + "E" + $filter('numberFixedLen')(episode, 2)
     }
 
-    $scope.connectBetaseries = function (nom, password) {
-      apiBT.saveAccess(nom, password, function () {
-        apiBT.connectToApi();
-      });
-    };
-
-    $scope.disconnectBetaseries = function () {
-      apiBT.disconnectToApi();
-    };
-
-
-    $(document).ready(function () {
-      if (!buttonCloseIsBind) {
-        $('#close-window-button').click(function () {
-          $scope.closeWindow();
-        });
-        buttonCloseIsBind = true;
-      }
-
-      if (!buttonMinimizeIsBind) {
-        $('#reduce-window-button').click(function () {
-          $scope.minimizeWindow();
-        });
-
-        buttonMinimizeIsBind = true;
-      }
-    });
-
-    $scope.closeWindow = function () {
-      ipc.send('hide-window');
-      apiBT.disconnectToApi(function () {
-        ipc.send('button-close-window');
-      });
-    };
-
-    $scope.minimizeWindow = function () {
-      ipc.send('minimize-window');
-    };
-
     $scope.synchroAll = function () {
       $scope.synchroEpisodesUnseen();
       $scope.synchroEpisodesIncoming();
@@ -150,25 +216,35 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
 
     $scope.synchroEpisodesUnseen = function () {
       $scope.synchroInProgress = true;
-      apiBT.synchroEpisodesUnseen(function () {
-        $.each($scope.episodesUnseen.shows, function (index, elm) {
-          apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [elm.title], function (err, data) {
-            if (data.length > 0) {
-              if (data[0][2] != elm.title) {
-                elm.torrentName = data[0][2];
-              }
-            }
-          });
+      apiBT.synchroEpisodesUnseen(function (res) {
+        $scope.episodesUnseen = apiBT.episodesUnseen;
+        $scope.$apply();
+        if(res) {
+          $scope.displayToast('Synchronisation terminée')
 
-          apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [elm.title], function (err, data) {
-            if (data.length > 0) {
-              if (data[0][2] != elm.title) {
-                elm.subName = data[0][2];
+          $.each($scope.episodesUnseen.shows, function (index, elm) {
+            apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [elm.title], function (err, data) {
+              if (data.length > 0) {
+                if (data[0][2] != elm.title) {
+                  elm.torrentName = data[0][2];
+                }
               }
-            }
+            });
+
+            apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [elm.title], function (err, data) {
+              if (data.length > 0) {
+                if (data[0][2] != elm.title) {
+                  elm.subName = data[0][2];
+                }
+              }
+            });
           });
-        });
+        } else {
+          $scope.displayToast('Synchronisation échouée')
+        }
+
         $scope.synchroInProgress = false;
+        $scope.$apply();
       });
     };
 
@@ -186,7 +262,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         }
 
         var name = gen_name_episode(target, episode.season, episode.episode);
-        apiST.searchAndDownload(name);
+        apiGS.searchAndDownload(name);
       });
     };
 
@@ -203,10 +279,10 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         apiAD.search(name, function (res) {
           if (res != '') {
             apiAD.downloadStr(res, name.trim(), function () {
-              $scope.showSimpleToast('Sous-titre récupéré');
+              $scope.displayToast('Sous-titre récupéré');
             });
           } else {
-            $scope.showSimpleToast('Fail addicted');
+            $scope.displayToast('Fail addicted');
           }
         });
       });
@@ -217,16 +293,6 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         $scope.episodesUnseen.shows[index].unseen.splice(index2, 1);
         $scope.$apply();
       });
-    };
-
-    $scope.connectTransmission = function (host, port) {
-      apiTR.saveAccess(host, port, function () {
-        apiTR.connectToApi();
-      });
-    };
-
-    $scope.disconnectTransmission = function () {
-      apiTR.disconnectToApi();
     };
 
     $scope.changeTarget = function (ev, origin) {
@@ -246,7 +312,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         }
       })
         .then(function (allName) {
-          apiST.createNewTarget(origin, allName.torrentName);
+          apiGS.createNewTarget(origin, allName.torrentName);
           apiAD.createNewTarget(origin, allName.subName);
         }, function () {
 
@@ -274,7 +340,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
       });
       apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function (err, rows) {
-        $scope.showSimpleToast('Changement enregistré');
+        $scope.displayToast('Changement enregistré');
       });
     };
 
@@ -303,19 +369,36 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
       });
       apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function (err, rows) {
-        $scope.showSimpleToast('Changement enregistré');
+        $scope.displayToast('Changement enregistré');
       });
     };
 
     $timeout(function () {
       if (!$scope.user.token && justOpen) {
-        apiBT.connectToApi(function () {
+        apiBT.connectToApi(function (res) {
+          $scope.user = apiBT.user;
+
+          if(apiBT.user.token) {
+            $scope.displayToast('Connecté à Betaseries');
+          } else {
+            $scope.displayToast('Identifiants Betaseries incorrect', 'error');
+          }
+
+          $scope.$apply();
+
           if (!$scope.synchroInProgress) {
             $scope.synchroEpisodesUnseen();
           }
           $scope.checkStrFolderPath();
         });
-        apiTR.connectToApi();
+        apiTR.connectToApi(function(res) {
+          if(res) {
+            $scope.displayToast('Connecté à Transmission');
+          } else {
+            $scope.displayToast('Erreur lors de la connection à Transmission', 'error');
+          }
+          $scope.$apply();
+        });
         justOpen = false;
       }
     }, 0);
@@ -350,7 +433,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       //Stockage de ma variable
       apiDB.query('DELETE FROM params WHERE nom = ?', ['strFolder'], function (err, rows) {
         apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['strFolder', strPath], function (err, rows) {
-          $scope.showSimpleToast('Dossier sous titres modifié');
+          $scope.displayToast('Dossier sous titres modifié');
         });
       });
     });

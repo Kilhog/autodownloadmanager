@@ -3,14 +3,14 @@
   var fs = require("fs");
   var Transmission = require('transmission');
 
-  function apiTransmission($scope, db) {
-    this.scope = $scope;
+  function apiTransmission(db) {
     this.db = db;
+    this.transmission_obj = null;
   }
 
   apiTransmission.prototype.addMagnet = function(url, func) {
     var self = this;
-    self.scope.transmission.obj.addUrl(url, func);
+    self.transmission_obj.addUrl(url, func);
   };
 
   apiTransmission.prototype.connectToApi = function(func) {
@@ -20,22 +20,20 @@
       if(rows.length > 0) {
         var TRaccess = JSON.parse(rows[0][2]);
 
-        self.scope.transmission.obj = new Transmission(TRaccess);
-        self.scope.transmission.obj.session(function(err, arg) {
+        self.transmission_obj = new Transmission(TRaccess);
+        self.transmission_obj.session(function(err, arg) {
           if(err) {
-            delete self.scope.transmission.obj;
+            self.transmission_obj = null;
           }
 
-          self.scope.$apply();
+          var res = false;
 
-          if(self.scope.transmission.obj) {
-            self.scope.displayCustomToast('success', 'Connecté à Transmission');
-          } else {
-            self.scope.displayCustomToast('error','Erreur lors de la connection à Transmission');
+          if(self.transmission_obj) {
+            res = true;
           }
 
           if(func) {
-            func();
+            func(res);
           }
         });
       }
@@ -45,7 +43,7 @@
   apiTransmission.prototype.disconnectToApi = function(func) {
     var self = this;
 
-    delete self.scope.transmission.obj;
+    self.transmission_obj = null;
 
     if(func) {
       func();

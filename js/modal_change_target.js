@@ -1,7 +1,7 @@
 'use strict';
 
 
-app.controller('ModalChangeTargetCtrl', ["$scope", "$timeout", "$filter","$mdToast", "$mdDialog", "origin", "apiDB" ,function ($scope, $timeout, $filter, $mdToast, $mdDialog, origin, apiDB) {
+app.controller('ModalChangeTargetCtrl', ["$scope", "$timeout", "$filter", "$mdDialog", "origin", "apiDB" ,function ($scope, $timeout, $filter, $mdDialog, origin, apiDB) {
   $scope.origin = origin;
 
   $scope.torrentname = "";

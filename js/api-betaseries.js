@@ -53,9 +53,10 @@
     req.end();
   }
 
-  function apiBetaseries(db, $scope) {
+  function apiBetaseries(db) {
     this.db = db;
-    this.scope = $scope;
+    this.user = {};
+    this.episodesUnseen = {}
   }
 
   apiBetaseries.prototype.connectToApi = function(func) {
@@ -70,18 +71,9 @@
           'password': md5(BTaccess.password)
         }, function(data) {
           if(data.errors.length == 0) {
-            self.scope.user['hash'] = data.hash;
-            self.scope.user['token'] = data.token;
-            self.scope.user['user'] = data.user;
-            self.scope.$apply();
-
-            if(self.scope.user.token) {
-              self.scope.displayCustomToast('success', 'Connecté à Betaseries');
-            } else {
-              self.scope.displayCustomToast('error', 'Identifiants Betaseries incorrect');
-            }
-          } else {
-            self.scope.displayCustomToast('error', 'Identifiants Betaseries incorrect');
+            self.user['hash'] = data.hash;
+            self.user['token'] = data.token;
+            self.user['user'] = data.user;
           }
 
           if(func) {
@@ -96,14 +88,14 @@
     var self = this;
 
     callAPI('/members/destroy', 'POST', {}, function(data) {
-      delete self.scope.user.hash;
-      delete self.scope.user.token;
-      delete self.scope.user.user;
-      self.scope.$apply();
+      delete self.user.hash;
+      delete self.user.token;
+      delete self.user.user;
+
       if(func) {
         func()
       }
-    }, function(){
+    }, function() {
       if(func) {
         func()
       }
@@ -127,17 +119,17 @@
 
   apiBetaseries.prototype.synchroEpisodesUnseen = function(func) {
     var self = this;
-    callAPI('/episodes/list', 'GET', {token: self.scope.user.token}, function(data) {
+    callAPI('/episodes/list', 'GET', {token: self.user.token}, function(data) {
       if(data.errors.length == 0) {
-        delete self.scope.episodesUnseen.shows;
-        self.scope.episodesUnseen.shows = data.shows;
-        self.scope.$apply();
-        self.scope.showSimpleToast('Synchronisation terminée');
+        delete self.episodesUnseen.shows;
+        self.episodesUnseen.shows = data.shows;
+        if(func) {
+          func(true);
+        }
       } else {
-        self.scope.showSimpleToast('Synchronisation échouée');
-      }
-      if(func) {
-        func();
+        if(func) {
+          func(false);
+        }
       }
     });
   };
@@ -150,7 +142,7 @@
   apiBetaseries.prototype.seenEpisode = function(episode, func) {
     var self = this;
 
-    callAPI('/episodes/watched', 'POST', {'id': episode.id, token: self.scope.user.token}, function(res) {
+    callAPI('/episodes/watched', 'POST', {'id': episode.id, token: self.user.token}, function(res) {
         if(func) {
           func();
         }

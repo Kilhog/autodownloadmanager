@@ -35,10 +35,10 @@
       }
 
       if(!find) {
-        self.scope.showSimpleToast('Aucun torrent trouvé !');
+        self.scope.displayToast('Aucun torrent trouvé !');
       }
     }, function(){
-      self.scope.showSimpleToast('Aucun torrent trouvé !');
+      self.scope.displayToast('Aucun torrent trouvé !');
     });
   };
 
@@ -47,9 +47,9 @@
     self.search(query, function(torrent) {
       if(torrent) {
         if(torrent.magnet_uri) {
-          if(self.scope.transmission.obj) {
+          if(self.apiTR.transmission_obj) {
             self.apiTR.addMagnet(torrent.magnet_uri, function(){
-              self.scope.showSimpleToast('Torrent ajouté');
+              self.scope.displayToast('Torrent ajouté');
             });
           } else {
             shell.openExternal(torrent.magnet_uri);
