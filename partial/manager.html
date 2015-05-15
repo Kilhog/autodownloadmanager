@@ -24,7 +24,7 @@
               <div class="ajust-height" ng-repeat="unseen in show.unseen" layout="row" flex="50" ng-mouseenter="hoverCondition[$index] = true" ng-mouseleave="hoverCondition[$index] = false">
                 <div flex="30">
                   <div ng-if="hoverCondition[$index]">
-                    <md-button aria-label="Marquer comme vu" ng-click="seenEpisode($parent.$parent.$parent.$index, $index)" class="md-fab md-xs md-accent" style="margin-left: 3px !important;">
+                    <md-button ng-disabled="!user.token" aria-label="Marquer comme vu" ng-click="seenEpisode($parent.$parent.$parent.$index, $index)" class="md-fab md-xs md-accent" style="margin-left: 3px !important;">
                       <md-tooltip md-direction="right" md-autohide="true">
                         Marquer comme vu
                       </md-tooltip>
