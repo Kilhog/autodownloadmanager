@@ -99,6 +99,8 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     persistContainer.apiDB = new apiDblite.apiDblite();
     persistContainer.apiTR = new apiTransmission.apiTransmission(persistContainer.apiDB);
     persistContainer.apiBT = new apiBetaseries.apiBetaseries(persistContainer.apiDB);
+    persistContainer.apiGS = new apiGetStrike.apiGetStrike(persistContainer.apiTR, persistContainer.apiDB);
+    persistContainer.apiAD = new apiAddicted.apiAddicted(persistContainer.apiDB);
 
   }]).controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer",
   function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer) {
@@ -171,9 +173,6 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   }]).controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer",
   function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer) {
 
-    $scope.pathDownloadFolder = $scope.pathDownloadFolder || "";
-    $scope.episodesIncoming = $scope.episodesIncoming || {};
-
     /**
      * Permet d'afficher des Toasts
      * @param msg - Message à afficher
@@ -186,15 +185,14 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     var apiDB = persistContainer.apiDB;
     var apiTR = persistContainer.apiTR;
     var apiBT = persistContainer.apiBT;
-    var apiGS = new apiGetStrike.apiGetStrike($scope, apiTR, apiDB);
-    var apiAD = new apiAddicted.apiAddicted($scope, apiDB);
-
-    persistContainer.apiGS = apiGS;
-    persistContainer.apiAD = apiAD;
+    var apiGS = persistContainer.apiGS;
+    var apiAD = persistContainer.apiAD;
 
     $scope.user = apiBT.user;
     $scope.episodesUnseen = apiBT.episodesUnseen;
     $scope.episodeQuality = $scope.episodeQuality || getEpisodeQuality();
+    $scope.pathDownloadFolder = $scope.pathDownloadFolder || "";
+    $scope.episodesIncoming = $scope.episodesIncoming || {};
 
     function getEpisodeQuality() {
       apiDB.query('SELECT * FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
@@ -262,7 +260,13 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         }
 
         var name = gen_name_episode(target, episode.season, episode.episode);
-        apiGS.searchAndDownload(name);
+        apiGS.searchAndDownload(name, $scope.episodeQuality, function(res){
+          if(res) {
+            $scope.displayToast('Torrent ajouté !');
+          } else {
+            $scope.displayToast('Aucun torrent trouvé !');
+          }
+        });
       });
     };
 
@@ -278,8 +282,10 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
 
         apiAD.search(name, function (res) {
           if (res != '') {
-            apiAD.downloadStr(res, name.trim(), function () {
-              $scope.displayToast('Sous-titre récupéré');
+            $scope.checkStrFolderPath(function() {
+              apiAD.downloadStr(res, name.trim(), $scope.pathDownloadFolder, function () {
+                $scope.displayToast('Sous-titre récupéré');
+              });
             });
           } else {
             $scope.displayToast('Fail addicted');

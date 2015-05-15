@@ -3,15 +3,14 @@
   var querystring = require('querystring');
   var curl = require('curlrequest');
   var cheerio = require('cheerio');
-    var path = require('path');
+  var path = require('path');
 
-  function apiAddicted($scope, apiDB) {
-    this.scope = $scope;
+  function apiAddicted(apiDB) {
     this.apiDB = apiDB;
     this.url_addic = 'http://www.addic7ed.com'
   }
 
-  apiAddicted.prototype.downloadStr = function(url_path, name, func) {    
+  apiAddicted.prototype.downloadStr = function(url_path, name, pathDownloadFolder, func) {
     var self = this;
 
     var options = {
@@ -23,12 +22,10 @@
     };
 
     curl.request(options, function (err, buffer) {
-      self.scope.checkStrFolderPath(function() {
-        fs.writeFile(self.scope.pathDownloadFolder + path.sep + name + ".srt", buffer, function(err) {
-          if(func) {
-            func();
-          }
-        });
+      fs.writeFile(pathDownloadFolder + path.sep + name + ".srt", buffer, function(err) {
+        if(func) {
+          func();
+        }
       });
     });
   };
