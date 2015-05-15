@@ -17,6 +17,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     /*
      Material Angular
      */
+
     $mdThemingProvider.theme('default').primaryPalette('grey', {
       'default': '800'
     }).accentPalette('lime', {
@@ -26,6 +27,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     /*
      Route UI
      */
+
     $urlRouterProvider.otherwise('/main/manager');
 
     $stateProvider
@@ -78,6 +80,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     /*
      Bind boutons d'actions de la fenetre
      */
+
     $(document).ready(function () {
       $('#close-window-button').click(function () {
         $scope.closeWindow();
@@ -102,12 +105,28 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     /*
      Instanciation des api
      */
+
     persistContainer.apiDB = new apiDblite.apiDblite();
     persistContainer.apiTR = new apiTransmission.apiTransmission(persistContainer.apiDB);
     persistContainer.apiBT = new apiBetaseries.apiBetaseries(persistContainer.apiDB);
     persistContainer.apiGS = new apiGetStrike.apiGetStrike(persistContainer.apiTR, persistContainer.apiDB);
     persistContainer.apiAD = new apiAddicted.apiAddicted(persistContainer.apiDB);
 
+    /*
+     Qualité des épisodes
+     */
+
+    function getEpisodeQuality(func) {
+      persistContainer.apiDB.query('SELECT * FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
+        if (rows.length > 0) {
+          func(rows[0][2]);
+        }
+      });
+    }
+
+    getEpisodeQuality(function(res){
+      persistContainer.episodeQuality = res;
+    });
   }]).controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer",
   function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer) {
 
@@ -179,10 +198,13 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
      Qualité Episodes
      */
 
+    $scope.episodeQuality = persistContainer.episodeQuality;
+
     $scope.changeQuality = function () {
-      apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
+      persistContainer.apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
       });
-      apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function (err, rows) {
+      persistContainer.apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function (err, rows) {
+        persistContainer.episodeQuality = $scope.episodeQuality;
         $scope.displayToast('Changement enregistré');
       });
     };
@@ -208,18 +230,8 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
 
     $scope.user = apiBT.user;
     $scope.episodesUnseen = apiBT.episodesUnseen;
-    $scope.episodeQuality = $scope.episodeQuality || getEpisodeQuality();
     $scope.pathDownloadFolder = $scope.pathDownloadFolder || "";
     $scope.episodesIncoming = $scope.episodesIncoming || {};
-
-    function getEpisodeQuality() {
-      apiDB.query('SELECT * FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
-        if (rows.length > 0) {
-          $scope.episodeQuality = rows[0][2];
-          $scope.$apply();
-        }
-      });
-    }
 
     function gen_name_episode(serie, saison, episode) {
       return serie + " S" + $filter('numberFixedLen')(saison, 2) + "E" + $filter('numberFixedLen')(episode, 2)
@@ -236,7 +248,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         $scope.episodesUnseen = apiBT.episodesUnseen;
         $scope.$apply();
         if (res) {
-          $scope.displayToast('Synchronisation terminée')
+          $scope.displayToast('Synchronisation terminée');
 
           $.each($scope.episodesUnseen.shows, function (index, elm) {
             apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [elm.title], function (err, data) {
@@ -278,7 +290,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         }
 
         var name = gen_name_episode(target, episode.season, episode.episode);
-        apiGS.searchAndDownload(name, $scope.episodeQuality, function (res) {
+        apiGS.searchAndDownload(name, persistContainer.episodeQuality, function (res) {
           if (res) {
             $scope.displayToast('Torrent ajouté !');
           } else {
