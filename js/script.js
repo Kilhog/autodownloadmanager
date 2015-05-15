@@ -13,16 +13,22 @@ var app = angular.module('adm-app', ["ngMaterial", "ui.router"]);
 
 app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
+
+    /*
+     Material Angular
+     */
     $mdThemingProvider.theme('default').primaryPalette('grey', {
       'default': '800'
     }).accentPalette('lime', {
       'default': '500'
     });
 
+    /*
+     Route UI
+     */
     $urlRouterProvider.otherwise('/main/manager');
 
     $stateProvider
-      // States
       .state("main", {
         controller: 'mainCtrl',
         url: "/main",
@@ -54,11 +60,11 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     }
     return num;
   };
-}).factory('persistContainer', function() {
+}).factory('persistContainer', function () {
   return {};
-}).factory('toastFact', ["$mdToast", function($mdToast) {
+}).factory('toastFact', ["$mdToast", function ($mdToast) {
   return {
-    show: function(msg, type) {
+    show: function (msg, type) {
       $mdToast.show({
         template: '<md-toast class="md-toast ' + (type || "") + '">' + msg + '</md-toast>',
         position: 'bottom right',
@@ -70,7 +76,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   function ($scope, persistContainer) {
 
     /*
-      Bind boutons d'actions de la fenetre
+     Bind boutons d'actions de la fenetre
      */
     $(document).ready(function () {
       $('#close-window-button').click(function () {
@@ -94,7 +100,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     };
 
     /*
-      Instanciation des api
+     Instanciation des api
      */
     persistContainer.apiDB = new apiDblite.apiDblite();
     persistContainer.apiTR = new apiTransmission.apiTransmission(persistContainer.apiDB);
@@ -115,22 +121,22 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     };
 
     /*
-      Transmission
+     Transmission
      */
 
     $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
 
     $scope.disconnectTransmission = function () {
-      persistContainer.apiTR.disconnectToApi(function() {
+      persistContainer.apiTR.disconnectToApi(function () {
         $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
       });
     };
 
     $scope.connectTransmission = function (host, port) {
       persistContainer.apiTR.saveAccess(host, port, function () {
-        persistContainer.apiTR.connectToApi(function(res) {
+        persistContainer.apiTR.connectToApi(function (res) {
           $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
-          if(res) {
+          if (res) {
             $scope.displayToast('Connecté à Transmission');
           } else {
             $scope.displayToast('Erreur lors de la connection à Transmission', 'error');
@@ -141,17 +147,17 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     };
 
     /*
-      BetaSeries
+     BetaSeries
      */
 
     $scope.user = persistContainer.apiBT.user;
 
     $scope.connectBetaseries = function (nom, password) {
       persistContainer.apiBT.saveAccess(nom, password, function () {
-        persistContainer.apiBT.connectToApi(function(){
+        persistContainer.apiBT.connectToApi(function () {
           $scope.user = persistContainer.apiBT.user;
 
-          if(persistContainer.apiBT.user.token) {
+          if (persistContainer.apiBT.user.token) {
             $scope.displayToast('Connecté à Betaseries');
           } else {
             $scope.displayToast('Identifiants Betaseries incorrect', 'error');
@@ -163,9 +169,21 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     };
 
     $scope.disconnectBetaseries = function () {
-      persistContainer.apiBT.disconnectToApi(function(){
+      persistContainer.apiBT.disconnectToApi(function () {
         $scope.user = persistContainer.apiBT.user;
         $scope.$apply();
+      });
+    };
+
+    /*
+     Qualité Episodes
+     */
+
+    $scope.changeQuality = function () {
+      apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
+      });
+      apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function (err, rows) {
+        $scope.displayToast('Changement enregistré');
       });
     };
 
@@ -217,7 +235,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       apiBT.synchroEpisodesUnseen(function (res) {
         $scope.episodesUnseen = apiBT.episodesUnseen;
         $scope.$apply();
-        if(res) {
+        if (res) {
           $scope.displayToast('Synchronisation terminée')
 
           $.each($scope.episodesUnseen.shows, function (index, elm) {
@@ -260,8 +278,8 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         }
 
         var name = gen_name_episode(target, episode.season, episode.episode);
-        apiGS.searchAndDownload(name, $scope.episodeQuality, function(res){
-          if(res) {
+        apiGS.searchAndDownload(name, $scope.episodeQuality, function (res) {
+          if (res) {
             $scope.displayToast('Torrent ajouté !');
           } else {
             $scope.displayToast('Aucun torrent trouvé !');
@@ -282,7 +300,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
 
         apiAD.search(name, function (res) {
           if (res != '') {
-            $scope.checkStrFolderPath(function() {
+            $scope.checkStrFolderPath(function () {
               apiAD.downloadStr(res, name.trim(), $scope.pathDownloadFolder, function () {
                 $scope.displayToast('Sous-titre récupéré');
               });
@@ -325,31 +343,6 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         });
     };
 
-    $scope.generateTooltipTitle = function (torrentName, subName) {
-      var tooltip = "";
-      if (torrentName) {
-        if (torrentName.trim() != '') {
-          tooltip = '<div class="prevent-line-break">Torrent : ' + torrentName + '</div>'
-        }
-      }
-
-      if (subName) {
-        if (subName.trim() != '') {
-          tooltip += '<div class="prevent-line-break">Sub : ' + subName + '</div>'
-        }
-      }
-
-      return tooltip;
-    };
-
-    $scope.changeQuality = function () {
-      apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
-      });
-      apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function (err, rows) {
-        $scope.displayToast('Changement enregistré');
-      });
-    };
-
     $scope.selectStrFolder = function (func) {
       ipc.send('dialog-selection-dossier');
     };
@@ -371,20 +364,12 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       });
     };
 
-    $scope.changeQuality = function () {
-      apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
-      });
-      apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function (err, rows) {
-        $scope.displayToast('Changement enregistré');
-      });
-    };
-
     $timeout(function () {
       if (!$scope.user.token && justOpen) {
         apiBT.connectToApi(function (res) {
           $scope.user = apiBT.user;
 
-          if(apiBT.user.token) {
+          if (apiBT.user.token) {
             $scope.displayToast('Connecté à Betaseries');
           } else {
             $scope.displayToast('Identifiants Betaseries incorrect', 'error');
@@ -397,8 +382,8 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
           }
           $scope.checkStrFolderPath();
         });
-        apiTR.connectToApi(function(res) {
-          if(res) {
+        apiTR.connectToApi(function (res) {
+          if (res) {
             $scope.displayToast('Connecté à Transmission');
           } else {
             $scope.displayToast('Erreur lors de la connection à Transmission', 'error');
@@ -443,15 +428,16 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         });
       });
     });
+
   }]).controller('TabsCtrl', ['$scope', '$location', function ($scope, $location) {
-  $scope.$watch('selectedTabIndex', function (current, old) {
-    switch (current) {
-      case 0:
-        $location.url("/main/manager");
-        break;
-      case 1:
-        $location.url("/main/reglages");
-        break;
-    }
-  });
+    $scope.$watch('selectedTabIndex', function (current, old) {
+      switch (current) {
+        case 0:
+          $location.url("/main/manager");
+          break;
+        case 1:
+          $location.url("/main/reglages");
+          break;
+      }
+    });
 }]);
