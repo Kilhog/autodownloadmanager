@@ -209,6 +209,27 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       });
     };
 
+    /*
+     Dossier ST
+     */
+
+    $scope.pathDownloadFolder = persistContainer.pathDownloadFolder;
+
+    $scope.selectStrFolder = function (func) {
+      ipc.send('dialog-selection-dossier');
+    };
+
+    ipc.on('dialog-selection-dossier-reply', function (arg) {
+      var strPath = arg[0];
+      $scope.pathDownloadFolder = persistContainer.pathDownloadFolder = strPath;
+      $scope.$apply();
+
+      persistContainer.apiDB.query('DELETE FROM params WHERE nom = ?', ['strFolder'], function (err, rows) {
+        persistContainer.apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['strFolder', strPath], function (err, rows) {
+          $scope.displayToast('Dossier sous titres modifié');
+        });
+      });
+    });
 
   }]).controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer",
   function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer) {
@@ -230,7 +251,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
 
     $scope.user = apiBT.user;
     $scope.episodesUnseen = apiBT.episodesUnseen;
-    $scope.pathDownloadFolder = $scope.pathDownloadFolder || "";
+    $scope.pathDownloadFolder = persistContainer.pathDownloadFolder || "";
     $scope.episodesIncoming = $scope.episodesIncoming || {};
 
     function gen_name_episode(serie, saison, episode) {
@@ -355,16 +376,12 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         });
     };
 
-    $scope.selectStrFolder = function (func) {
-      ipc.send('dialog-selection-dossier');
-    };
-
     $scope.checkStrFolderPath = function (func) {
       var strPath = "";
       apiDB.query('SELECT value FROM params WHERE nom = ?', ['strFolder'], function (err, rows) {
         if (rows.length > 0) {
           strPath = rows[0][0];
-          $scope.pathDownloadFolder = strPath;
+          $scope.pathDownloadFolder = persistContainer.pathDownloadFolder = strPath;
           $scope.$apply();
           if (func) {
             func();
@@ -428,18 +445,6 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
         }
       });
     };
-
-    ipc.on('dialog-selection-dossier-reply', function (arg) {
-      var strPath = arg[0];
-      $scope.pathDownloadFolder = strPath;
-      $scope.$apply();
-      //Stockage de ma variable
-      apiDB.query('DELETE FROM params WHERE nom = ?', ['strFolder'], function (err, rows) {
-        apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['strFolder', strPath], function (err, rows) {
-          $scope.displayToast('Dossier sous titres modifié');
-        });
-      });
-    });
 
   }]).controller('TabsCtrl', ['$scope', '$location', function ($scope, $location) {
     $scope.$watch('selectedTabIndex', function (current, old) {
