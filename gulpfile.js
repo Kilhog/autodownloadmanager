@@ -19,7 +19,10 @@ var js = [
   './bower_components/angular-aria/angular-aria.min.js',
   './bower_components/angular-material/angular-material.min.js',
   './bower_components/angular-ui-router/release/angular-ui-router.min.js',
-  './js/script.js',
+  './js/mainModule.js',
+	'./js/mainCtrl.js',
+	'./js/managerCtrl.js',
+	'./js/reglagesCtrl.js',
   './js/modal_change_target.js',
   './js/episode_bottom_sheet.js'
 ];
