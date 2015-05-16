@@ -50,12 +50,14 @@
     }
   };
 
-  apiTransmission.prototype.saveAccess = function(host, port, func) {
+  apiTransmission.prototype.saveAccess = function(host, port, username, password, func) {
     var self = this;
 
     var TRaccess = {
       host: host,
-      port: port
+      port: port,
+      username: username,
+      password: password
     };
 
     this.db.query("DELETE FROM params WHERE nom = ?", ['TRaccess'], function(err, rows) {});

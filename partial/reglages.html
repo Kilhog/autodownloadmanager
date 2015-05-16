@@ -44,8 +44,18 @@
                                     <input type="number" ng-model="TRport">
                                 </md-input-container>
                             </div>
+                            <div layout layout-sm="column">
+                                <md-input-container flex>
+                                    <label>Nom d'utilisateur</label>
+                                    <input ng-model="TRusername">
+                                </md-input-container>
+                                <md-input-container flex>
+                                    <label>Mot de passe</label>
+                                    <input type="password" ng-model="TRpassword">
+                                </md-input-container>
+                            </div>
                             <div layout="row" layout-align="center">
-                                <md-button ng-click="connectTransmission(TRhost, TRport)" class="btn-center md-raised md-accent">Se connecter</md-button>
+                                <md-button ng-click="connectTransmission(TRhost, TRport, TRusername, TRpassword)" class="btn-center md-raised md-accent">Se connecter</md-button>
                             </div>
                         </form>
                     </md-content>

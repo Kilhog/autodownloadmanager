@@ -151,8 +151,8 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       });
     };
 
-    $scope.connectTransmission = function (host, port) {
-      persistContainer.apiTR.saveAccess(host, port, function () {
+    $scope.connectTransmission = function (host, port, username, password) {
+      persistContainer.apiTR.saveAccess(host, port, username, password, function () {
         persistContainer.apiTR.connectToApi(function (res) {
           $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
           if (res) {
