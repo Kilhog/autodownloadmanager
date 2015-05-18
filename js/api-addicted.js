@@ -46,7 +46,7 @@
                 var stat = $res('div#container95m table.tabel95 tr:nth-child(2) td:nth-child(2) table tr').get(index + 1).children[1].children[2].data;
                 var array_stat = stat.split('·');
                 var nb_download_now = array_stat[1].replace('Downloads', '').replace('Download', '').trim();
-                if(parseInt(nb_download_now) >= parseInt(nb_download)) {
+                if(~~nb_download_now >= ~~nb_download) {
                   if($res('div#container95m table.tabel95 tr:nth-child(2) td:nth-child(2) table tr').get(index).children[8].children[2].attribs == null) {
                     url_with_more_download = $res('div#container95m table.tabel95 tr:nth-child(2) td:nth-child(2) table tr').get(index).children[8].children[2].next.next.next.attribs.href;
                   } else {
