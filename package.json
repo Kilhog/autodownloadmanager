@@ -22,6 +22,7 @@
     "font-awesome": "^4.3.0",
     "jquery": "^2.1.4",
     "strike-api": "^0.2.0",
+    "t411": "^1.0.0",
     "transmission": "^0.4.2"
   }
 }
