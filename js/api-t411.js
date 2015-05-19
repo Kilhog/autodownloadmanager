@@ -10,22 +10,23 @@
     this.name = null;
   }
 
-  apiT411.prototype.connectToApi = function(username, password, func) {
+  apiT411.prototype.connectToApi = function(func) {
     var self = this;
 
     self.t411Client = new T411();
 
-    self.saveAccess(username, password, function(){
-
-    });
-
-    self.t411Client.auth(username, password, function(err) {
-      self.t411Client.profile(self.t411Client.uid, function(err, res) {
-        if(!err) {
-          self.name = res.username;
-        }
-        func();
-      });
+    self.apiDB.query("SELECT * FROM params WHERE nom = ?", ['T4access'], function(err, rows) {
+      if(rows.length > 0) {
+        var T4access = JSON.parse(rows[0][2]);
+        self.t411Client.auth(T4access.login, T4access.password, function(err) {
+          self.t411Client.profile(self.t411Client.uid, function(err, res) {
+            if(!err) {
+              self.name = res.username;
+            }
+            func();
+          });
+        });
+      }
     });
   };
 

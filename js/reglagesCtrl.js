@@ -120,9 +120,11 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
     };
 
     $scope.connectT411 = function(username, password) {
-      persistContainer.apiT4.connectToApi(username, password, function() {
-        $scope.refreshT411();
-        $scope.$apply();
+      persistContainer.apiT4.saveAccess(username, password, function() {
+        persistContainer.apiT4.connectToApi(function() {
+          $scope.refreshT411();
+          $scope.$apply();
+        });
       });
     };
   }]);
