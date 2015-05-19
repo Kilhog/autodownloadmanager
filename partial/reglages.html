@@ -1,129 +1,99 @@
 <div id="reglages-content">
-  <div class="page-header">
-    <h1 style="margin-top: 0">Réglages</h1>
-  </div>
+    <div class="page-header">
+        <h1 style="margin-top: 0">Réglages</h1>
+    </div>
 
-  <div>
-    <md-content class="md-padding">
-      <md-tabs md-dynamic-height md-border-bottom>
-        <md-tab label="Betaseries">
-          <md-content layout-padding ng-if="!user.user.login">
-            <div layout layout-sm="column">
-              <md-input-container flex>
-                <label>Utilisateur</label>
-                <input ng-model="BTnom">
-              </md-input-container>
-              <md-input-container flex>
-                <label>Mot de passe</label>
-                <input type="password" ng-model="BTpassword">
-              </md-input-container>
-            </div>
-            <div layout="row" layout-align="center">
-              <md-button class="btn-center  md-raised md-accent" ng-click="connectBetaseries(BTnom, BTpassword)">Se connecter</md-button>
-            </div>
-          </md-content>
+    <div>
+        <md-content class="md-padding">
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="Betaseries">
+                    <md-content layout-padding ng-if="!user.user.login">
+                        <div layout layout-sm="column">
+                            <md-input-container flex>
+                                <label>Utilisateur</label>
+                                <input ng-model="BTnom">
+                            </md-input-container>
+                            <md-input-container flex>
+                                <label>Mot de passe</label>
+                                <input type="password" ng-model="BTpassword">
+                            </md-input-container>
+                        </div>
+                        <div layout="row" layout-align="center">
+                            <md-button class="btn-center  md-raised md-accent" ng-click="connectBetaseries(BTnom, BTpassword)">Se connecter</md-button>
+                        </div>
+                    </md-content>
 
-          <md-content ng-if="user.user.login" layout-padding>
-            <br/>
-            <i class="i-default fa fa-check-circle"></i> Vous etes connecté en tant que <b>{{user.user.login}}</b><br/><br/>
+                    <md-content ng-if="user.user.login" layout-padding>
+                        <br />
+                        <i class="i-default fa fa-check-circle"></i> Vous etes connecté en tant que <b>{{user.user.login}}</b><br/><br/>
+                        <div layout="row" layout-align="center">
+                        <md-button ng-click="disconnectBetaseries()" class="btn-center md-raised md-accent">Se déconnecter</md-button>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Transmission">
+                    <md-content ng-if="!transmission_obj" layout-padding>
+                        <form>
+                            <div layout layout-sm="column">
+                                <md-input-container flex>
+                                    <label>Adresse de l'hôte</label>
+                                    <input ng-model="TRhost">
+                                </md-input-container>
+                                <md-input-container flex>
+                                    <label>Port</label>
+                                    <input type="number" ng-model="TRport">
+                                </md-input-container>
+                            </div>
+                            <div layout layout-sm="column">
+                                <md-input-container flex>
+                                    <label>Nom d'utilisateur</label>
+                                    <input ng-model="TRusername">
+                                </md-input-container>
+                                <md-input-container flex>
+                                    <label>Mot de passe</label>
+                                    <input type="password" ng-model="TRpassword">
+                                </md-input-container>
+                            </div>
+                            <div layout="row" layout-align="center">
+                                <md-button ng-click="connectTransmission(TRhost, TRport, TRusername, TRpassword)" class="btn-center md-raised md-accent">Se connecter</md-button>
+                            </div>
+                        </form>
+                    </md-content>
 
-            <div layout="row" layout-align="center">
-              <md-button ng-click="disconnectBetaseries()" class="btn-center md-raised md-accent">Se déconnecter</md-button>
-            </div>
-          </md-content>
-        </md-tab>
-        <md-tab label="T411">
-          <md-content layout-padding ng-if="!t411Token">
-            <div layout layout-sm="column">
-              <md-input-container flex>
-                <label>Utilisateur</label>
-                <input ng-model="T4nom">
-              </md-input-container>
-              <md-input-container flex>
-                <label>Mot de passe</label>
-                <input type="password" ng-model="T4password">
-              </md-input-container>
-            </div>
-            <div layout="row" layout-align="center">
-              <md-button class="btn-center  md-raised md-accent" ng-click="connectT411(T4nom, T4password)">Se connecter</md-button>
-            </div>
-          </md-content>
-
-          <md-content ng-if="t411Token" layout-padding>
-            <br/>
-            <i class="i-default fa fa-check-circle"></i> Vous etes connecté en tant que <b>{{t411Name}}</b><br/><br/>
-
-            <div layout="row" layout-align="center">
-              <md-button ng-click="disconnectT411()" class="btn-center md-raised md-accent">Se déconnecter</md-button>
-            </div>
-          </md-content>
-        </md-tab>
-        <md-tab label="Transmission">
-          <md-content ng-if="!transmission_obj" layout-padding>
-            <form>
-              <div layout layout-sm="column">
-                <md-input-container flex>
-                  <label>Adresse de l'hôte</label>
-                  <input ng-model="TRhost">
-                </md-input-container>
-                <md-input-container flex>
-                  <label>Port</label>
-                  <input type="number" ng-model="TRport">
-                </md-input-container>
-              </div>
-              <div layout layout-sm="column">
-                <md-input-container flex>
-                  <label>Nom d'utilisateur</label>
-                  <input ng-model="TRusername">
-                </md-input-container>
-                <md-input-container flex>
-                  <label>Mot de passe</label>
-                  <input type="password" ng-model="TRpassword">
-                </md-input-container>
-              </div>
-              <div layout="row" layout-align="center">
-                <md-button ng-click="connectTransmission(TRhost, TRport, TRusername, TRpassword)" class="btn-center md-raised md-accent">Se
-                  connecter
-                </md-button>
-              </div>
-            </form>
-          </md-content>
-
-          <md-content ng-if="transmission_obj" layout-padding>
-            <br/>
-            <i class="i-default fa fa-check-circle"></i> Vous etes connecté à Transmission <br/><br/>
-
-            <div layout="row" layout-align="center">
-              <md-button ng-click="disconnectTransmission()" class="btn-center md-raised md-accent">Se déconnecter</md-button>
-            </div>
-          </md-content>
-        </md-tab>
-        <md-tab label="Qualité des épisodes">
-          <md-content>
-            <form>
-              <div layout="column">
-                <md-radio-group style="border: none;" ng-model="episodeQuality" ng-change="changeQuality(episodeQuality)">
-                  <md-radio-button value="480p" class="md-accent" ng-selected="episodeQuality == '480p'">480p</md-radio-button>
-                  <md-radio-button value="720p" class="md-accent" ng-selected="episodeQuality == '720p' || !episodeQuality">720p</md-radio-button>
-                </md-radio-group>
-              </div>
-            </form>
-          </md-content>
-        </md-tab>
-        <md-tab label="Dossier sous-titres">
-          <md-content class="md-padding">
-            <form>
-              <div layout="column">
-                <md-input-container>
-                  <label>Dossier</label>
-                  <input readonly ng-model="pathDownloadFolder" type="text">
-                </md-input-container>
-                <md-button ng-click="selectStrFolder()" class="btn-center md-raised md-accent">Choisir son dossier</md-button>
-              </div>
-            </form>
-          </md-content>
-        </md-tab>
-      </md-tabs>
-    </md-content>
-  </div>
+                    <md-content ng-if="transmission_obj" layout-padding>
+                        <br />
+                        <i class="i-default fa fa-check-circle"></i> Vous etes connecté à Transmission <br/><br/>
+                        <div layout="row" layout-align="center">
+                            <md-button ng-click="disconnectTransmission()" class="btn-center md-raised md-accent">Se déconnecter</md-button>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Qualité des épisodes">
+                    <md-content>
+                        <form>
+                            <div layout="column">
+                                <md-radio-group style="border: none;" ng-model="episodeQuality" ng-change="changeQuality(episodeQuality)">
+                                    <md-radio-button value="480p" class="md-accent" ng-selected="episodeQuality == '480p'">480p</md-radio-button>
+                                    <md-radio-button value="720p" class="md-accent" ng-selected="episodeQuality == '720p' || !episodeQuality">720p</md-radio-button>
+                                </md-radio-group>
+                            </div>
+                        </form>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Dossier sous-titres">
+                    <md-content class="md-padding">
+                        <form>
+                            <div layout="column">
+                                <md-input-container>
+                                    <label>Dossier</label>
+                                    <input readonly ng-model="pathDownloadFolder" type="text">
+                                </md-input-container>
+                                <md-button ng-click="selectStrFolder()" class="btn-center md-raised md-accent">Choisir son dossier</md-button>
+                            </div>
+                        </form>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </div>
 </div>

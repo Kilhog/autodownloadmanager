@@ -102,27 +102,4 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
       });
     });
 
-    /*
-     T411
-     */
-
-    $scope.refreshT411 = function() {
-      $scope.t411Token = persistContainer.apiT4.t411Client.token;
-      $scope.t411Name = persistContainer.apiT4.name;
-    };
-
-    $scope.refreshT411();
-
-    $scope.disconnectT411 = function() {
-      persistContainer.apiT4.disconnectToApi(function(){
-        $scope.refreshT411();
-      });
-    };
-
-    $scope.connectT411 = function(username, password) {
-      persistContainer.apiT4.connectToApi(username, password, function() {
-        $scope.refreshT411();
-        $scope.$apply();
-      });
-    };
   }]);
