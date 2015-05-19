@@ -5,6 +5,7 @@ var apiGetStrike = require("./dist/js/api-getstrike");
 var apiTransmission = require("./dist/js/api-transmission");
 var apiDblite = require("./dist/js/api-dblite");
 var apiAddicted = require("./dist/js/api-addicted");
+var apiT411 = require("./dist/js/api-t411");
 
 var ipc = require('ipc');
 var justOpen = true;

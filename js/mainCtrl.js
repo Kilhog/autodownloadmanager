@@ -35,6 +35,7 @@ app.controller('mainCtrl', ["$scope", "persistContainer",
     persistContainer.apiBT = new apiBetaseries.apiBetaseries(persistContainer.apiDB);
     persistContainer.apiGS = new apiGetStrike.apiGetStrike(persistContainer.apiTR, persistContainer.apiDB);
     persistContainer.apiAD = new apiAddicted.apiAddicted(persistContainer.apiDB);
+    persistContainer.apiT4 = new apiT411.apiT411(persistContainer.apiDB);
 
     /*
      Qualité des épisodes
