@@ -60,6 +60,7 @@
     });
   };
 
+  // TODO : DEPLACER CETTE FONCTION
   apiGetStrike.prototype.createNewTarget = function(origin, target) {
     var self = this;
 
