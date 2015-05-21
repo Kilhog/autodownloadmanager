@@ -65,25 +65,5 @@
     });
   };
 
-  apiAddicted.prototype.createNewTarget = function(origin, target) {
-    var self = this;
-
-    if(target.trim() != '') {
-      self.apiDB.query("SELECT * FROM search_for_sub WHERE origin = ?", [origin], function(err, data) {
-        if(data.length == 0) {
-          self.apiDB.query("INSERT INTO search_for_sub (origin, target) VALUES (?,?)", [origin, target], function(){
-          });
-        } else {
-          self.apiDB.query("UPDATE search_for_sub SET target = ? WHERE id = ? ", [target, data[0][0]], function(){
-          });
-        }
-      });
-    } else {
-      self.apiDB.query("DELETE FROM search_for_sub WHERE origin = ?", [origin], function(err,data) {
-
-      });
-    }
-  };
-
   exports.apiAddicted = apiAddicted;
 })();
