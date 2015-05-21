@@ -40,7 +40,20 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
      BetaSeries
      */
 
-    $scope.user = persistContainer.apiBT.user;
+    $scope.refreshBT = function() {
+      $scope.user = persistContainer.apiBT.user;
+
+      persistContainer.apiDB.query("SELECT * FROM params WHERE nom = ?", ['BTaccess'], function(err, rows) {
+        if (rows.length > 0) {
+          var BTaccess = JSON.parse(rows[0][2]);
+          $scope.BTnom = BTaccess.login;
+          $scope.BTpassword = BTaccess.password;
+          $scope.$apply();
+        }
+      });
+    };
+
+    $scope.refreshBT();
 
     $scope.connectBetaseries = function (nom, password) {
       persistContainer.apiBT.saveAccess(nom, password, function () {
@@ -69,8 +82,6 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
      Qualité Episodes
      */
 
-    $scope.episodeQuality = persistContainer.episodeQuality;
-
     $scope.changeQuality = function () {
       persistContainer.apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
       });
@@ -80,11 +91,15 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
       });
     };
 
+    $scope.refreshQuality = function() {
+      $scope.episodeQuality = persistContainer.episodeQuality;
+    };
+
+    $scope.refreshQuality();
+
     /*
      Dossier ST
      */
-
-    $scope.pathDownloadFolder = persistContainer.pathDownloadFolder;
 
     $scope.selectStrFolder = function (func) {
       ipc.send('dialog-selection-dossier');
@@ -101,6 +116,12 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
         });
       });
     });
+
+    $scope.refreshST = function() {
+      $scope.pathDownloadFolder = persistContainer.pathDownloadFolder;
+    };
+
+    $scope.refreshST();
 
     /*
      T411
