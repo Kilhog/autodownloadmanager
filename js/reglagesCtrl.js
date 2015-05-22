@@ -135,7 +135,12 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
     });
 
     $scope.refreshST = function() {
-      $scope.pathDownloadFolder = persistContainer.pathDownloadFolder;
+      persistContainer.apiDB.query("SELECT * FROM params WHERE nom = ?", ['strFolder'], function(err, rows) {
+        if (rows.length > 0) {
+          $scope.pathDownloadFolder = rows[0][2];
+          $scope.$apply();
+        }
+      });
     };
 
     $scope.refreshST();
