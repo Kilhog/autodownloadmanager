@@ -14,7 +14,24 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
      Transmission
      */
 
-    $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
+    $scope.refreshTR = function() {
+      $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
+
+      persistContainer.apiDB.query("SELECT * FROM params WHERE nom = ?", ['TRaccess'], function(err, rows) {
+        if (rows.length > 0) {
+          var TRaccess = JSON.parse(rows[0][2]);
+
+          $scope.TRhost = TRaccess.host;
+          $scope.TRport = TRaccess.port;
+          $scope.TRusername = TRaccess.username;
+          $scope.TRpassword = TRaccess.password;
+
+          $scope.$apply();
+        }
+      });
+    };
+
+    $scope.refreshTR();
 
     $scope.disconnectTransmission = function () {
       persistContainer.apiTR.disconnectToApi(function () {
@@ -130,6 +147,17 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
     $scope.refreshT411 = function() {
       $scope.t411Token = persistContainer.apiT4.t411Client.token;
       $scope.t411Name = persistContainer.apiT4.name;
+
+      persistContainer.apiDB.query("SELECT * FROM params WHERE nom = ?", ['T4access'], function(err, rows) {
+        if (rows.length > 0) {
+          var T4access = JSON.parse(rows[0][2]);
+
+          $scope.T4nom = T4access.login;
+          $scope.T4password = T4access.password;
+
+          $scope.$apply();
+        }
+      });
     };
 
     $scope.refreshT411();
