@@ -62,26 +62,22 @@
   apiBetaseries.prototype.connectToApi = function(func) {
     var self = this;
 
-    this.db.query("SELECT * FROM params WHERE nom = ?", ['BTaccess'], function(err, rows) {
-      if(rows.length > 0) {
-        var BTaccess = JSON.parse(rows[0][2]);
+    utils.getParam(self.db, 'BTaccess', function(BTaccess) {
+      callAPI('/members/auth', 'POST', {
+        'login': BTaccess.login,
+        'password': md5(BTaccess.password)
+      }, function(data) {
+        if(data.errors.length == 0) {
+          self.user['hash'] = data.hash;
+          self.user['token'] = data.token;
+          self.user['user'] = data.user;
+        }
 
-        callAPI('/members/auth', 'POST', {
-          'login': BTaccess.login,
-          'password': md5(BTaccess.password)
-        }, function(data) {
-          if(data.errors.length == 0) {
-            self.user['hash'] = data.hash;
-            self.user['token'] = data.token;
-            self.user['user'] = data.user;
-          }
-
-          if(func) {
-            func();
-          }
-        });
-      }
-    });
+        if(func) {
+          func();
+        }
+      });
+    }, true);
   };
 
   apiBetaseries.prototype.disconnectToApi = function(func) {
@@ -104,17 +100,7 @@
 
   apiBetaseries.prototype.saveAccess = function(login, password, func) {
     var self = this;
-
-    var BTaccess = {
-      login: login,
-      password: password
-    };
-
-    this.db.query("DELETE FROM params WHERE nom = ?", ['BTaccess'], function(err, rows) {});
-
-    this.db.query("INSERT INTO params (nom, value) VALUES (?, ?)", ['BTaccess', JSON.stringify(BTaccess)], function(err, rows) {
-      func(err, rows);
-    });
+    utils.setParam(self.db, 'BTaccess', {login: login,password: password}, func, true);
   };
 
   apiBetaseries.prototype.synchroEpisodesUnseen = function(func) {

@@ -15,19 +15,16 @@
 
     self.t411Client = new T411();
 
-    self.apiDB.query("SELECT * FROM params WHERE nom = ?", ['T4access'], function(err, rows) {
-      if(rows.length > 0) {
-        var T4access = JSON.parse(rows[0][2]);
-        self.t411Client.auth(T4access.login, T4access.password, function(err) {
-          self.t411Client.profile(self.t411Client.uid, function(err, res) {
-            if(!err) {
-              self.name = res.username;
-            }
-            func();
-          });
+    utils.getParam(self.apiDB, 'T4access', function(T4access) {
+      self.t411Client.auth(T4access.login, T4access.password, function(err) {
+        self.t411Client.profile(self.t411Client.uid, function(err, res) {
+          if(!err) {
+            self.name = res.username;
+          }
+          func();
         });
-      }
-    });
+      });
+    }, true);
   };
 
   apiT411.prototype.disconnectToApi = function(func) {
@@ -51,17 +48,7 @@
 
   apiT411.prototype.saveAccess = function(login, password, func) {
     var self = this;
-
-    var T4access = {
-      login: login,
-      password: password
-    };
-
-    self.apiDB.query("DELETE FROM params WHERE nom = ?", ['T4access'], function(err, rows) {});
-
-    self.apiDB.query("INSERT INTO params (nom, value) VALUES (?, ?)", ['T4access', JSON.stringify(T4access)], function(err, rows) {
-      func(err, rows);
-    });
+    utils.setParam(self.apiDB, 'T4access', {login: login, password: password}, func, true);
   };
 
 

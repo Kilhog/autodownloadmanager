@@ -42,11 +42,7 @@ app.controller('mainCtrl', ["$scope", "persistContainer",
      */
 
     function getEpisodeQuality(func) {
-      persistContainer.apiDB.query('SELECT * FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
-        if (rows.length > 0) {
-          func(rows[0][2]);
-        }
-      });
+      utils.getParam(persistContainer.apiDB, 'episodeQuality', func);
     }
 
     getEpisodeQuality(function (res) {

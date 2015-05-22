@@ -6,6 +6,7 @@ var apiTransmission = require("./dist/js/api-transmission");
 var apiDblite = require("./dist/js/api-dblite");
 var apiAddicted = require("./dist/js/api-addicted");
 var apiT411 = require("./dist/js/api-t411");
+var utils = require("./dist/js/api-utils.js");
 
 var ipc = require('ipc');
 var justOpen = true;

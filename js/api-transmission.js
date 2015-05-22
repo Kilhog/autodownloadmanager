@@ -16,28 +16,18 @@
   apiTransmission.prototype.connectToApi = function(func) {
     var self = this;
 
-    this.db.query("SELECT * FROM params WHERE nom = ?", ['TRaccess'], function(err, rows) {
-      if(rows.length > 0) {
-        var TRaccess = JSON.parse(rows[0][2]);
+    utils.getParam(this.db, 'TRaccess', function(TRaccess) {
+      self.transmission_obj = new Transmission(TRaccess);
+      self.transmission_obj.session(function(err, arg) {
+        if(err) {
+          self.transmission_obj = null;
+        }
 
-        self.transmission_obj = new Transmission(TRaccess);
-        self.transmission_obj.session(function(err, arg) {
-          if(err) {
-            self.transmission_obj = null;
-          }
-
-          var res = false;
-
-          if(self.transmission_obj) {
-            res = true;
-          }
-
-          if(func) {
-            func(res);
-          }
-        });
-      }
-    });
+        if(func) {
+          func(self.transmission_obj ? true : false);
+        }
+      });
+    }, true);
   };
 
   apiTransmission.prototype.disconnectToApi = function(func) {
@@ -52,19 +42,7 @@
 
   apiTransmission.prototype.saveAccess = function(host, port, username, password, func) {
     var self = this;
-
-    var TRaccess = {
-      host: host,
-      port: port,
-      username: username,
-      password: password
-    };
-
-    this.db.query("DELETE FROM params WHERE nom = ?", ['TRaccess'], function(err, rows) {});
-
-    this.db.query("INSERT INTO params (nom, value) VALUES (?, ?)", ['TRaccess', JSON.stringify(TRaccess)], function(err, rows) {
-      func(err, rows);
-    });
+    utils.setParam(self.db, 'TRaccess', {host: host, port: port, username: username, password: password}, func, true);
   };
 
   exports.apiTransmission = apiTransmission;

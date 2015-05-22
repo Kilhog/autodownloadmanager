@@ -17,18 +17,14 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
     $scope.refreshTR = function() {
       $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
 
-      persistContainer.apiDB.query("SELECT * FROM params WHERE nom = ?", ['TRaccess'], function(err, rows) {
-        if (rows.length > 0) {
-          var TRaccess = JSON.parse(rows[0][2]);
+      utils.getParam(persistContainer.apiDB, 'TRaccess', function(TRaccess) {
+        $scope.TRhost = TRaccess.host;
+        $scope.TRport = TRaccess.port;
+        $scope.TRusername = TRaccess.username;
+        $scope.TRpassword = TRaccess.password;
 
-          $scope.TRhost = TRaccess.host;
-          $scope.TRport = TRaccess.port;
-          $scope.TRusername = TRaccess.username;
-          $scope.TRpassword = TRaccess.password;
-
-          $scope.$apply();
-        }
-      });
+        $scope.$apply();
+      }, true);
     };
 
     $scope.refreshTR();
@@ -60,14 +56,12 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
     $scope.refreshBT = function() {
       $scope.user = persistContainer.apiBT.user;
 
-      persistContainer.apiDB.query("SELECT * FROM params WHERE nom = ?", ['BTaccess'], function(err, rows) {
-        if (rows.length > 0) {
-          var BTaccess = JSON.parse(rows[0][2]);
-          $scope.BTnom = BTaccess.login;
-          $scope.BTpassword = BTaccess.password;
-          $scope.$apply();
-        }
-      });
+      utils.getParam(persistContainer.apiDB, 'BTaccess', function(BTaccess) {
+        $scope.BTnom = BTaccess.login;
+        $scope.BTpassword = BTaccess.password;
+
+        $scope.$apply();
+      }, true);
     };
 
     $scope.refreshBT();
@@ -100,9 +94,7 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
      */
 
     $scope.changeQuality = function () {
-      persistContainer.apiDB.query('DELETE FROM params WHERE nom = ?', ['episodeQuality'], function (err, rows) {
-      });
-      persistContainer.apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['episodeQuality', $scope.episodeQuality], function (err, rows) {
+      utils.setParam(persistContainer.apiDB, 'episodeQuality', $scope.episodeQuality, function() {
         persistContainer.episodeQuality = $scope.episodeQuality;
         $scope.displayToast('Changement enregistré');
       });
@@ -127,19 +119,15 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
       $scope.pathDownloadFolder = persistContainer.pathDownloadFolder = strPath;
       $scope.$apply();
 
-      persistContainer.apiDB.query('DELETE FROM params WHERE nom = ?', ['strFolder'], function (err, rows) {
-        persistContainer.apiDB.query('INSERT INTO params (nom, value) VALUES (?, ?)', ['strFolder', strPath], function (err, rows) {
-          $scope.displayToast('Dossier sous titres modifié');
-        });
+      utils.setParam(persistContainer.apiDB, 'strFolder', strPath, function() {
+        $scope.displayToast('Dossier sous titres modifié');
       });
     });
 
     $scope.refreshST = function() {
-      persistContainer.apiDB.query("SELECT * FROM params WHERE nom = ?", ['strFolder'], function(err, rows) {
-        if (rows.length > 0) {
-          $scope.pathDownloadFolder = rows[0][2];
-          $scope.$apply();
-        }
+      utils.getParam(persistContainer.apiDB, 'strFolder', function(res) {
+        $scope.pathDownloadFolder = res;
+        $scope.$apply();
       });
     };
 
@@ -153,16 +141,12 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
       $scope.t411Token = persistContainer.apiT4.t411Client.token;
       $scope.t411Name = persistContainer.apiT4.name;
 
-      persistContainer.apiDB.query("SELECT * FROM params WHERE nom = ?", ['T4access'], function(err, rows) {
-        if (rows.length > 0) {
-          var T4access = JSON.parse(rows[0][2]);
+      utils.getParam(persistContainer.apiDB, 'T4access', function(T4access) {
+        $scope.T4nom = T4access.login;
+        $scope.T4password = T4access.password;
 
-          $scope.T4nom = T4access.login;
-          $scope.T4password = T4access.password;
-
-          $scope.$apply();
-        }
-      });
+        $scope.$apply();
+      }, true);
     };
 
     $scope.refreshT411();
