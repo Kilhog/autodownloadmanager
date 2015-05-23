@@ -10,15 +10,15 @@ var exec = require('child_process').exec;
 var css = [
   './css/styles.css',
   './node_modules/font-awesome/css/font-awesome.min.css',
-  './bower_components/angular-material/angular-material.min.css'
+  './node_modules/angular-material/angular-material.min.css'
 ];
 
 var js = [
-  './bower_components/angular/angular.min.js',
-  './bower_components/angular-animate/angular-animate.min.js',
-  './bower_components/angular-aria/angular-aria.min.js',
-  './bower_components/angular-material/angular-material.min.js',
-  './bower_components/angular-ui-router/release/angular-ui-router.min.js',
+  './node_modules/angular/angular.min.js',
+  './node_modules/angular-animate/angular-animate.min.js',
+  './node_modules/angular-aria/angular-aria.min.js',
+  './node_modules/angular-material/angular-material.min.js',
+  './node_modules/angular-ui-router/release/angular-ui-router.min.js',
   './js/mainModule.js',
 	'./js/mainCtrl.js',
 	'./js/managerCtrl.js',
