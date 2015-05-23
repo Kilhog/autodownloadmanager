@@ -188,3 +188,11 @@ md-dialog-content {
 .ajust-text-height {
   padding-top: 6px;
 }
+
+.custom-subheader {
+  margin-bottom: -15px !important;
+}
+
+.custom-subheader .md-subheader-inner {
+  padding-bottom: 0 !important;
+}
