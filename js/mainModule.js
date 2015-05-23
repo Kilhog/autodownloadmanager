@@ -36,19 +36,19 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       .state("main", {
         controller: 'mainCtrl',
         url: "/main",
-        templateUrl: 'partial/main.html'
+        templateUrl: 'dist/html/main.html'
       })
       .state("main.reglages", {
         controller: 'reglagesCtrl',
         parent: 'main',
         url: "/reglages",
-        templateUrl: 'partial/reglages.html'
+        templateUrl: 'dist/html/reglages.html'
       })
       .state("main.manager", {
         controller: 'managerCtrl',
         parent: 'main',
         url: "/manager",
-        templateUrl: 'partial/manager.html'
+        templateUrl: 'dist/html/manager.html'
       });
   }
 ]).filter('numberFixedLen', function () {
