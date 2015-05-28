@@ -168,9 +168,8 @@ body > div {
 }
 
 .md-xs md-icon {
-  top: -2px;
+  top: -4px;
   position: relative;
-  left: -2px;
 }
 
 a:focus {
