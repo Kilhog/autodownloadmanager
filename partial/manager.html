@@ -10,7 +10,7 @@
 <md-content class="md-padding">
   <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="Mes séries en retard">
-      <md-content class="md-padding">
+      <md-content class="md-padding" style="padding-top: 20px;">
         <div ng-if="synchroInProgress">
           <div layout="row" layout-sm="column" layout-align="space-around">
             <md-progress-circular md-mode="indeterminate"></md-progress-circular>
@@ -18,10 +18,10 @@
           <h3 class="synch_text">Synchronisation des épisodes en cours</h3>
         </div>
         <div ng-if="!synchroInProgress" ng-repeat="show in episodesUnseen.shows track by $index">
-          <h4>
+          <h4 style="margin-bottom: 0; margin-top: 0">
             <a style="cursor: pointer" ng-click="changeTarget($event, show.title)">> {{show.title}}</a>
           </h4>
-          <md-content layout="row" layout-wrap>
+          <md-content layout="row" style="padding-top: 20px; padding-bottom: 20px" layout-wrap>
             <div class="ajust-height" ng-repeat="unseen in show.unseen" layout="row" flex="50" ng-mouseenter="hoverCondition[$index] = true" ng-mouseleave="hoverCondition[$index] = false">
               <div flex="30">
                 <div ng-if="hoverCondition[$index]">
