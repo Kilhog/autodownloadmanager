@@ -1,5 +1,5 @@
 <md-bottom-sheet class="md-list md-has-header">
-  <md-subheader class="custom-subheader">S{{episode.season | numberFixedLen:2}}E{{episode.episode | numberFixedLen:2}} - {{episode.title}}</md-subheader>
+  <md-subheader class="custom-subheader">{{episode.show.title}} S{{episode.season | numberFixedLen:2}}E{{episode.episode | numberFixedLen:2}} - {{episode.title}}</md-subheader>
   <div style="font-size: 13px; padding: 0 16px">
     <p>{{episode.description}}</p>
   </div>
