@@ -4,13 +4,14 @@
   var curl = require('curlrequest');
   var cheerio = require('cheerio');
   var path = require('path');
+  var StringDecoder = require('string_decoder').StringDecoder;
 
   function apiAddicted(apiDB) {
     this.apiDB = apiDB;
     this.url_addic = 'http://www.addic7ed.com'
   }
 
-  apiAddicted.prototype.downloadStr = function(url_path, name, pathDownloadFolder, func) {
+  apiAddicted.prototype.downloadStr = function(url_path, name, pathDownloadFolder, func, func_err) {
     var self = this;
 
     var options = {
@@ -22,11 +23,19 @@
     };
 
     curl.request(options, function (err, buffer) {
-      fs.writeFile(pathDownloadFolder + path.sep + name + ".srt", buffer, function(err) {
-        if(func) {
-          func();
-        }
-      });
+
+      var decoder = new StringDecoder('utf-8');
+      var buffer_str = decoder.write(buffer);
+
+      if(buffer_str.indexOf('<!DOCTYPE html') == 0) {
+        func_err();
+      } else {
+        fs.writeFile(pathDownloadFolder + path.sep + name + ".srt", buffer, function(err) {
+          if(func) {
+            func();
+          }
+        });
+      }
     });
   };
 
