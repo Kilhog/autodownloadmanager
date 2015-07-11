@@ -1,6 +1,8 @@
 app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer",
   function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer) {
 
+    $scope.config = {};
+
     /**
      * Permet d'afficher des Toasts
      * @param msg - Message à afficher
@@ -94,14 +96,14 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
      */
 
     $scope.changeQuality = function () {
-      utils.setParam(persistContainer.apiDB, 'episodeQuality', $scope.episodeQuality, function() {
-        persistContainer.episodeQuality = $scope.episodeQuality;
+      utils.setParam(persistContainer.apiDB, 'episodeQuality', $scope.config.episodeQuality, function() {
+        persistContainer.episodeQuality = $scope.config.episodeQuality;
         $scope.displayToast('Changement enregistré');
       });
     };
 
     $scope.refreshQuality = function() {
-      $scope.episodeQuality = persistContainer.episodeQuality;
+      $scope.config.episodeQuality = persistContainer.episodeQuality;
     };
 
     $scope.refreshQuality();

@@ -102,9 +102,9 @@
           <md-content>
             <form>
               <div layout="column">
-                <md-radio-group style="border: none;" ng-model="episodeQuality" ng-change="changeQuality(episodeQuality)">
-                  <md-radio-button value="480p" class="md-accent" ng-selected="episodeQuality == '480p'">480p</md-radio-button>
-                  <md-radio-button value="720p" class="md-accent" ng-selected="episodeQuality == '720p' || !episodeQuality">720p</md-radio-button>
+                <md-radio-group style="border: none;" ng-model="config.episodeQuality" ng-change="changeQuality()">
+                  <md-radio-button value="480p" class="md-accent" ng-selected="config.episodeQuality == '480p'">480p</md-radio-button>
+                  <md-radio-button value="720p" class="md-accent" ng-selected="config.episodeQuality == '720p' || !config.episodeQuality">720p</md-radio-button>
                 </md-radio-group>
               </div>
             </form>
