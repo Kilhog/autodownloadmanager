@@ -11,6 +11,7 @@ var apiT411 = require("./dist/js/api-t411");
 var utils = require("./dist/js/api-utils.js");
 
 var http = require('http');
+var https = require('https');
 var ipc = require('ipc');
 var justOpen = true;
 
@@ -77,26 +78,26 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   states.kat = false;
 
   var checkStates = function() {
-    http.get('http://www.addic7ed.com/', function () {
-      states.addicted = true;
+    http.get('http://www.addic7ed.com/', function (res) {
+      states.addicted = res.statusCode == 200;
     }).on('error', function() {
       states.addicted = false;
     });
 
-    http.get('http://getstrike.net/torrents/', function () {
-      states.getStrike = true;
+    https.get('https://getstrike.net/torrents/', function (res) {
+      states.getStrike = res.statusCode == 200;
     }).on('error', function() {
       states.getStrike = false;
     });
 
-    http.get('http://www.t411.io/', function () {
-      states.t411 = true;
+    http.get('http://www.t411.io/', function (res) {
+      states.t411 = res.statusCode == 200;
     }).on('error', function() {
       states.t411 = false;
     });
 
-    http.get('http://kat.cr/', function () {
-      states.kat = true;
+    http.get('http://kat.cr/', function (res) {
+      states.kat = res.statusCode == 200;
     }).on('error', function() {
       states.kat = false;
     });
