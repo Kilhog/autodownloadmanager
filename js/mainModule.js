@@ -10,6 +10,7 @@ var apiAddicted = require("./dist/js/api-addicted");
 var apiT411 = require("./dist/js/api-t411");
 var utils = require("./dist/js/api-utils.js");
 
+var http = require('http');
 var ipc = require('ipc');
 var justOpen = true;
 
@@ -68,6 +69,43 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   };
 }).factory('persistContainer', function () {
   return {};
+}).factory('stateSites', function ($interval, $timeout) {
+  var states = {};
+  states.addicted = false;
+  states.getStrike = false;
+  states.t411 = false;
+  states.kat = false;
+
+  var checkStates = function() {
+    http.get('http://www.addic7ed.com/', function () {
+      states.addicted = true;
+    }).on('error', function() {
+      states.addicted = false;
+    });
+
+    http.get('http://getstrike.net/torrents/', function () {
+      states.getStrike = true;
+    }).on('error', function() {
+      states.getStrike = false;
+    });
+
+    http.get('http://www.t411.io/', function () {
+      states.t411 = true;
+    }).on('error', function() {
+      states.t411 = false;
+    });
+
+    http.get('http://kat.cr/', function () {
+      states.kat = true;
+    }).on('error', function() {
+      states.kat = false;
+    });
+  };
+
+  $interval(checkStates, 30000);
+  $timeout(checkStates, 3000);
+
+  return states;
 }).factory('toastFact', ["$mdToast", function ($mdToast) {
   return {
     show: function (msg, type) {
@@ -89,4 +127,6 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
           break;
       }
     });
+}]).controller('StateCtrl', ['$scope', 'stateSites', function ($scope, stateSites) {
+    $scope.states = stateSites;
 }]);

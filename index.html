@@ -21,6 +21,22 @@
 						<md-tab label="Réglages"></md-tab>
 					</md-tabs>
 				</span>
+
+				<div style="display: inherit;" ng-controller="StateCtrl">
+					<div class="state-site" ng-class="states.getStrike ? 'active' : 'desactive'">
+						GetStrike
+					</div>
+					<div class="state-site" ng-class="states.t411 ? 'active' : 'desactive'">
+						T411
+					</div>
+					<div class="state-site" ng-class="states.kat ? 'active' : 'desactive'">
+						KickAss
+					</div>
+					<div class="state-site" ng-class="states.addicted ? 'active' : 'desactive'" style="margin-right: 10px">
+						Addic7ed
+					</div>
+				</div>
+
 				<md-button id="reduce-window-button" aria-label="Reduire" class="button-main-window">
 					<i class="fa fa-minus"></i>
 				</md-button>

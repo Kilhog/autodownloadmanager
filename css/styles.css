@@ -195,3 +195,37 @@ md-dialog-content {
 .custom-subheader .md-subheader-inner {
   padding-bottom: 0 !important;
 }
+
+.state-site {
+  font-size: 12px;
+  width: 53px;
+  text-align: center;
+  position: relative;
+  top: 20px;
+}
+
+.state-site.active:after {
+  content: '';
+  background: rgb(205, 220, 57);
+  width: 8px;
+  height: 8px;
+  border-radius: 14px;
+  position: relative;
+  left: 23px;
+  top: 4px;
+  box-shadow: 0px 0px 3px #656565;
+  display: block;
+}
+
+.state-site.desactive:after {
+  content: '';
+  background: rgb(95, 95, 95);
+  width: 8px;
+  height: 8px;
+  border-radius: 14px;
+  position: relative;
+  left: 23px;
+  top: 4px;
+  box-shadow: 0px 0px 3px #656565;
+  display: block;
+}
