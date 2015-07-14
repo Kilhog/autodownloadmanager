@@ -2,6 +2,7 @@
 
 var apiBetaseries = require("./dist/js/api-betaseries");
 var apiGetStrike = require("./dist/js/api-getstrike");
+var apiKickAss = require("./dist/js/api-kat.js");
 var apiTransmission = require("./dist/js/api-transmission");
 var apiDblite = require("./dist/js/api-dblite");
 var apiAddicted = require("./dist/js/api-addicted");
