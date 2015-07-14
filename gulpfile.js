@@ -92,8 +92,13 @@ gulp.task('move-js', ['clean-min-js', 'move-jquery', 'move-api'], function () {
 gulp.task('min-api', function () {
   return gulp.src([
     './js/api-*'])
-    .pipe(uglify())
     .pipe(gulp.dest('dist/js/'));
+  // TODO : UGLIFY DOESNT SUPPORT ES6
+  /*
+  return gulp.src([
+    './js/api-*'])
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/js/'));*/
 });
 
 gulp.task('move-api', function () {

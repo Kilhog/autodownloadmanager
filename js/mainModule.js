@@ -70,7 +70,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   };
 }).factory('persistContainer', function () {
   return {};
-}).factory('stateSites', function ($interval, $timeout) {
+}).factory('stateSites', ['$interval', '$timeout', function ($interval, $timeout) {
   var states = {};
   states.addicted = false;
   states.getStrike = false;
@@ -107,7 +107,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   $timeout(checkStates, 3000);
 
   return states;
-}).factory('toastFact', ["$mdToast", function ($mdToast) {
+}]).factory('toastFact', ["$mdToast", function ($mdToast) {
   return {
     show: function (msg, type) {
       $mdToast.show({
