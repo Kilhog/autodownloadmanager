@@ -1,59 +1,48 @@
+"use strict";
+
 (function() {
 
   var fs = require("fs");
   var strike = require('strike-api');
   var shell = require('shell');
 
-  function apiGetStrike(apiTR, apiDB) {
+  function apiGetStrike(apiTR) {
     this.apiTR = apiTR;
-    this.apiDB = apiDB;
   }
 
-  apiGetStrike.prototype.search = function(phrase, episodeQuality, success, error) {
-    var self = this;
-
-    strike.search(phrase).then(function(res) {
-
-      var find = false;
-      var results = res.torrents;
-
-      for(var i in results) {
-        if(episodeQuality == '480p') {
-          if(results[i].torrent_title.indexOf("720p") == -1) {
-            success(results[i]);
-            find = true;
-            return false;
+  apiGetStrike.prototype.searchTheBest = function(q, episodeQuality) {
+    return new Promise(
+      function (resolve, reject) {
+        strike.search(q).then(function(res) {
+          for(let torrent of res.torrents) {
+            if((episodeQuality == '480p' && torrent.torrent_title.indexOf("720p") == -1) || episodeQuality == '720p' && torrent.torrent_title.indexOf("720p") > -1) {
+              resolve(torrent);
+              return false;
+            }
           }
-        } else {
-          if(results[i].torrent_title.indexOf("720p") > -1) {
-            success(results[i]);
-            find = true;
-            return false;
-          }
-        }
-      }
 
-      if(!find) {
-        error();
+          resolve(null);
+        }, function(){
+          reject();
+        });
       }
-    }, function(){
-      error();
-    });
+    );
   };
 
   apiGetStrike.prototype.searchAndDownload = function(query, episodeQuality, func) {
     var self = this;
-    self.search(query, episodeQuality, function(torrent) {
-      if(torrent) {
-        if(torrent.magnet_uri) {
-          if(self.apiTR.transmission_obj) {
-            self.apiTR.addMagnet(torrent.magnet_uri, function() {
-              func(true);
-            });
-          } else {
-            shell.openExternal(torrent.magnet_uri);
-          }
+
+    self.searchTheBest(query, episodeQuality).then(function(torrent) {
+      if(torrent && torrent.magnet_uri) {
+
+        if(self.apiTR.transmission_obj) {
+          self.apiTR.addMagnet(torrent.magnet_uri, function() {
+            func(true);
+          });
+        } else {
+          shell.openExternal(torrent.magnet_uri);
         }
+
       }
     }, function() {
       func(false);

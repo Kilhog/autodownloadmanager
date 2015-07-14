@@ -33,7 +33,7 @@ app.controller('mainCtrl', ["$scope", "persistContainer",
     persistContainer.apiDB = new apiDblite.apiDblite();
     persistContainer.apiTR = new apiTransmission.apiTransmission(persistContainer.apiDB);
     persistContainer.apiBT = new apiBetaseries.apiBetaseries(persistContainer.apiDB);
-    persistContainer.apiGS = new apiGetStrike.apiGetStrike(persistContainer.apiTR, persistContainer.apiDB);
+    persistContainer.apiGS = new apiGetStrike.apiGetStrike(persistContainer.apiTR);
     persistContainer.apiAD = new apiAddicted.apiAddicted(persistContainer.apiDB);
     persistContainer.apiT4 = new apiT411.apiT411(persistContainer.apiDB);
 
