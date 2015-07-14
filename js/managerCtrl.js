@@ -13,7 +13,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
     var apiDB = persistContainer.apiDB;
     var apiTR = persistContainer.apiTR;
     var apiBT = persistContainer.apiBT;
-    var apiGS = persistContainer.apiGS;
+    var apiTO = persistContainer.apiTO;
     var apiAD = persistContainer.apiAD;
     var apiT4 = persistContainer.apiT4;
 
@@ -28,7 +28,6 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
 
     $scope.synchroAll = function () {
       $scope.synchroEpisodesUnseen();
-      $scope.synchroEpisodesIncoming();
     };
 
     $scope.synchroEpisodesUnseen = function () {
@@ -57,16 +56,11 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
             });
           });
         } else {
-          $scope.displayToast('Synchronisation échouée')
+          $scope.displayToast('Synchronisation échouée');
         }
 
         $scope.synchroInProgress = false;
         $scope.$apply();
-      });
-    };
-
-    $scope.synchroEpisodesIncoming = function () {
-      apiBT.synchroEpisodesIncoming(function () {
       });
     };
 
@@ -75,37 +69,27 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
      */
 
     function gen_name_episode(serie, saison, episode) {
-      return serie + " S" + $filter('numberFixedLen')(saison, 2) + "E" + $filter('numberFixedLen')(episode, 2)
+      return serie + " S" + $filter('numberFixedLen')(saison, 2) + "E" + $filter('numberFixedLen')(episode, 2);
     }
 
     $scope.downloadEpisode = function (episode) {
       apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [episode.show.title], function (err, data) {
-        var target = episode.show.title;
+        var target = data.length > 0 ? data[0][2] : episode.show.title,
+          name = gen_name_episode(target, episode.season, episode.episode);
 
-        if (data.length > 0) {
-          target = data[0][2];
-        }
-
-        var name = gen_name_episode(target, episode.season, episode.episode);
-        apiGS.searchAndDownload(name, persistContainer.episodeQuality, function (res) {
-          if (res) {
-            $scope.displayToast('Torrent ajouté !');
-          } else {
-            $scope.displayToast('Aucun torrent trouvé !');
-          }
+        apiTO.searchAndDownload(name, persistContainer.episodeQuality).then(function() {
+          $scope.displayToast('Torrent ajouté !');
+        }, function() {
+          $scope.displayToast('Aucun torrent trouvé !');
         });
+
       });
     };
 
     $scope.downloadStr = function (episode) {
       apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [episode.show.title], function (err, data) {
-        var target = episode.show.title;
-
-        if (data.length > 0) {
-          target = data[0][2];
-        }
-
-        var name = gen_name_episode(target, episode.season, episode.episode);
+        var target = data.length > 0 ? data[0][2] : episode.show.title,
+          name = gen_name_episode(target, episode.season, episode.episode);
 
         apiAD.search(name, function (res) {
           if (res != '') {
@@ -139,6 +123,15 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
      */
 
     $scope.changeTarget = function (ev, origin) {
+      var createNewTarget = function(origin, target, table) {
+        if(target.trim() != '') {
+          apiDB.query("DELETE FROM " + table + " WHERE origin = ?", [origin], function() {
+            apiDB.query("INSERT INTO " + table + " (origin, target) VALUES (?,?)", [origin, target], function() {});
+          });
+        } else {
+          apiDB.query("DELETE FROM " + table + " WHERE origin = ?", [origin], function() {});
+        }
+      };
 
       $mdDialog.show({
         controller: 'ModalChangeTargetCtrl',
@@ -153,24 +146,12 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
             return apiDB;
           }
         }
-      })
-        .then(function (allName) {
-          createNewTarget(origin, allName.torrentName, 'search_for_torrent');
-          createNewTarget(origin, allName.subName, 'search_for_sub');
-        }, function () {
-
-        });
+      }).then(function (allName) {
+        createNewTarget(origin, allName.torrentName, 'search_for_torrent');
+        createNewTarget(origin, allName.subName, 'search_for_sub');
+      });
     };
 
-    function createNewTarget(origin, target, table) {
-      if(target.trim() != '') {
-        apiDB.query("DELETE FROM " + table + " WHERE origin = ?", [origin], function() {
-          apiDB.query("INSERT INTO " + table + " (origin, target) VALUES (?,?)", [origin, target], function() {});
-        });
-      } else {
-        apiDB.query("DELETE FROM " + table + " WHERE origin = ?", [origin], function() {});
-      }
-    }
 
     /*
      Check si le dossier des sous-titres est renseigné

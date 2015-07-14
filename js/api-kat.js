@@ -1,10 +1,9 @@
-"use strict";
-
 (function() {
+  "use strict";
 
-  var getJson = require('load-json');
-  var BASE_URL = 'http://kat.cr';
-  var url = BASE_URL + '/json.php';
+  var getJson = require('load-json'),
+    BASE_URL = 'http://kat.cr',
+    url = BASE_URL + '/json.php';
 
   function apiKickAss() {
 
@@ -15,16 +14,16 @@
       function (resolve, reject) {
         getJson(url, {q, field: 'seeders', order: 'desc'}, function(e, response) {
           if(e) {
-            reject(e);
+            reject(null);
           } else if (response.list.length > 0)  {
             for(let torrent of response.list) {
               if((episodeQuality == '480p' && torrent.title.indexOf("720p") == -1) || episodeQuality == '720p' && torrent.title.indexOf("720p") > -1) {
-                resolve(torrent);
+                resolve({title: torrent.title, torrentLink: torrent.torrentLink, seeds: torrent.seeds});
                 return false;
               }
             }
           }
-          resolve(null);
+          reject(null);
         });
       }
     );

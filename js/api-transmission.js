@@ -1,6 +1,6 @@
 (function() {
+  "use strict";
 
-  var fs = require("fs");
   var Transmission = require('transmission');
 
   function apiTransmission(db) {
@@ -8,7 +8,7 @@
     this.transmission_obj = null;
   }
 
-  apiTransmission.prototype.addMagnet = function(url, func) {
+  apiTransmission.prototype.addUrl = function(url, func) {
     var self = this;
     self.transmission_obj.addUrl(url, func);
   };

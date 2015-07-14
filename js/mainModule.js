@@ -3,6 +3,7 @@
 var apiBetaseries = require("./dist/js/api-betaseries");
 var apiGetStrike = require("./dist/js/api-getstrike");
 var apiKickAss = require("./dist/js/api-kat.js");
+var apiTorrent = require("./dist/js/api-torrent.js");
 var apiTransmission = require("./dist/js/api-transmission");
 var apiDblite = require("./dist/js/api-dblite");
 var apiAddicted = require("./dist/js/api-addicted");
@@ -59,7 +60,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     if (isNaN(num) || isNaN(len)) {
       return n;
     }
-    num = '' + num;
+    num = String(num);
     while (num.length < len) {
       num = '0' + num;
     }

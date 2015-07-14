@@ -120,11 +120,6 @@
     });
   };
 
-  apiBetaseries.prototype.synchroEpisodesIncoming = function(func) {
-    var self = this;
-
-  };
-
   apiBetaseries.prototype.seenEpisode = function(episode, func) {
     var self = this;
 
