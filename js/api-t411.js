@@ -1,4 +1,5 @@
 (function() {
+  "use strict";
 
   var fs = require("fs");
   var T411 = require('t411');
@@ -36,14 +37,24 @@
     func();
   };
 
-  apiT411.prototype.search = function(phrase, episodeQuality, success, error) {
+  apiT411.prototype.searchTheBest = function(q, episodeQuality) {
     var self = this;
 
-  };
+    return new Promise(
+      function (resolve, reject) {
+        if(self.t411Client) {
+          self.t411Client.search(q + "?limit=50", function(err, result) {
+            if(err) {
+              reject();
+            }
 
-  apiT411.prototype.searchAndDownload = function(query, episodeQuality, func) {
-    var self = this;
-
+            resolve(result);
+          });
+        } else {
+          reject();
+        }
+      }
+    );
   };
 
   apiT411.prototype.saveAccess = function(login, password, func) {
