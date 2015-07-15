@@ -114,9 +114,26 @@ body > div {
 
 .button-main-window {
   -webkit-app-region: no-drag !important;
-  min-width: initial !important;
+  min-width: 0 !important;
+  width: 23px !important;
   margin: 0 4px !important;
+  min-height: 0 !important;
+  height: 23px !important;
+  position: relative !important;
+  top: -14px;
+  left: 13px;
 }
+
+.button-main-window i.fa-minus {
+  position: relative;
+  top: -4px;
+}
+
+.button-main-window i.fa-times {
+  position: relative;
+  top: -7px;
+}
+
 
 .logo-txt {
   color: white;
