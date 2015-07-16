@@ -221,9 +221,13 @@ md-dialog-content {
   top: 20px;
 }
 
+.state-site:after {
+  -webkit-transition: background-color 1000ms cubic-bezier(0, 0, 0.01, 1), box-shadow 1000ms cubic-bezier(0, 0, 0.01, 1);
+}
+
 .state-site.active:after {
   content: '';
-  background: rgb(205, 220, 57);
+  background-color: rgb(205, 220, 57);
   width: 8px;
   height: 8px;
   border-radius: 14px;
@@ -236,13 +240,13 @@ md-dialog-content {
 
 .state-site.desactive:after {
   content: '';
-  background: rgb(95, 95, 95);
+  background-color: rgb(95, 95, 95);
   width: 8px;
   height: 8px;
   border-radius: 14px;
   position: relative;
   left: 23px;
   top: 4px;
-  box-shadow: 0px 0px 3px #656565;
+  box-shadow: 0;
   display: block;
 }
