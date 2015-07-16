@@ -175,6 +175,22 @@ body > div {
   left: -3px;
 }
 
+
+.logo-bolt-up i, .logo-bolt-down i {
+  -webkit-animation-name: logoCycle;
+  -webkit-animation-duration:10s;
+  -webkit-animation-direction:alternate;
+  -webkit-animation-iteration-count:infinite;
+}
+
+@-webkit-keyframes logoCycle {
+  26% {color:#bcc726;}
+  27% {color: #f4ff33;}
+  28% {color: #bcc726;}
+  30% {color: #f4ff33;}
+  31% {color: #bcc726;}
+}
+
 .md-xs {
   line-height: 40px !important;
   width: 23px !important;
