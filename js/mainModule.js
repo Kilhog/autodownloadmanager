@@ -87,7 +87,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     }).on('error', function() {
       states.addicted = false;
     });
-  }
+  };
 
   var checkStatesStrike = function() {
     https.get('https://getstrike.net/torrents/', function (res) {
@@ -95,7 +95,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     }).on('error', function() {
       states.getStrike = false;
     });
-  }
+  };
 
   var checkStatesT411 = function() {
     http.get('http://www.t411.io/', function (res) {
@@ -103,7 +103,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     }).on('error', function() {
       states.t411 = false;
     });
-  }
+  };
 
   var checkStatesKat = function() {
     http.get('http://kat.cr/', function (res) {
@@ -111,14 +111,14 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     }).on('error', function() {
       states.kat = false;
     });
-  }
+  };
 
   var checkStates = function() {
     checkStatesKat();
     checkStatesT411();
     checkStatesStrike();
     checkStatesAddic();
-  }
+  };
 
   $interval(checkStates, 4000);
   
