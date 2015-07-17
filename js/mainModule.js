@@ -77,34 +77,51 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   states.t411 = false;
   states.kat = false;
 
-  var checkStates = function() {
+  var checkStatesAddic = function() {
     http.get('http://www.addic7ed.com/', function (res) {
       states.addicted = res.statusCode == 200;
     }).on('error', function() {
       states.addicted = false;
     });
+  }
 
+  var checkStatesStrike = function() {
     https.get('https://getstrike.net/torrents/', function (res) {
       states.getStrike = res.statusCode == 200;
     }).on('error', function() {
       states.getStrike = false;
     });
+  }
 
+  var checkStatesT411 = function() {
     http.get('http://www.t411.io/', function (res) {
       states.t411 = res.statusCode == 200;
     }).on('error', function() {
       states.t411 = false;
     });
+  }
 
+  var checkStatesKat = function() {
     http.get('http://kat.cr/', function (res) {
       states.kat = res.statusCode == 200;
     }).on('error', function() {
       states.kat = false;
     });
-  };
+  }
 
-  $interval(checkStates, 30000);
-  $timeout(checkStates, 3000);
+  var checkStates = function() {
+    checkStatesKat();
+    checkStatesT411();
+    checkStatesStrike();
+    checkStatesAddic();
+  }
+
+  $interval(checkStates, 4000);
+  
+  $timeout(checkStatesKat, Math.floor((Math.random() * 2000) + 1) + 1500);
+  $timeout(checkStatesT411, Math.floor((Math.random() * 2000) + 1) + 1500);
+  $timeout(checkStatesStrike, Math.floor((Math.random() * 2000) + 1) + 1500);
+  $timeout(checkStatesAddic, Math.floor((Math.random() * 2000) + 1) + 1500);
 
   return states;
 }]).factory('toastFact', ["$mdToast", function ($mdToast) {
