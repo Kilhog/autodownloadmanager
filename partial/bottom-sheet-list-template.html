@@ -3,11 +3,34 @@
   <div style="font-size: 13px; padding: 0 16px">
     <p>{{episode.description}}</p>
   </div>
+
+  <div class="rating">
+
+    <input type="radio" name="rating" id="r1">
+    <label for="r1"></label>
+
+    <input type="radio" name="rating" id="r2">
+    <label for="r2"></label>
+
+    <input type="radio" name="rating" id="r3">
+    <label for="r3"></label>
+
+    <input type="radio" name="rating" id="r4">
+    <label for="r4"></label>
+
+    <input type="radio" name="rating" id="r5">
+    <label for="r5"></label>
+
+  </div>
+
+
   <md-list>
     <md-list-item>
       <md-button class="md-list-item-content" ng-click="seenEpisode()">
         <md-icon md-font-icon="fa fa-eye" class="i-see"></md-icon>
-        <span class="md-inline-list-icon-label">Marquer comme vu</span>
+        <span class="md-inline-list-icon-label">
+          Marquer comme vu
+        </span>
       </md-button>
     </md-list-item>
     <md-list-item>
