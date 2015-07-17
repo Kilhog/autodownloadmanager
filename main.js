@@ -20,8 +20,13 @@ app.on('window-all-closed', function() {
 // initialization and ready for creating browser windows.
 app.on('ready', function() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({"min-width": 750, width: 800, "min-height": 400, height: 800, frame: false, center: true, resizable: true, title: "AutoDownloadManager"});
+  mainWindow = new BrowserWindow({"show": false, "min-width": 750, width: 800, "min-height": 400, height: 800, frame: false, center: true, resizable: true, title: "AutoDownloadManager"});
   mainWindow.openDevTools();
+
+  ipc.on('dom-ready', function() {
+    mainWindow.show();
+  });
+
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 

@@ -17,6 +17,10 @@ var justOpen = true;
 
 var app = angular.module('adm-app', ["ngMaterial", "ui.router"]);
 
+$(document).ready(function(){
+  ipc.send('dom-ready');
+})
+
 app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
 
