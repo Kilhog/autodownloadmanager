@@ -120,7 +120,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     checkStatesAddic();
   };
 
-  $interval(checkStates, 4000);
+  $interval(checkStates, 60000);
   
   $timeout(checkStatesKat, Math.floor((Math.random() * 2000) + 1) + 1500);
   $timeout(checkStatesT411, Math.floor((Math.random() * 2000) + 1) + 1500);
