@@ -181,7 +181,6 @@ body > div {
   -webkit-animation-duration:10s;
   -webkit-animation-direction:normal;
   -webkit-animation-iteration-count:infinite;
-  -webkit-transform: translateZ(0);
 }
 
 @-webkit-keyframes logoCycle {
