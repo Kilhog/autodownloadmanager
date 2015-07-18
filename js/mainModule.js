@@ -19,7 +19,7 @@ var app = angular.module('adm-app', ["ngMaterial", "ui.router"]);
 
 $(document).ready(function(){
   ipc.send('dom-ready');
-})
+});
 
 app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
@@ -151,4 +151,14 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     });
 }]).controller('StateCtrl', ['$scope', 'stateSites', function ($scope, stateSites) {
     $scope.states = stateSites;
-}]);
+}]).directive('ngRightClick', function($parse) {
+  return function(scope, element, attrs) {
+    var fn = $parse(attrs.ngRightClick);
+    element.bind('contextmenu', function(event) {
+      scope.$apply(function() {
+        event.preventDefault();
+        fn(scope, {$event:event});
+      });
+    });
+  };
+});

@@ -5,6 +5,7 @@
   var cheerio = require('cheerio');
   var path = require('path');
   var StringDecoder = require('string_decoder').StringDecoder;
+  var shell = require('shell');
 
   function apiAddicted(apiDB) {
     this.apiDB = apiDB;
@@ -37,6 +38,11 @@
         });
       }
     });
+  };
+
+  apiAddicted.prototype.openUrl = function(query) {
+    var self = this;
+    shell.openExternal(self.url_addic + "/search.php?" + querystring.stringify({search: query}));
   };
 
   apiAddicted.prototype.search = function(query, func) {

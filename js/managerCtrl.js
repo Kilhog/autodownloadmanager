@@ -107,6 +107,15 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       });
     };
 
+    $scope.redirectStr = function(episode) {
+      apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [episode.show.title], function (err, data) {
+        var target = data.length > 0 ? data[0][2] : episode.show.title,
+          name = gen_name_episode(target, episode.season, episode.episode);
+
+        apiAD.openUrl(name);
+      });
+    };
+
     /*
      Marquer comme vu
      */
