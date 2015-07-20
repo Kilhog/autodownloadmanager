@@ -5,7 +5,7 @@
   "author": "Kilhog",
   "license": "MIT",
   "devDependencies": {
-    "electron-prebuilt": "0.29.2",
+    "electron-prebuilt": "^0.30.0",
     "gulp": "3.9.0",
     "gulp-concat": "2.6.0",
     "gulp-concat-css": "2.2.0",
