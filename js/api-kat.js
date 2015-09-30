@@ -1,8 +1,8 @@
 (function() {
   "use strict";
 
-  var getJson = require('load-json'),
-    BASE_URL = 'http://kat.cr',
+  var request = require('superagent'),
+    BASE_URL = 'https://kat.cr',
     url = BASE_URL + '/json.php';
 
   function apiKickAss() {
@@ -12,7 +12,8 @@
   apiKickAss.prototype.searchTheBest = function(q, episodeQuality) {
     return new Promise(
       function (resolve, reject) {
-        getJson(url, {q, field: 'seeders', order: 'desc'}, function(e, response) {
+        request.get(url).query({q, field: 'seeders', order: 'desc'}).end(function(e, response) {
+          response = JSON.parse(response.text);
           if(e) {
             reject(null);
           } else if (response.list.length > 0)  {

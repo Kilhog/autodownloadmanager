@@ -29,6 +29,7 @@
     "jquery": "2.1.4",
     "load-json": "0.0.1",
     "strike-api": "0.2.0",
+    "superagent": "^1.4.0",
     "t411": "1.0.0",
     "transmission": "0.4.2"
   }
