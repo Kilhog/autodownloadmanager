@@ -98,7 +98,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   };
 
   var checkStatesT411 = function() {
-    http.get('http://www.t411.io/', function (res) {
+    http.get('http://www.t411.in/', function (res) {
       states.t411 = res.statusCode == 200;
     }).on('error', function() {
       states.t411 = false;
@@ -106,7 +106,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   };
 
   var checkStatesKat = function() {
-    http.get('http://kat.cr/', function (res) {
+    https.get('https://kat.cr/', function (res) {
       states.kat = res.statusCode == 200;
     }).on('error', function() {
       states.kat = false;
