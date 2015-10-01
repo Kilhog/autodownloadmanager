@@ -14,6 +14,8 @@ En gros le principe est le suivant:
 
 Actuellement l'application n'est pas "packagé" donc vous devez utiliser cette procédure ci-dessous pour démarrer l'application. 
 
+![Alt text](http://i.imgur.com/vi7ueMj.png)
+
 ## Procédure d'installation
 
 ### Installer node & npm
