@@ -7,6 +7,7 @@ var uglify = require('gulp-uglify');
 var htmlmin = require('gulp-htmlmin');
 var sys = require('sys');
 var exec = require('child_process').exec;
+var execSync = require('sync-exec');
 
 var css = [
   './css/styles.css',
@@ -31,6 +32,8 @@ var js = [
 var html = [
   './partial/*.html'
 ];
+
+var electronPrebuilt = './node_modules/electron-prebuilt/dist/Electron.app';
 
 function launch() {
   function puts(error, stdout, stderr) {
@@ -114,12 +117,12 @@ gulp.task('clean-min-html', function () {
 gulp.task('min-html', ['clean-min-html'], function() {
   return gulp.src(html)
     .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(gulp.dest('dist/html/'))
+    .pipe(gulp.dest('dist/html/'));
 });
 
 gulp.task('move-html', ['clean-min-html'], function() {
   return gulp.src(html)
-    .pipe(gulp.dest('dist/html/'))
+    .pipe(gulp.dest('dist/html/'));
 });
 
 gulp.task('default', ['move-css', 'move-js', 'move-html'], function () {
@@ -130,4 +133,30 @@ gulp.task('compile', ['min-css', 'min-js', 'min-html'], function () {
   launch();
 });
 
+gulp.task('move-electron-prebuilt', function() {
+  execSync("rm -rf ./out");
 
+  if (process.platform == 'darwin') {
+    execSync("mkdir out");
+    execSync("cp -R ./node_modules/electron-prebuilt/dist/Electron.app ./out/AutoDownloadManager.app");
+    execSync("sed 's/Electron/AutoDownloadManager/g' ./out/AutoDownloadManager.app/Contents/Info.plist > ./out/AutoDownloadManager.app/Contents/Info.plist.tmp");
+    execSync("rm ./out/AutoDownloadManager.app/Contents/Info.plist");
+    execSync("mv ./out/AutoDownloadManager.app/Contents/Info.plist.tmp ./out/AutoDownloadManager.app/Contents/Info.plist");
+    execSync("rm ./out/AutoDownloadManager.app/Contents/Info.plist.tmp");
+    execSync("mv ./out/AutoDownloadManager.app/Contents/MacOS/Electron ./out/AutoDownloadManager.app/Contents/MacOS/AutoDownloadManager");
+    execSync("mkdir ./out/AutoDownloadManager.app/Contents/Resources/app");
+    execSync("cp index.html ./out/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("cp main.js ./out/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("cp package.json ./out/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("cp -R dist ./out/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("cp -R lib ./out/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("mkdir ./out/AutoDownloadManager.app/Contents/Resources/app/db/");
+    execSync("cp -R node_modules ./out/AutoDownloadManager.app/Contents/Resources/app/");
+  }
+
+  //AutoDownloadManager.app/Contents/Resources/app
+});
+
+gulp.task('package', ['move-electron-prebuilt'], function() {
+
+});
