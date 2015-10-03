@@ -10,6 +10,10 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       toastFact.show(msg, type);
     };
 
+    $timeout(function() {
+      ipc.send('dom-ready');
+    }, 0);
+
     var apiDB = persistContainer.apiDB;
     var apiTR = persistContainer.apiTR;
     var apiBT = persistContainer.apiBT;
