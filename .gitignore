@@ -5,3 +5,4 @@ nwjs.app/
 nwjc
 dist/
 db/adm.sqlite
+.DS_Store
