@@ -147,7 +147,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     });
 }]).controller('StateCtrl', ['$scope', 'stateSites', function ($scope, stateSites) {
     $scope.states = stateSites;
-}]).directive('ngRightClick', function($parse) {
+}]).directive('ngRightClick', ['$parse', function($parse) {
   return function(scope, element, attrs) {
     var fn = $parse(attrs.ngRightClick);
     element.bind('contextmenu', function(event) {
@@ -157,4 +157,4 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       });
     });
   };
-});
+}]);
