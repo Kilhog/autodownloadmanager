@@ -6,3 +6,4 @@ nwjc
 dist/
 db/adm.sqlite
 .DS_Store
+out/

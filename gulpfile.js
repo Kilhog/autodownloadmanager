@@ -153,8 +153,6 @@ gulp.task('move-electron-prebuilt', function() {
     execSync("mkdir ./out/AutoDownloadManager.app/Contents/Resources/app/db/");
     execSync("cp -R node_modules ./out/AutoDownloadManager.app/Contents/Resources/app/");
   }
-
-  //AutoDownloadManager.app/Contents/Resources/app
 });
 
 gulp.task('package', ['move-electron-prebuilt'], function() {
