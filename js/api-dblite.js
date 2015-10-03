@@ -1,15 +1,15 @@
 (function() {
   var dblite = require('dblite');
   if(process.platform == "win32") {
-    dblite.bin = "./lib/sqlite3/win32/sqlite3.exe";
+    dblite.bin = __dirname + "/../../lib/sqlite3/win32/sqlite3.exe";
   } else if(process.platform == "darwin") {
-    dblite.bin = "./lib/sqlite3/darwin/sqlite3";
+    dblite.bin = __dirname + "/../../lib/sqlite3/darwin/sqlite3";
   } else if(process.platform == "linux") {
-    dblite.bin = "./lib/sqlite3/linux/sqlite3";
+    dblite.bin = __dirname + "/../../lib/sqlite3/linux/sqlite3";
   }
 
   var fs = require('fs');
-  var path_db = './db/adm.sqlite';
+  var path_db = __dirname + '/../../db/adm.sqlite';
 
   var apiDblite = function() {
     this.db = dblite(path_db);
