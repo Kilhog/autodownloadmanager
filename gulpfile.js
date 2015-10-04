@@ -125,15 +125,23 @@ gulp.task('move-html', ['clean-min-html'], function() {
     .pipe(gulp.dest('dist/html/'));
 });
 
-gulp.task('default', ['move-css', 'move-js', 'move-html'], function () {
+gulp.task('move-all', ['move-css', 'move-js', 'move-html'], function () {
+
+});
+
+gulp.task('min-all', ['min-css', 'min-js', 'min-html'], function () {
+
+});
+
+gulp.task('default', ['move-all'], function () {
   launch();
 });
 
-gulp.task('compile', ['min-css', 'min-js', 'min-html'], function () {
+gulp.task('compile', ['min-all'], function () {
   launch();
 });
 
-gulp.task('move-electron-prebuilt', function() {
+var build = function() {
   execSync("rm -rf ./build");
 
   if (process.platform == 'darwin') {
@@ -165,8 +173,8 @@ gulp.task('move-electron-prebuilt', function() {
     execSync("cp -R node_modules/font-awesome ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
     execSync("cd build && tar -zcvf AutoDownloadManager.app.tar.gz AutoDownloadManager.app/*");
   }
-});
+};
 
-gulp.task('package', ['move-electron-prebuilt'], function() {
+gulp.task('package', ['min-all'], build);
 
-});
+gulp.task('package-dev', ['move-all'], build);
