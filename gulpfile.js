@@ -158,7 +158,6 @@ var build = function() {
     execSync("cp package.json ./build/AutoDownloadManager.app/Contents/Resources/app/");
     execSync("cp -R dist ./build/AutoDownloadManager.app/Contents/Resources/app/");
     execSync("cp -R lib ./build/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("mkdir ./build/AutoDownloadManager.app/Contents/Resources/app/db/");
     execSync("mkdir ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
 
     execSync("cp -R node_modules/cheerio ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");

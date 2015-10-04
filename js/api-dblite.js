@@ -1,4 +1,6 @@
 (function() {
+  var path = require('path-extra');
+
   var dblite = require('dblite');
   if(process.platform == "win32") {
     dblite.bin = __dirname + "/../../lib/sqlite3/win32/sqlite3.exe";
@@ -9,7 +11,14 @@
   }
 
   var fs = require('fs');
-  var path_db = __dirname + '/../../db/adm.sqlite';
+
+  try {
+    fs.mkdirSync(path.homedir() + '/.adm');
+  } catch(e) {
+    // Already Exist
+  }
+  
+  var path_db = path.homedir() + '/.adm/adm.sqlite';
 
   var apiDblite = function() {
     this.db = dblite(path_db);
