@@ -148,6 +148,9 @@ var build = function() {
     execSync("rm ./build/AutoDownloadManager.app/Contents/Info.plist");
     execSync("mv ./build/AutoDownloadManager.app/Contents/Info.plist.tmp ./build/AutoDownloadManager.app/Contents/Info.plist");
     execSync("rm ./build/AutoDownloadManager.app/Contents/Info.plist.tmp");
+    execSync("rm -rf ./build/AutoDownloadManager.app/Contents/Resources/default_app");
+    execSync("rm -rf ./build/AutoDownloadManager.app/Contents/Resources/atom.icns");
+    execSync("cp img/atom.icns ./build/AutoDownloadManager.app/Contents/Resources/atom.icns");
     execSync("mv ./build/AutoDownloadManager.app/Contents/MacOS/Electron ./build/AutoDownloadManager.app/Contents/MacOS/AutoDownloadManager");
     execSync("mkdir ./build/AutoDownloadManager.app/Contents/Resources/app");
     execSync("cp index.html ./build/AutoDownloadManager.app/Contents/Resources/app/");
