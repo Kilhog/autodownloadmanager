@@ -1,8 +1,4 @@
 .idea/
 node_modules/
-bower_components/
-nwjs.app/
-nwjc
 dist/
 .DS_Store
-out/
