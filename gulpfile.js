@@ -8,6 +8,7 @@ var htmlmin = require('gulp-htmlmin');
 var sys = require('sys');
 var exec = require('child_process').exec;
 var execSync = require('sync-exec');
+var babel = require('gulp-babel');
 
 var css = [
   './css/styles.css',
@@ -95,13 +96,9 @@ gulp.task('move-js', ['clean-min-js', 'move-jquery', 'move-api'], function () {
 gulp.task('min-api', function () {
   return gulp.src([
     './js/api-*'])
-    .pipe(gulp.dest('dist/js/'));
-  // TODO : UGLIFY DOESNT SUPPORT ES6
-  /*
-  return gulp.src([
-    './js/api-*'])
+    .pipe(babel())
     .pipe(uglify())
-    .pipe(gulp.dest('dist/js/'));*/
+    .pipe(gulp.dest('dist/js/'));
 });
 
 gulp.task('move-api', function () {
