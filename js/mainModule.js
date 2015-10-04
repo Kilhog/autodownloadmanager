@@ -10,8 +10,7 @@ var apiAddicted = require("./dist/js/api-addicted");
 var apiT411 = require("./dist/js/api-t411");
 var utils = require("./dist/js/api-utils.js");
 
-var http = require('http');
-var https = require('https');
+var request = require('superagent');
 var ipc = require('ipc');
 var justOpen = true;
 
@@ -78,34 +77,26 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   states.kat = false;
 
   var checkStatesAddic = function() {
-    http.get('http://www.addic7ed.com/', function (res) {
-      states.addicted = res.statusCode == 200;
-    }).on('error', function() {
-      states.addicted = false;
+    request.get('http://www.addic7ed.com/').end(function(err, res) {
+      states.addicted = !err && res.statusCode == 200;
     });
   };
 
   var checkStatesStrike = function() {
-    https.get('https://getstrike.net/torrents/', function (res) {
-      states.getStrike = res.statusCode == 200;
-    }).on('error', function() {
-      states.getStrike = false;
+    request.get('https://getstrike.net/torrents/').end(function (err, res) {
+      states.getStrike = !err && res.statusCode == 200;
     });
   };
 
   var checkStatesT411 = function() {
-    http.get('http://www.t411.in/', function (res) {
-      states.t411 = res.statusCode == 200;
-    }).on('error', function() {
-      states.t411 = false;
+    request.get('http://www.t411.in/').end(function (err, res) {
+      states.t411 = !err && res.statusCode == 200;
     });
   };
 
   var checkStatesKat = function() {
-    https.get('https://kat.cr/', function (res) {
-      states.kat = res.statusCode == 200;
-    }).on('error', function() {
-      states.kat = false;
+    request.get('https://kat.cr/').end(function (err, res) {
+      states.kat = !err && res.statusCode == 200;
     });
   };
 
