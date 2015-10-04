@@ -134,24 +134,37 @@ gulp.task('compile', ['min-css', 'min-js', 'min-html'], function () {
 });
 
 gulp.task('move-electron-prebuilt', function() {
-  execSync("rm -rf ./out");
+  execSync("rm -rf ./build");
 
   if (process.platform == 'darwin') {
-    execSync("mkdir out");
-    execSync("cp -R ./node_modules/electron-prebuilt/dist/Electron.app ./out/AutoDownloadManager.app");
-    execSync("sed 's/Electron/AutoDownloadManager/g' ./out/AutoDownloadManager.app/Contents/Info.plist > ./out/AutoDownloadManager.app/Contents/Info.plist.tmp");
-    execSync("rm ./out/AutoDownloadManager.app/Contents/Info.plist");
-    execSync("mv ./out/AutoDownloadManager.app/Contents/Info.plist.tmp ./out/AutoDownloadManager.app/Contents/Info.plist");
-    execSync("rm ./out/AutoDownloadManager.app/Contents/Info.plist.tmp");
-    execSync("mv ./out/AutoDownloadManager.app/Contents/MacOS/Electron ./out/AutoDownloadManager.app/Contents/MacOS/AutoDownloadManager");
-    execSync("mkdir ./out/AutoDownloadManager.app/Contents/Resources/app");
-    execSync("cp index.html ./out/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("cp main.js ./out/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("cp package.json ./out/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("cp -R dist ./out/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("cp -R lib ./out/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("mkdir ./out/AutoDownloadManager.app/Contents/Resources/app/db/");
-    execSync("cp -R node_modules ./out/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("mkdir build");
+    execSync("cp -R ./node_modules/electron-prebuilt/dist/Electron.app ./build/AutoDownloadManager.app");
+    execSync("sed 's/Electron/AutoDownloadManager/g' ./build/AutoDownloadManager.app/Contents/Info.plist > ./build/AutoDownloadManager.app/Contents/Info.plist.tmp");
+    execSync("rm ./build/AutoDownloadManager.app/Contents/Info.plist");
+    execSync("mv ./build/AutoDownloadManager.app/Contents/Info.plist.tmp ./build/AutoDownloadManager.app/Contents/Info.plist");
+    execSync("rm ./build/AutoDownloadManager.app/Contents/Info.plist.tmp");
+    execSync("mv ./build/AutoDownloadManager.app/Contents/MacOS/Electron ./build/AutoDownloadManager.app/Contents/MacOS/AutoDownloadManager");
+    execSync("mkdir ./build/AutoDownloadManager.app/Contents/Resources/app");
+    execSync("cp index.html ./build/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("cp main.js ./build/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("cp package.json ./build/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("cp -R dist ./build/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("cp -R lib ./build/AutoDownloadManager.app/Contents/Resources/app/");
+    execSync("mkdir ./build/AutoDownloadManager.app/Contents/Resources/app/db/");
+    execSync("mkdir ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+
+    execSync("cp -R node_modules/cheerio ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/crypto-js ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/curlrequest ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/dblite ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/jquery ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/MD5 ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/strike-api ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/superagent ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/t411 ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/transmission ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/font-awesome ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cd build && tar -zcvf AutoDownloadManager.app.tar.gz AutoDownloadManager.app/*");
   }
 });
 
