@@ -25,6 +25,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
     $scope.episodesUnseen = apiBT.episodesUnseen;
     $scope.pathDownloadFolder = persistContainer.pathDownloadFolder || "";
     $scope.episodesIncoming = $scope.episodesIncoming || {};
+    $scope.loadedEpisode = [];
 
     /*
      Synchronisation
@@ -76,21 +77,35 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       return serie + " S" + $filter('numberFixedLen')(saison, 2) + "E" + $filter('numberFixedLen')(episode, 2);
     }
 
+    function remove_from_loaded_episode(id) {
+      for (var i=$scope.loadedEpisode.length-1; i>=0; i--) {
+        if ($scope.loadedEpisode[i] === id) {
+          $scope.loadedEpisode.splice(i, 1);
+        }
+      }
+    }
+
     $scope.downloadEpisode = function (episode) {
+      $scope.loadedEpisode.push(episode.id);
+
       apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [episode.show.title], function (err, data) {
         var target = data.length > 0 ? data[0][2] : episode.show.title,
           name = gen_name_episode(target, episode.season, episode.episode);
 
         apiTO.searchAndDownload(name, persistContainer.episodeQuality).then(function() {
           $scope.displayToast('Torrent ajouté !');
+          remove_from_loaded_episode(episode.id);
         }, function() {
           $scope.displayToast('Aucun torrent trouvé !');
+          remove_from_loaded_episode(episode.id);
         });
 
       });
     };
 
     $scope.downloadStr = function (episode) {
+      $scope.loadedEpisode.push(episode.id);
+
       apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [episode.show.title], function (err, data) {
         var target = data.length > 0 ? data[0][2] : episode.show.title,
           name = gen_name_episode(target, episode.season, episode.episode);
@@ -100,12 +115,15 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
             $scope.checkStrFolderPath(function () {
               apiAD.downloadStr(res, name.trim(), $scope.pathDownloadFolder, function () {
                 $scope.displayToast('Sous-titre récupéré');
+                remove_from_loaded_episode(episode.id);
               }, function() {
                 $scope.displayToast('Erreur lors de la récupération des sous-titres');
+                remove_from_loaded_episode(episode.id);
               });
             });
           } else {
             $scope.displayToast('Sous-titres non trouvés');
+            remove_from_loaded_episode(episode.id);
           }
         });
       });
@@ -125,8 +143,12 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
      */
 
     $scope.seenEpisode = function (index, index2) {
+      var id = $scope.episodesUnseen.shows[index].unseen[index2].id;
+      $scope.loadedEpisode.push(id);
+
       apiBT.seenEpisode($scope.episodesUnseen.shows[index].unseen[index2], function () {
         $scope.episodesUnseen.shows[index].unseen.splice(index2, 1);
+        remove_from_loaded_episode(id);
         $scope.$apply();
       });
     };

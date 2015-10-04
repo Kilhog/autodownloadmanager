@@ -170,6 +170,7 @@ var build = function() {
     execSync("cp -R node_modules/t411 ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
     execSync("cp -R node_modules/transmission ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
     execSync("cp -R node_modules/font-awesome ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/path-extra ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
     execSync("cd build && tar -zcvf AutoDownloadManager.app.tar.gz AutoDownloadManager.app/*");
   }
 };
