@@ -158,7 +158,6 @@ gulp.task('move-electron-prebuilt', function() {
     execSync("cp -R node_modules/curlrequest ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
     execSync("cp -R node_modules/dblite ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
     execSync("cp -R node_modules/jquery ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/MD5 ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
     execSync("cp -R node_modules/strike-api ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
     execSync("cp -R node_modules/superagent ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
     execSync("cp -R node_modules/t411 ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");

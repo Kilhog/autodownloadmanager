@@ -2,7 +2,7 @@
   var fs = require("fs");
   var querystring = require('querystring');
   var https = require('https');
-  var md5 = require('MD5');
+  var md5 = require('crypto-js/md5');
 
   function callAPI(endpoint, method, data, success, error) {
     var dataString = JSON.stringify(data);
@@ -65,7 +65,7 @@
     utils.getParam(self.db, 'BTaccess', function(BTaccess) {
       callAPI('/members/auth', 'POST', {
         'login': BTaccess.login,
-        'password': md5(BTaccess.password)
+        'password': md5(BTaccess.password).toString()
       }, function(data) {
         if(data.errors.length == 0) {
           self.user['hash'] = data.hash;
