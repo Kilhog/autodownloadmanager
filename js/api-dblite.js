@@ -22,8 +22,6 @@
   
   var path_db = pathdb + '/adm.sqlite';
 
-console.log(path_db);
-
   var apiDblite = function() {
     this.db = dblite(path_db);
     this.db.query('CREATE TABLE IF NOT EXISTS params (id INTEGER PRIMARY KEY AUTOINCREMENT, nom TEXT, value TEXT)');
