@@ -148,6 +148,9 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
 
       apiBT.seenEpisode($scope.episodesUnseen.shows[index].unseen[index2], function () {
         $scope.episodesUnseen.shows[index].unseen.splice(index2, 1);
+        if($scope.episodesUnseen.shows[index].unseen.length == 0) {
+          $scope.episodesUnseen.shows.splice(index, 1);
+        }
         remove_from_loaded_episode(id);
         $scope.$apply();
       });
