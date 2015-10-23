@@ -244,6 +244,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       if (!$scope.user.token && justOpen) {
         apiBT.connectToApi(function (res) {
           $scope.user = apiBT.user;
+          $scope.user['done'] = true;
 
           if (apiBT.user.token) {
             $scope.displayToast('Connecté à Betaseries');

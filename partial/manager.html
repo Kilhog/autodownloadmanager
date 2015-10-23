@@ -20,6 +20,9 @@
         <div ng-if="!synchroInProgress && episodesUnseen.shows.length == 0" layout="row" layout-sm="column" layout-align="space-around">
           Vous n'avez plus d'épisodes à voir
         </div>
+        <div ng-if="!synchroInProgress && !user.token && user.done === true" layout="row" layout-sm="column" layout-align="space-around">
+          Veuillez vous connecter à votre compte BetaSeries
+        </div>
         <div ng-if="!synchroInProgress" ng-repeat="show in episodesUnseen.shows track by $index">
           <h4 style="margin-bottom: 0; margin-top: 0">
             <a style="cursor: pointer" ng-click="changeTarget($event, show.title)">> {{show.title}}</a>
