@@ -48,6 +48,12 @@ app.controller('mainCtrl', ["$scope", "persistContainer",
     }
 
     getEpisodeQuality(function (res) {
-      persistContainer.episodeQuality = res;
+      if(!res) {
+        utils.setParam(persistContainer.apiDB, 'episodeQuality', '720p', function() {
+          persistContainer.episodeQuality = '720p';
+        });
+      } else {
+        persistContainer.episodeQuality = res;
+      }
     });
   }]);
