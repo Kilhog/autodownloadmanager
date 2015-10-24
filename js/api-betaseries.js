@@ -4,29 +4,29 @@
   var https = require('https');
   var md5 = require('crypto-js/md5');
 
-  function callAPI(endpoint, method, data, success, error) {
+  function apiBetaseries(db) {
+    this.db = db;
+    this.user = {};
+    this.episodesUnseen = {}
+  }
+
+  function callAPI(path, method, data, success, error) {
     var dataString = JSON.stringify(data);
+    var host = "api.betaseries.com";
     var headers = {
       Accept: 'application/json',
       'X-BetaSeries-Version': 2.4,
       'X-BetaSeries-Key': 'b931e8e98023'
     };
-    var host = "api.betaseries.com";
 
-    if (method == 'GET') {
-      endpoint += '?' + querystring.stringify(data);
-    } else {
-      endpoint += '?' + querystring.stringify(data);
+    path += '?' + querystring.stringify(data);
+
+    if (method != 'GET') {
       headers['Content-Type'] = 'application/json';
       headers['Content-Length'] = dataString.length;
     }
 
-    var options = {
-      host: host,
-      path: endpoint,
-      method: method,
-      headers: headers
-    };
+    var options = {host, path, method, headers};
 
     var req = https.request(options, function(res) {
       res.setEncoding('utf-8');
@@ -53,12 +53,6 @@
     req.end();
   }
 
-  function apiBetaseries(db) {
-    this.db = db;
-    this.user = {};
-    this.episodesUnseen = {}
-  }
-
   apiBetaseries.prototype.connectToApi = function(func) {
     var self = this;
 
@@ -73,9 +67,7 @@
           self.user['user'] = data.user;
         }
 
-        if(func) {
-          func();
-        }
+        (func || Function)();
       });
     }, true);
   };
@@ -88,14 +80,8 @@
       delete self.user.token;
       delete self.user.user;
 
-      if(func) {
-        func()
-      }
-    }, function() {
-      if(func) {
-        func()
-      }
-    });
+      (func || Function)();
+    }, (func || Function));
   };
 
   apiBetaseries.prototype.saveAccess = function(login, password, func) {
@@ -109,25 +95,17 @@
       if(data.errors.length == 0) {
         delete self.episodesUnseen.shows;
         self.episodesUnseen.shows = data.shows;
-        if(func) {
-          func(true);
-        }
+
+        (func || Function)(true);
       } else {
-        if(func) {
-          func(false);
-        }
+        (func || Function)(false);
       }
     });
   };
 
   apiBetaseries.prototype.seenEpisode = function(episode, func) {
     var self = this;
-
-    callAPI('/episodes/watched', 'POST', {'id': episode.id, token: self.user.token}, function(res) {
-        if(func) {
-          func();
-        }
-    });
+    callAPI('/episodes/watched', 'POST', {'id': episode.id, token: self.user.token}, (func || Function));
   };
 
   exports.apiBetaseries = apiBetaseries;

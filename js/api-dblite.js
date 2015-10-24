@@ -1,8 +1,16 @@
 (function() {
   var path = require('path-extra');
   var dblite = require('dblite');
+  var fs = require('fs');
 
-  var pathdb = path.datadir('adm');
+  var path_dir_db = path.datadir('adm');
+  var path_db = path_dir_db + '/adm.sqlite';
+
+  try {
+    fs.mkdirSync(path_dir_db);
+  } catch(e) {
+    // Already Exist
+  }
 
   if(process.platform == "win32") {
     dblite.bin = __dirname + "/../../lib/sqlite3/win32/sqlite3.exe";
@@ -11,16 +19,6 @@
   } else if(process.platform == "linux") {
     dblite.bin = __dirname + "/../../lib/sqlite3/linux/sqlite3";
   }
-
-  var fs = require('fs');
-
-  try {
-    fs.mkdirSync(pathdb);
-  } catch(e) {
-    // Already Exist
-  }
-  
-  var path_db = pathdb + '/adm.sqlite';
 
   var apiDblite = function() {
     this.db = dblite(path_db);
@@ -34,21 +32,12 @@
   };
 
   apiDblite.dropDb = function(func) {
-    fs.unlink(path_db, function () {
-      if(func) {
-        func();
-      }
-    });
+    fs.unlink(path_db, (func || Function));
   };
 
   apiDblite.prototype.query = function(sql, params, func) {
     var self = this;
-
-    self.db.query(sql, params, function(err, rows){
-      if(func) {
-        func(err, rows);
-      }
-    });
+    self.db.query(sql, params, (func || Function));
   };
 
   exports.apiDblite = apiDblite;

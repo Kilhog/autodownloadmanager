@@ -31,11 +31,7 @@
       if(buffer_str.indexOf('<!DOCTYPE html') == 0) {
         func_err();
       } else {
-        fs.writeFile(pathDownloadFolder + path.sep + name + ".srt", buffer, function(err) {
-          if(func) {
-            func();
-          }
-        });
+        fs.writeFile(pathDownloadFolder + path.sep + name + ".srt", buffer, (func || Function));
       }
     });
   };
@@ -74,9 +70,8 @@
           }
         });
       });
-      if(func) {
-        func(url_with_more_download)
-      }
+
+      (func || Function)(url_with_more_download)
     });
   };
 

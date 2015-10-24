@@ -37,14 +37,12 @@
   utils.setParam = function(db, param, data, func, is_json) {
     data = encrypt_param(is_json ? JSON.stringify(data) : data).toString();
     db.query("DELETE FROM params WHERE nom = ?", [param], function() {
-      db.query("INSERT INTO params (nom, value) VALUES (?, ?)", [param, data], function() {
-        func();
-      });
+      db.query("INSERT INTO params (nom, value) VALUES (?, ?)", [param, data], (func || Function));
     });
   };
 
   utils.setDefaultStrFolder = function(db) {
-    utils.setParam(db, 'strFolder', path.homedir(), function(){});
+    utils.setParam(db, 'strFolder', path.homedir());
   }
 
   module.exports = utils;

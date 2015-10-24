@@ -1,5 +1,5 @@
-var app = require('app');  // Module to control application life.
-var BrowserWindow = require('browser-window');  // Module to create native browser window.
+var app = require('app');
+var BrowserWindow = require('browser-window');
 var ipc = require('ipc');
 var dialog = require('dialog');
 
@@ -23,11 +23,11 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({"show": false, "min-width": 750, width: 800, "min-height": 400, height: 800, frame: false, center: true, resizable: true, title: "AutoDownloadManager"});
   mainWindow.openDevTools();
 
+  // Show the window when angular is ready
   ipc.on('dom-ready', function() {
     mainWindow.show();
   });
 
-  // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
   ipc.on('minimize-window', function(event) {
@@ -42,16 +42,14 @@ app.on('ready', function() {
     mainWindow.hide();
   });
 
-    ipc.on('dialog-selection-dossier', function(event, arg){
-        var res = dialog.showOpenDialog({ properties: [ 'openDirectory', 'multiSelections' ], title: 'Choisir un dossier pour les sous-titres'});
-        event.sender.send('dialog-selection-dossier-reply', res);
-    });
+  // Event for the folder selection
+  ipc.on('dialog-selection-dossier', function(event, arg){
+    var res = dialog.showOpenDialog({ properties: [ 'openDirectory', 'multiSelections' ], title: 'Choisir un dossier pour les sous-titres'});
+    event.sender.send('dialog-selection-dossier-reply', res);
+  });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     mainWindow = null;
   });
 });

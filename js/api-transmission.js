@@ -23,21 +23,15 @@
           self.transmission_obj = null;
         }
 
-        if(func) {
-          func(self.transmission_obj ? true : false);
-        }
+        (func || Function)(self.transmission_obj ? true : false);
       });
     }, true);
   };
 
   apiTransmission.prototype.disconnectToApi = function(func) {
     var self = this;
-
     self.transmission_obj = null;
-
-    if(func) {
-      func();
-    }
+    (func || Function)();
   };
 
   apiTransmission.prototype.saveAccess = function(host, port, username, password, func) {

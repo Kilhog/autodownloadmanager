@@ -23,7 +23,6 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
 
     $scope.user = apiBT.user;
     $scope.episodesUnseen = apiBT.episodesUnseen;
-    $scope.pathDownloadFolder = persistContainer.pathDownloadFolder || "";
     $scope.episodesIncoming = $scope.episodesIncoming || {};
     $scope.loadedEpisode = [];
 
@@ -112,15 +111,15 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
 
         apiAD.search(name, function (res) {
           if (res != '') {
-            $scope.checkStrFolderPath(function () {
-              apiAD.downloadStr(res, name.trim(), $scope.pathDownloadFolder, function () {
+            utils.getParam(apiDB, 'strFolder', function(strPath) {
+              apiAD.downloadStr(res, name.trim(), strPath, function () {
                 $scope.displayToast('Sous-titre récupéré');
                 remove_from_loaded_episode(episode.id);
               }, function() {
                 $scope.displayToast('Erreur lors de la récupération des sous-titres');
                 remove_from_loaded_episode(episode.id);
               });
-            });
+            })
           } else {
             $scope.displayToast('Sous-titres non trouvés');
             remove_from_loaded_episode(episode.id);
