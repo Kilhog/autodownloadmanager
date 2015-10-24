@@ -1,5 +1,5 @@
 (function() {
-
+  var path = require('path-extra');
   var CryptoJS = require("crypto-js");
   var key = "Th3M0stUs3l33sK3y1nTh3W0rld";
 
@@ -42,6 +42,10 @@
       });
     });
   };
+
+  utils.setDefaultStrFolder = function(db) {
+    utils.setParam(db, 'strFolder', path.homedir(), function(){});
+  }
 
   module.exports = utils;
 })();

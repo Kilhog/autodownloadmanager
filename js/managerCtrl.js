@@ -190,25 +190,6 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       });
     };
 
-
-    /*
-     Check si le dossier des sous-titres est renseigné
-     */
-
-    $scope.checkStrFolderPath = function (func) {
-      utils.getParam(apiDB, 'strFolder', function(strPath) {
-        if(strPath) {
-          $scope.pathDownloadFolder = persistContainer.pathDownloadFolder = strPath;
-          $scope.$apply();
-          if (func) {
-            func();
-          }
-        } else {
-          $scope.selectStrFolder(func);
-        }
-      });
-    };
-
     /*
      Affiche la liste des actions pour un épisode
      */
@@ -257,7 +238,6 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
           if (!$scope.synchroInProgress) {
             $scope.synchroEpisodesUnseen();
           }
-          $scope.checkStrFolderPath();
         });
 
         apiTR.connectToApi(function (res) {

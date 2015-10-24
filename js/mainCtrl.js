@@ -26,10 +26,7 @@ app.controller('mainCtrl', ["$scope", "persistContainer",
       ipc.send('minimize-window');
     };
 
-    /*
-     Instanciation des api
-     */
-
+    // Instanciation des api
     persistContainer.apiDB = new apiDblite.apiDblite();
     persistContainer.apiTR = new apiTransmission.apiTransmission(persistContainer.apiDB);
     persistContainer.apiBT = new apiBetaseries.apiBetaseries(persistContainer.apiDB);
@@ -39,21 +36,19 @@ app.controller('mainCtrl', ["$scope", "persistContainer",
     persistContainer.apiTO = new apiTorrent(persistContainer.apiTR, persistContainer.apiT4, persistContainer.apiGS, persistContainer.apiKA);
     persistContainer.apiAD = new apiAddicted.apiAddicted(persistContainer.apiDB);
 
-    /*
-     Qualité des épisodes
-     */
-
-    function getEpisodeQuality(func) {
-      utils.getParam(persistContainer.apiDB, 'episodeQuality', func);
-    }
-
-    getEpisodeQuality(function (res) {
+    // Init Episode Quality
+    utils.getParam(persistContainer.apiDB, 'episodeQuality', function(res) {
       if(!res) {
-        utils.setParam(persistContainer.apiDB, 'episodeQuality', '720p', function() {
-          persistContainer.episodeQuality = '720p';
-        });
-      } else {
-        persistContainer.episodeQuality = res;
+        utils.setParam(persistContainer.apiDB, 'episodeQuality', '720p');
+      }
+      persistContainer.episodeQuality = res || '720p';
+    });
+
+    // Init strFolder
+    utils.getParam(persistContainer.apiDB, 'strFolder', function(strPath) {
+      if(!strPath) {
+        utils.setDefaultStrFolder(persistContainer.apiDB);
       }
     });
+
   }]);
