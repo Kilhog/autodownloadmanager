@@ -9,6 +9,7 @@ var sys = require('sys');
 var exec = require('child_process').exec;
 var execSync = require('sync-exec');
 var babel = require('gulp-babel');
+var pjson = require('./package.json');
 
 var css = [
   './css/styles.css',
@@ -141,37 +142,41 @@ gulp.task('compile', ['min-all'], function () {
 var build = function() {
   execSync("rm -rf ./build");
 
-  if (process.platform == 'darwin') {
-    execSync("mkdir build");
-    execSync("cp -R ./node_modules/electron-prebuilt/dist/Electron.app ./build/AutoDownloadManager.app");
-    execSync("sed 's/Electron/AutoDownloadManager/g' ./build/AutoDownloadManager.app/Contents/Info.plist > ./build/AutoDownloadManager.app/Contents/Info.plist.tmp");
-    execSync("rm ./build/AutoDownloadManager.app/Contents/Info.plist");
-    execSync("mv ./build/AutoDownloadManager.app/Contents/Info.plist.tmp ./build/AutoDownloadManager.app/Contents/Info.plist");
-    execSync("rm ./build/AutoDownloadManager.app/Contents/Info.plist.tmp");
-    execSync("rm -rf ./build/AutoDownloadManager.app/Contents/Resources/default_app");
-    execSync("rm -rf ./build/AutoDownloadManager.app/Contents/Resources/atom.icns");
-    execSync("cp img/atom.icns ./build/AutoDownloadManager.app/Contents/Resources/atom.icns");
-    execSync("mv ./build/AutoDownloadManager.app/Contents/MacOS/Electron ./build/AutoDownloadManager.app/Contents/MacOS/AutoDownloadManager");
-    execSync("mkdir ./build/AutoDownloadManager.app/Contents/Resources/app");
-    execSync("cp index.html ./build/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("cp main.js ./build/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("cp package.json ./build/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("cp -R dist ./build/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("cp -R lib ./build/AutoDownloadManager.app/Contents/Resources/app/");
-    execSync("mkdir ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
+  var application = "AutoDownloadManager";
+  var applicationName = application + "_" + pjson.version.replace(/\./g, '_');
+  var out = "./build/";
 
-    execSync("cp -R node_modules/cheerio ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/crypto-js ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/curlrequest ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/dblite ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/jquery ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/strike-api ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/superagent ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/t411 ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/transmission ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/font-awesome ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/path-extra ./build/AutoDownloadManager.app/Contents/Resources/app/node_modules/");
-    execSync("cd build && tar -zcvf AutoDownloadManager.app.tar.gz AutoDownloadManager.app/*");
+  if (process.platform == 'darwin') {
+    execSync("mkdir " + out);
+    execSync("cp -R ./node_modules/electron-prebuilt/dist/Electron.app " + out + applicationName + ".app");
+    execSync("sed 's/Electron/AutoDownloadManager/g' " + out + applicationName + ".app/Contents/Info.plist > " + out + applicationName + ".app/Contents/Info.plist.tmp");
+    execSync("rm " + out + applicationName + ".app/Contents/Info.plist");
+    execSync("mv " + out + applicationName + ".app/Contents/Info.plist.tmp " + out + applicationName + ".app/Contents/Info.plist");
+    execSync("rm " + out + applicationName + ".app/Contents/Info.plist.tmp");
+    execSync("rm -rf " + out + applicationName + ".app/Contents/Resources/default_app");
+    execSync("rm -rf " + out + applicationName + ".app/Contents/Resources/atom.icns");
+    execSync("cp img/atom.icns " + out + applicationName + ".app/Contents/Resources/atom.icns");
+    execSync("mv " + out + applicationName + ".app/Contents/MacOS/Electron " + out + applicationName + ".app/Contents/MacOS/AutoDownloadManager");
+    execSync("mkdir " + out + applicationName + ".app/Contents/Resources/app");
+    execSync("cp index.html " + out + applicationName + ".app/Contents/Resources/app/");
+    execSync("cp main.js " + out + applicationName + ".app/Contents/Resources/app/");
+    execSync("cp package.json " + out + applicationName + ".app/Contents/Resources/app/");
+    execSync("cp -R dist " + out + applicationName + ".app/Contents/Resources/app/");
+    execSync("cp -R lib " + out + applicationName + ".app/Contents/Resources/app/");
+    execSync("mkdir " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+
+    execSync("cp -R node_modules/cheerio " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/crypto-js " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/curlrequest " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/dblite " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/jquery " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/strike-api " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/superagent " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/t411 " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/transmission " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/font-awesome " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/path-extra " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cd " + out + " && tar -zcvf " + applicationName + ".app.tar.gz " + applicationName + ".app/*");
   }
 };
 
