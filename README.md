@@ -20,7 +20,7 @@ Actuellement l'application n'est pas "packagé" donc vous devez utiliser cette p
 
 ![Alt text](http://i.imgur.com/cODGSXK.png)
 
-## Procédure d'installation
+## Installation pour les développeurs
 
 ### Installer node & npm
 
