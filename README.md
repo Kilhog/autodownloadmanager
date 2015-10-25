@@ -1,9 +1,13 @@
 # Auto Download Manager
 
-Version PreAlpha
+Version Beta
+
+## Download
+
+### OSX ~ [Télécharger v.0.9.0](https://github.com/Kilhog/autodownloadmanager/blob/master/build/AutoDownloadManager_0_9_0.app.tar.gz?raw=true)
 
 Auto Download Manager est un outil qui permet de gérer vos séries automatiquement.
-En gros le principe est le suivant: 
+En gros le principe est le suivant:
 * Vous vous connecté avec votre compte BetaSeries
 * L'application affiche les épisodes non-vues
 * Vous pouvez télécharger les épisodes non-vues (Recherche les torrents sur GetStrike & Kat.cr)
@@ -12,7 +16,7 @@ En gros le principe est le suivant:
 * Vous pouvez télécharger les sous-tires VF (Recherche sur addic7ed.com)
 * Vous pouvez marqué un épisode comme "vue" (Directement synchronisé avec votre compte Betaseries)
 
-Actuellement l'application n'est pas "packagé" donc vous devez utiliser cette procédure ci-dessous pour démarrer l'application. 
+Actuellement l'application n'est pas "packagé" donc vous devez utiliser cette procédure ci-dessous pour démarrer l'application.
 
 ![Alt text](http://i.imgur.com/cODGSXK.png)
 
@@ -32,13 +36,13 @@ Créez un dossier, ensuite ouvrez un terminal et faites :
 
 	cd /path/to/my/folder
 	git clone https://***@bitbucket.org/***/autodownloadmanager.git .
-	
-Remplacez l'adresse du dépot par la votre (présent dans le dépot BitBucket). 
+
+Remplacez l'adresse du dépot par la votre (présent dans le dépot BitBucket).
 
 ### Installation des dépendances
 
 Ouvrez un terminal et faites :
-	
+
 	cd /path/to/my/folder
 	npm install
 
@@ -60,6 +64,6 @@ ou
 
 	gulp compile
 
-(Pour concatener et minifier les fichiers)	
+(Pour concatener et minifier les fichiers)
 
 Et voila ça fait des Chocapic !
