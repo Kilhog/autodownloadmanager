@@ -76,8 +76,8 @@
       func(torrents);
     }
 
-    self.apiKA.searchAll(query).then(updateListTorrents);
-    self.apiGS.searchAll(query).then(updateListTorrents);
+    self.apiKA.searchAll(query).then(updateListTorrents, function() {});
+    self.apiGS.searchAll(query).then(updateListTorrents, function() {});
   };
 
   module.exports = apiTorrent;

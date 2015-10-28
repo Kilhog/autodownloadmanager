@@ -37,7 +37,9 @@
           }
 
           resolve(torrents);
-        }, reject);
+        }, function() {
+          reject(null);
+        });
       }
     )
   };
