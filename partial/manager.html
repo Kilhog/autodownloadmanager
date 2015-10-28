@@ -68,6 +68,16 @@
         <p style="text-align: center;">Dans la prochaine mise à jour ;)</p>
       </md-content>
     </md-tab>
+    <md-tab label="Recherche">
+      <md-content class="md-padding">
+        <div class="text-center">
+          <md-input-container>
+            <label>Recherche</label>
+            <input ng-model="recherche_rapide" type="text" ng-model-options="{ debounce: 1000 }" ng-change="recherche_change()">
+          </md-input-container>
+        </div>
+      </md-content>
+    </md-tab>
   </md-tabs>
 </md-content>
 
