@@ -58,7 +58,11 @@
     var self = this;
 
     if(self.apiTR.transmission_obj) {
-      self.apiTR.addUrl(torrentLink, (func || Function));
+      self.apiTR.addUrl(torrentLink, function() {
+        if(func) {
+          func();
+        }
+      });
     } else {
       shell.openExternal(torrentLink);
     }
