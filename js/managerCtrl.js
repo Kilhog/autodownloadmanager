@@ -260,4 +260,14 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       }
     }, 0);
 
+    /*
+     Recherche rapide
+     */
+
+    $scope.recherche_rapide = "";
+
+    $scope.recherche_change = function() {
+      console.log($scope.recherche_rapide);
+    }
+
   }]);
