@@ -8,7 +8,7 @@
 </div>
 
 <md-content class="md-padding">
-  <md-tabs md-dynamic-height md-border-bottom>
+  <md-tabs md-dynamic-height md-border-bottom md-selected="selectedTabManagerIndex">
     <md-tab label="Mes séries en retard">
       <md-content class="md-padding" style="padding-top: 20px;">
         <div ng-if="synchroInProgress">
@@ -68,11 +68,44 @@
         <p style="text-align: center;">Dans la prochaine mise à jour ;)</p>
       </md-content>
     </md-tab>
+    <md-tab label="Recherche">
+      <md-content class="md-padding">
+        <div class="text-center">
+          <md-input-container class="md-accent">
+            <label>Recherche</label>
+            <input ng-model="recherche_rapide" type="text" ng-model-options="{ debounce: 1000 }" ng-change="recherche_change()" id="recherche_rapide">
+          </md-input-container>
+
+          <div ng-if="showSpinnerRechercheRapide">
+            <div layout="row" layout-sm="column" layout-align="space-around">
+              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+          </div>
+
+          <md-list>
+            <md-list-item style="min-height: 30px; height: 30px;" class="md-3-line" layout="row" ng-repeat="torrent in torrents track by $index">
+              <div flex class="md-list-item-text prevent-line-break" style="cursor: pointer;" ng-click="downloadTorrent(torrent)">
+                <p>{{ torrent.title }}</p>
+              </div>
+              <div flex="5">
+                &nbsp;
+              </div>
+              <div flex="10" class="md-list-item-text">
+                <p>{{ torrent.seeds }}</p>
+              </div>
+              <div flex="10" class="md-list-item-text">
+                <p>{{ torrent.tracker }}</p>
+              </div>
+            </md-list-item>
+          </md-list>
+        </div>
+      </md-content>
+    </md-tab>
   </md-tabs>
 </md-content>
 
 <div layout="row" layout-align="center">
-  <md-button class="md-raised md-accent" ng-disabled="!user.token || synchroInProgress" ng-click="synchroAll()">
+  <md-button class="md-raised md-accent" ng-disabled="!user.token || synchroInProgress" ng-show="showReloadButton" ng-click="synchroAll()">
     Recharger
   </md-button>
 </div>

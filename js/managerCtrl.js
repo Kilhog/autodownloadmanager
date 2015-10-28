@@ -1,6 +1,27 @@
 app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer",
   function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer) {
 
+    $scope.showReloadButton = true;
+
+    $scope.$watch('selectedTabManagerIndex', function (current, old) {
+      switch (current) {
+        case 0:
+          $scope.showReloadButton = true;
+          break;
+        case 1:
+          $scope.showReloadButton = true;
+          break;
+        case 2:
+          $scope.showReloadButton = false;
+          $timeout(function() {
+            $('input#recherche_rapide')[0].focus();
+          }, 100);
+          break;
+      }
+    });
+
+
+
     /**
      * Permet d'afficher des Toasts
      * @param msg - Message à afficher
@@ -259,5 +280,37 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
         justOpen = false;
       }
     }, 0);
+
+    /*
+     Recherche rapide
+     */
+
+    $scope.recherche_rapide = "";
+    $scope.torrents = [];
+    $scope.showSpinnerRechercheRapide = false;
+
+    $scope.recherche_change = function() {
+      if($scope.recherche_rapide.length > 2) {
+        $scope.showSpinnerRechercheRapide = true;
+
+        apiTO.getTorrentsWithSearch($scope.recherche_rapide, function(torrents) {
+          $scope.showSpinnerRechercheRapide = false;
+
+          $scope.torrents = torrents;
+          if(!$scope.$$phase) {
+            $scope.$apply();
+          }
+        });
+      } else {
+        $scope.showSpinnerRechercheRapide = false;
+        $scope.torrents = [];
+      }
+    };
+
+    $scope.downloadTorrent = function(torrent) {
+      apiTO.download(torrent.torrentLink, function() {
+        $scope.displayToast('Torrent ajouté !');
+      });
+    };
 
   }]);
