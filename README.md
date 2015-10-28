@@ -18,7 +18,7 @@ En gros le principe est le suivant:
 
 Actuellement l'application n'est pas "packagé" donc vous devez utiliser cette procédure ci-dessous pour démarrer l'application.
 
-[Imgur](http://i.imgur.com/KmVWWjH.png)
+![Imgur](http://i.imgur.com/KmVWWjH.png)
 
 ## Installation pour les développeurs
 
