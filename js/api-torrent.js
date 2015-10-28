@@ -54,11 +54,11 @@
     );
   };
 
-  apiTorrent.prototype.download = function(torrentLink) {
+  apiTorrent.prototype.download = function(torrentLink, func) {
     var self = this;
 
     if(self.apiTR.transmission_obj) {
-      self.apiTR.addUrl(torrentLink, function() {});
+      self.apiTR.addUrl(torrentLink, (func || Function));
     } else {
       shell.openExternal(torrentLink);
     }
@@ -69,10 +69,7 @@
     var torrents = [];
 
     var updateListTorrents = function(new_torrents) {
-      torrents = torrents.concat(new_torrents);
-
-      torrents = _.chain(torrents).uniq().sortBy(function(torrent){return torrent.seeds * -1}).value();
-
+      torrents = _.chain(torrents).union(new_torrents).uniq().sortBy(function(torrent){return torrent.seeds * -1}).value();
       func(torrents);
     }
 

@@ -176,6 +176,7 @@ var build = function() {
     execSync("cp -R node_modules/transmission " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
     execSync("cp -R node_modules/font-awesome " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
     execSync("cp -R node_modules/path-extra " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    execSync("cp -R node_modules/underscore " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
     execSync("cd " + out + " && tar -zcvf " + applicationName + ".app.tar.gz " + applicationName + ".app/*");
   }
 };
