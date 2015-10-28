@@ -26,5 +26,23 @@
     );
   };
 
+  apiGetStrike.prototype.searchAll = function(q) {
+    return new Promise(
+      function(resolve, reject) {
+        strike.search(q).then(function(res) {
+          let torrents = [];
+
+          for(let torrent of res.torrents) {
+            torrents.push({title: torrent.torrent_title, torrentLink: torrent.magnet_uri, seeds: torrent.seeds, tracker: 'gs'});
+          }
+
+          resolve(torrents);
+        }, function() {
+          reject(null);
+        });
+      }
+    )
+  };
+
   exports.apiGetStrike = apiGetStrike;
 })();

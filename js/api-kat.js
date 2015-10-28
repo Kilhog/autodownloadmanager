@@ -30,5 +30,29 @@
     );
   };
 
+  apiKickAss.prototype.searchAll = function(q) {
+    return new Promise(
+      function(resolve, reject) {
+        request.get(url).query({q, field: 'seeders', order: 'desc'}).end(function(e, response) {
+          response = JSON.parse(response.text);
+
+          if(e) {
+            reject(null);
+          } else if (response.list.length > 0) {
+            let torrents = [];
+
+            for(let torrent of response.list) {
+              torrents.push({title: torrent.title, torrentLink: torrent.torrentLink, seeds: torrent.seeds, tracker: 'kat'});
+            }
+
+            resolve(torrents);
+          } else {
+            reject(null);
+          }
+        });
+      }
+    )
+  };
+
   module.exports = apiKickAss;
 })();
