@@ -2,6 +2,7 @@
   "use strict";
 
   var shell = require('shell');
+  var _ = require('underscore');
 
   function apiTorrent(apiTR, apiT4, apiGS, apiKA) {
     this.apiTR = apiTR;
@@ -61,6 +62,22 @@
     } else {
       shell.openExternal(torrentLink);
     }
+  };
+
+  apiTorrent.prototype.getTorrentsWithSearch = function(query, func) {
+    var self = this;
+    var torrents = [];
+
+    var updateListTorrents = function(new_torrents) {
+      torrents = torrents.concat(new_torrents);
+
+      torrents = _.chain(torrents).uniq().sortBy(function(torrent){return torrent.seeds * -1}).value();
+
+      func(torrents);
+    }
+
+    self.apiKA.searchAll(query).then(updateListTorrents);
+    self.apiGS.searchAll(query).then(updateListTorrents);
   };
 
   module.exports = apiTorrent;

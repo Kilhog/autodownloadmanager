@@ -265,9 +265,16 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
      */
 
     $scope.recherche_rapide = "";
+    $scope.torrents = [];
 
     $scope.recherche_change = function() {
-      console.log($scope.recherche_rapide);
+      apiTO.getTorrentsWithSearch($scope.recherche_rapide, function(torrents) {
+        $scope.torrents = torrents;
+        if(!$scope.$$phase) {
+          $scope.$apply();
+        }
+
+      });
     }
 
   }]);

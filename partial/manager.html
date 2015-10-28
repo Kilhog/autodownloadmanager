@@ -75,6 +75,19 @@
             <label>Recherche</label>
             <input ng-model="recherche_rapide" type="text" ng-model-options="{ debounce: 1000 }" ng-change="recherche_change()">
           </md-input-container>
+          <md-list>
+            <md-list-item style="min-height: 30px; height: 30px" class="md-3-line" layout="row" ng-repeat="torrent in torrents track by $index">
+              <div flex class="md-list-item-text prevent-line-break">
+                <p>{{ torrent.title }}</p>
+              </div>
+              <div flex="10" class="md-list-item-text">
+                <p>{{ torrent.seeds }}</p>
+              </div>
+              <div flex="10" class="md-list-item-text">
+                <p>{{ torrent.tracker }}</p>
+              </div>
+            </md-list-item>
+          </md-list>
         </div>
       </md-content>
     </md-tab>
