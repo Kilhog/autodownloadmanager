@@ -308,7 +308,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
     };
 
     $scope.downloadTorrent = function(torrent) {
-      apiTO.download(torrent.torrentLink, function() {
+      apiTO.download(torrent.torrentLink, torrent.tracker).then(function() {
         $scope.displayToast('Torrent ajouté !');
       });
     };

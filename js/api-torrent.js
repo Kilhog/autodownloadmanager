@@ -54,18 +54,26 @@
     );
   };
 
-  apiTorrent.prototype.download = function(torrentLink, func) {
+  apiTorrent.prototype.download = function(torrentLink, torrentTracker) {
     var self = this;
 
-    if(self.apiTR.transmission_obj) {
-      self.apiTR.addUrl(torrentLink, function() {
-        if(func) {
-          func();
+    return new Promise(
+      function(resolve, reject) {
+        if(torrentTracker == "t411") {
+          apiT4.downloadTorrent(torrent);
+          resolve();
+        } else {
+          if(self.apiTR.transmission_obj) {
+            self.apiTR.addUrl(torrentLink, function() {
+              resolve();
+            });
+          } else {
+            shell.openExternal(torrentLink);
+            reject();
+          }
         }
-      });
-    } else {
-      shell.openExternal(torrentLink);
-    }
+      }
+    )
   };
 
   apiTorrent.prototype.getTorrentsWithSearch = function(query, func) {
@@ -79,6 +87,7 @@
 
     self.apiKA.searchAll(query).then(updateListTorrents, function() {});
     self.apiGS.searchAll(query).then(updateListTorrents, function() {});
+    self.apiT4.searchAll(query).then(updateListTorrents, function() {});
   };
 
   module.exports = apiTorrent;
