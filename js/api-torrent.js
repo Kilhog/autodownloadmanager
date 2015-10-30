@@ -60,8 +60,14 @@
     return new Promise(
       function(resolve, reject) {
         if(torrentTracker == "t411") {
-          apiT4.downloadTorrent(torrent);
-          resolve();
+          self.apiT4.downloadTorrent(torrentLink).then(function(path) {
+            if(self.apiTR.transmission_obj) {
+              self.apiTR.addFile(path).then(resolve);
+            } else {
+              shell.openItem(path);
+              reject();
+            }
+          }, reject);
         } else {
           if(self.apiTR.transmission_obj) {
             self.apiTR.addUrl(torrentLink, function() {
