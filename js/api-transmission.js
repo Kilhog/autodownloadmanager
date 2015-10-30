@@ -13,6 +13,11 @@
     self.transmission_obj.addUrl(url, func);
   };
 
+  apiTransmission.prototype.addFile = function(url) {
+    var self = this;
+    return new Promise(function(resolve, reject) {self.transmission_obj.addFile(url, resolve)});
+  }
+
   apiTransmission.prototype.connectToApi = function(func) {
     var self = this;
 
