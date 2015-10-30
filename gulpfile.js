@@ -139,45 +139,64 @@ gulp.task('compile', ['min-all'], function () {
   launch();
 });
 
-var build = function() {
-  execSync("rm -rf ./build");
+function pExec(cmd) {
+  console.log(execSync(cmd).stderr);
+};
 
+var build = function() {
   var application = "AutoDownloadManager";
   var applicationName = application + "_" + pjson.version.replace(/\./g, '_');
   var out = "./build/";
+  var path = out + applicationName + ".app";
 
   if (process.platform == 'darwin') {
-    execSync("mkdir " + out);
-    execSync("cp -R ./node_modules/electron-prebuilt/dist/Electron.app " + out + applicationName + ".app");
-    execSync("sed 's/Electron/AutoDownloadManager/g' " + out + applicationName + ".app/Contents/Info.plist > " + out + applicationName + ".app/Contents/Info.plist.tmp");
-    execSync("rm " + out + applicationName + ".app/Contents/Info.plist");
-    execSync("mv " + out + applicationName + ".app/Contents/Info.plist.tmp " + out + applicationName + ".app/Contents/Info.plist");
-    execSync("rm " + out + applicationName + ".app/Contents/Info.plist.tmp");
-    execSync("rm -rf " + out + applicationName + ".app/Contents/Resources/default_app");
-    execSync("rm -rf " + out + applicationName + ".app/Contents/Resources/atom.icns");
-    execSync("cp img/atom.icns " + out + applicationName + ".app/Contents/Resources/atom.icns");
-    execSync("mv " + out + applicationName + ".app/Contents/MacOS/Electron " + out + applicationName + ".app/Contents/MacOS/AutoDownloadManager");
-    execSync("mkdir " + out + applicationName + ".app/Contents/Resources/app");
-    execSync("cp index.html " + out + applicationName + ".app/Contents/Resources/app/");
-    execSync("cp main.js " + out + applicationName + ".app/Contents/Resources/app/");
-    execSync("cp package.json " + out + applicationName + ".app/Contents/Resources/app/");
-    execSync("cp -R dist " + out + applicationName + ".app/Contents/Resources/app/");
-    execSync("cp -R lib " + out + applicationName + ".app/Contents/Resources/app/");
-    execSync("mkdir " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
+    var rms = [path + "/Contents/Resources/default_app", path + "/Contents/Resources/atom.icns"];
+    var mkdirs = [path + "/Contents/Resources/app", path + "/Contents/Resources/app/node_modules/"];
+    var cps = [
+      ['img/atom.icns', path + '/Contents/Resources/atom.icns'],
+      ['index.html', path + '/Contents/Resources/app/'],
+      ['main.js', path + '/Contents/Resources/app/'],
+      ['package.json', path + '/Contents/Resources/app/']
+    ];
+    var cprs = [
+      ['dist', path + '/Contents/Resources/app/'],
+      ['lib', path + '/Contents/Resources/app/'],
+      ['node_modules/cheerio', path + '/Contents/Resources/app/node_modules/'],
+      ['node_modules/crypto-js', path + '/Contents/Resources/app/node_modules/'],
+      ['node_modules/dblite', path + '/Contents/Resources/app/node_modules/'],
+      ['node_modules/jquery', path + '/Contents/Resources/app/node_modules/'],
+      ['node_modules/strike-api', path + '/Contents/Resources/app/node_modules/'],
+      ['node_modules/superagent', path + '/Contents/Resources/app/node_modules/'],
+      ['node_modules/t411', path + '/Contents/Resources/app/node_modules/'],
+      ['node_modules/transmission', path + '/Contents/Resources/app/node_modules/'],
+      ['node_modules/font-awesome', path + '/Contents/Resources/app/node_modules/'],
+      ['node_modules/path-extra', path + '/Contents/Resources/app/node_modules/'],
+      ['node_modules/underscore', path + '/Contents/Resources/app/node_modules/']
+    ];
 
-    execSync("cp -R node_modules/cheerio " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/crypto-js " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/curlrequest " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/dblite " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/jquery " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/strike-api " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/superagent " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/t411 " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/transmission " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/font-awesome " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/path-extra " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cp -R node_modules/underscore " + out + applicationName + ".app/Contents/Resources/app/node_modules/");
-    execSync("cd " + out + " && tar -zcvf " + applicationName + ".app.tar.gz " + applicationName + ".app/*");
+    pExec("cp -R ./node_modules/electron-prebuilt/dist/Electron.app " + path);
+
+    for (mkdir of mkdirs) {
+      pExec("mkdir -p " + mkdir);
+    }
+
+    for (rm of rms) {
+      pExec("rm -rf " + rm);
+    }
+
+    pExec("sed -i '' 's/Electron/AutoDownloadManager/g' " + path + '/Contents/Info.plist')
+    pExec("mv " + path + "/Contents/MacOS/Electron " + path + "/Contents/MacOS/AutoDownloadManager");
+
+    for (cp of cps) {
+      pExec("cp " + cp[0] + " " + cp[1]);
+    }
+
+    for (cpr of cprs) {
+      pExec("cp -R " + cpr[0] + " " + cpr[1]);
+    }
+
+    pExec("cd " + out + " && tar -zcvf " + applicationName + ".app.tar.gz " + applicationName + ".app/*");
+    pExec("rm -rf " + path);
   }
 };
 
