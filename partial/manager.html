@@ -61,6 +61,12 @@
             </div>
           </md-content>
         </div>
+        <br/>
+        <div layout="row" layout-align="center">
+          <md-button class="md-raised md-accent" ng-disabled="!user.token || synchroInProgress" ng-click="synchroAll()">
+            Recharger
+          </md-button>
+        </div>
       </md-content>
     </md-tab>
     <md-tab label="Mes séries surveillées">
@@ -103,10 +109,3 @@
     </md-tab>
   </md-tabs>
 </md-content>
-
-<div layout="row" layout-align="center">
-  <md-button class="md-raised md-accent" ng-disabled="!user.token || synchroInProgress" ng-show="showReloadButton" ng-click="synchroAll()">
-    Recharger
-  </md-button>
-</div>
-<br/>

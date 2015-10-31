@@ -1,18 +1,9 @@
 app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer",
   function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer) {
 
-    $scope.showReloadButton = true;
-
     $scope.$watch('selectedTabManagerIndex', function (current, old) {
       switch (current) {
-        case 0:
-          $scope.showReloadButton = true;
-          break;
-        case 1:
-          $scope.showReloadButton = true;
-          break;
         case 2:
-          $scope.showReloadButton = false;
           $timeout(function() {
             $('input#recherche_rapide')[0].focus();
           }, 100);
