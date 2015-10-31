@@ -75,6 +75,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   states.getStrike = false;
   states.t411 = false;
   states.kat = false;
+  states.rarbg = false;
 
   var checkStatesAddic = function() {
     request.get('http://www.addic7ed.com/').end(function(err, res) {
@@ -100,19 +101,27 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     });
   };
 
+  var checkStatesRarBg = function() {
+    request.get('https://rarbg.to/torrents.php').end(function(err, res) {
+      states.rarbg = !err && res.statusCode == 200;
+    });
+  }
+
   var checkStates = function() {
     checkStatesKat();
     checkStatesT411();
     checkStatesStrike();
     checkStatesAddic();
+    checkStatesRarBg();
   };
 
   $interval(checkStates, 60000);
-  
+
   $timeout(checkStatesKat, Math.floor((Math.random() * 2000) + 1) + 1500);
   $timeout(checkStatesT411, Math.floor((Math.random() * 2000) + 1) + 1500);
   $timeout(checkStatesStrike, Math.floor((Math.random() * 2000) + 1) + 1500);
   $timeout(checkStatesAddic, Math.floor((Math.random() * 2000) + 1) + 1500);
+  $timeout(checkStatesRarBg, Math.floor((Math.random() * 2000) + 1) + 1500);
 
   return states;
 }]).factory('toastFact', ["$mdToast", function ($mdToast) {
