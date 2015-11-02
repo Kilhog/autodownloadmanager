@@ -35,6 +35,7 @@ app.controller('mainCtrl', ["$scope", "persistContainer",
     persistContainer.apiKA = new apiKickAss();
     persistContainer.apiTO = new apiTorrent(persistContainer.apiTR, persistContainer.apiT4, persistContainer.apiGS, persistContainer.apiKA);
     persistContainer.apiAD = new apiAddicted.apiAddicted(persistContainer.apiDB);
+    persistContainer.apiRB = new apiRarBg();
 
     // Init Episode Quality
     utils.getParam(persistContainer.apiDB, 'episodeQuality', function(res) {

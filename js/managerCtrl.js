@@ -32,6 +32,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
     var apiTO = persistContainer.apiTO;
     var apiAD = persistContainer.apiAD;
     var apiT4 = persistContainer.apiT4;
+    var apiRB = persistContainer.apiRB;
 
     $scope.user = apiBT.user;
     $scope.episodesUnseen = apiBT.episodesUnseen;
@@ -43,7 +44,8 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
      */
 
     $scope.synchroAll = function () {
-      $scope.synchroEpisodesUnseen();
+      console.log(apiRB.searchAll("flash S02E04"));
+      //$scope.synchroEpisodesUnseen();
     };
 
     $scope.synchroEpisodesUnseen = function () {
