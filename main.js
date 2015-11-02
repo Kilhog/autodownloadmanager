@@ -2,6 +2,7 @@ var app = require('app');
 var BrowserWindow = require('browser-window');
 var ipc = require('ipc');
 var dialog = require('dialog');
+var globalShortcut = require('global-shortcut');
 
 app.commandLine.appendSwitch('--enable-viewport-meta', 'true');
 
@@ -52,4 +53,14 @@ app.on('ready', function() {
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
+
+  globalShortcut.register('ctrl+w', function() {
+    mainWindow.close();
+  });
+
+  app.on('will-quit', function() {
+    // Unregister all shortcuts.
+    globalShortcut.unregisterAll();
+  });
+
 });
