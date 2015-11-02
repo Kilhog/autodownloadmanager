@@ -29,6 +29,7 @@
     "dblite": "0.7.6",
     "font-awesome": "4.4.0",
     "jquery": "2.1.4",
+    "moment": "^2.10.6",
     "path-extra": "2.0.0",
     "request": "^2.65.0",
     "strike-api": "0.2.0",

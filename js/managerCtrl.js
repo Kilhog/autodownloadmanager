@@ -44,8 +44,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
      */
 
     $scope.synchroAll = function () {
-      console.log(apiRB.searchAll("flash S02E04"));
-      //$scope.synchroEpisodesUnseen();
+      $scope.synchroEpisodesUnseen();
     };
 
     $scope.synchroEpisodesUnseen = function () {

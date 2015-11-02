@@ -4,11 +4,12 @@
   var shell = require('shell');
   var _ = require('underscore');
 
-  function apiTorrent(apiTR, apiT4, apiGS, apiKA) {
+  function apiTorrent(apiTR, apiT4, apiGS, apiKA, apiRB) {
     this.apiTR = apiTR;
     this.apiT4 = apiT4;
     this.apiGS = apiGS;
     this.apiKA = apiKA;
+    this.apiRB = apiRB;
   }
 
   apiTorrent.prototype.searchAndDownload = function(query, episodeQuality) {
@@ -94,6 +95,7 @@
     self.apiKA.searchAll(query).then(updateListTorrents, function() {});
     self.apiGS.searchAll(query).then(updateListTorrents, function() {});
     self.apiT4.searchAll(query).then(updateListTorrents, function() {});
+    self.apiRB.searchAll(query).then(updateListTorrents, function() {});
   };
 
   module.exports = apiTorrent;
