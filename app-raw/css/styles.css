@@ -1,0 +1,268 @@
+* {
+  -webkit-user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body > div {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: hidden;
+}
+
+.prevent-line-break {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.episode-name-link {
+  outline: 0 none;
+  cursor: pointer;
+}
+
+/* Global UI */
+.i-app {
+  color: #bcc726;
+
+}
+
+.i-default {
+  color: #bcc726;
+}
+
+#ui-view {
+  padding: 0px 10px;
+}
+
+.logo-icon {
+  float: left;
+  position: relative;
+  left: -30px;
+  opacity: 0.8;
+}
+
+.synch_text {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.episode:HOVER{
+    cursor: pointer;
+}
+
+#close-window-button:HOVER {
+  background-color: rgba(207, 0, 0, 0.78);
+}
+
+#reduce-window-button:HOVER {
+  background-color: rgba(74, 186, 207, 0.78);
+}
+
+.tab-navbar md-tab-item {
+  -webkit-app-region: no-drag !important;
+  color: white !important;
+}
+
+.page-header {
+  margin-top: 20px;
+  font-style: italic;
+  border-bottom: 1px dashed #ddd;
+}
+
+/* Couleur icon Manager */
+.i-see {
+  color: #ccdb3b !important;
+}
+
+.i-download {
+  color: #bcc726 !important;
+}
+
+.i-str {
+  color: #95a020 !important;
+}
+
+/* Saison et titre épisode */
+.season-and-episode-identifier {
+  color: #aaa;
+}
+
+/* Vue des réglages */
+#reglages-content .btn-center {
+  dispay: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Custom Toast */
+.md-toast.error {
+  background-color: darkred;
+}
+
+.md-toast.success {
+  background-color: green;
+}
+
+.fix-bug-flex {
+  display: inline-flex;
+}
+
+.button-main-window {
+  -webkit-app-region: no-drag !important;
+  min-width: 0 !important;
+  width: 23px !important;
+  margin: 0 4px !important;
+  min-height: 0 !important;
+  height: 23px !important;
+  position: relative !important;
+  top: -14px;
+  left: 13px;
+}
+
+.button-main-window i.fa-minus {
+  position: relative;
+  top: -4px;
+}
+
+.button-main-window i.fa-times {
+  position: relative;
+  top: -7px;
+}
+
+
+.logo-txt {
+  color: white;
+  position: relative;
+  z-index: 50;
+  font-size: 24px;
+}
+
+.logo-bolt-up {
+  opacity: 1;
+  z-index: 55;
+  overflow: hidden;
+  height: 14px;
+  width: 10px;
+  left: -36px;
+  top: -4px;
+}
+
+.logo-bolt-up i {
+  font-size: 25px;
+  position: relative;
+  left: 1px;
+}
+
+.logo-bolt-down {
+  left: -42px;
+  opacity: 1;
+  z-index: 45;
+  overflow: hidden;
+  top: 5px;
+  width: 11px;
+  height: 18px;
+}
+
+.logo-bolt-down i {
+  font-size: 25px;
+  position: relative;
+  top: -7px;
+  left: -3px;
+}
+
+
+.logo-bolt-up i, .logo-bolt-down i {
+  -webkit-animation-name: logoCycle;
+  -webkit-animation-duration:10s;
+  -webkit-animation-direction:normal;
+  -webkit-animation-iteration-count:infinite;
+}
+
+@-webkit-keyframes logoCycle {
+  90% {color: #bcc726;}
+  90.5% {color: #f4ff33;}
+  91% {color: #bcc726;}
+  91.5% {color: #f4ff33;}
+  100% {color: #bcc726;}
+}
+
+.md-xs {
+  line-height: 40px !important;
+  width: 23px !important;
+  height: 23px !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 3px 2px !important;
+}
+
+.md-xs md-icon {
+  top: -4px;
+  position: relative;
+}
+
+a:focus {
+  outline: 0;
+}
+
+md-dialog-content {
+  overflow: visible !important;
+}
+
+.ajust-height {
+  min-height: 29px;
+}
+
+.ajust-text-height {
+  padding-top: 6px;
+}
+
+.custom-subheader {
+  margin-bottom: -15px !important;
+}
+
+.custom-subheader .md-subheader-inner {
+  padding-bottom: 0 !important;
+}
+
+.state-site {
+  font-size: 12px;
+  width: 53px;
+  text-align: center;
+  position: relative;
+  top: 20px;
+}
+
+.state-site:after {
+  -webkit-transition: background-color 1000ms cubic-bezier(0, 0, 0.01, 1), box-shadow 1000ms cubic-bezier(0, 0, 0.01, 1);
+}
+
+.state-site.active:after {
+  content: '';
+  background-color: rgb(205, 220, 57);
+  width: 8px;
+  height: 8px;
+  border-radius: 14px;
+  position: relative;
+  left: 23px;
+  top: 4px;
+  box-shadow: 0px 0px 3px #656565;
+  display: block;
+}
+
+.state-site.desactive:after {
+  content: '';
+  background-color: rgb(95, 95, 95);
+  width: 8px;
+  height: 8px;
+  border-radius: 14px;
+  position: relative;
+  left: 23px;
+  top: 4px;
+  box-shadow: 0;
+  display: block;
+}
