@@ -159,51 +159,13 @@ var build = function() {
   var path = out + applicationName + ".app";
 
   if (process.platform == 'darwin') {
-    var rms = [path + "/Contents/Resources/default_app", path + "/Contents/Resources/atom.icns"];
-    var mkdirs = [path + "/Contents/Resources/app", path + "/Contents/Resources/app/node_modules/"];
-    var cps = [
-      ['img/atom.icns', path + '/Contents/Resources/atom.icns'],
-      ['index.html', path + '/Contents/Resources/app/'],
-      ['main.js', path + '/Contents/Resources/app/'],
-      ['package.json', path + '/Contents/Resources/app/']
-    ];
-    var cprs = [
-      ['dist', path + '/Contents/Resources/app/'],
-      ['lib', path + '/Contents/Resources/app/'],
-      ['node_modules/cheerio', path + '/Contents/Resources/app/node_modules/'],
-      ['node_modules/crypto-js', path + '/Contents/Resources/app/node_modules/'],
-      ['node_modules/dblite', path + '/Contents/Resources/app/node_modules/'],
-      ['node_modules/jquery', path + '/Contents/Resources/app/node_modules/'],
-      ['node_modules/strike-api', path + '/Contents/Resources/app/node_modules/'],
-      ['node_modules/superagent', path + '/Contents/Resources/app/node_modules/'],
-      ['node_modules/t411', path + '/Contents/Resources/app/node_modules/'],
-      ['node_modules/transmission', path + '/Contents/Resources/app/node_modules/'],
-      ['node_modules/font-awesome', path + '/Contents/Resources/app/node_modules/'],
-      ['node_modules/path-extra', path + '/Contents/Resources/app/node_modules/'],
-      ['node_modules/underscore', path + '/Contents/Resources/app/node_modules/']
-    ];
-
     pExec("cp -R ./node_modules/electron-prebuilt/dist/Electron.app " + path);
-
-    for (mkdir of mkdirs) {
-      pExec("mkdir -p " + mkdir);
-    }
-
-    for (rm of rms) {
-      pExec("rm -rf " + rm);
-    }
-
+    pExec("rm -rf " + path + "/Contents/Resources/default_app");
+    pExec("rm -rf " + path + "/Contents/Resources/atom.icns");
     pExec("sed -i '' 's/Electron/AutoDownloadManager/g' " + path + '/Contents/Info.plist')
     pExec("mv " + path + "/Contents/MacOS/Electron " + path + "/Contents/MacOS/AutoDownloadManager");
-
-    for (cp of cps) {
-      pExec("cp " + cp[0] + " " + cp[1]);
-    }
-
-    for (cpr of cprs) {
-      pExec("cp -R " + cpr[0] + " " + cpr[1]);
-    }
-
+    pExec("cp img/atom.icns " + path + '/Contents/Resources/atom.icns');
+    pExec("cp -R app " + path + '/Contents/Resources/');
     pExec("cd " + out + " && tar -zcvf " + applicationName + ".app.tar.gz " + applicationName + ".app/*");
     pExec("rm -rf " + path);
   }
