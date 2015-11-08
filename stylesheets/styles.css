@@ -580,12 +580,14 @@ h3 {
 }
 
 a {
-  color: #ffcc00;
+  color: #659e10;
   font-weight: 400;
   text-decoration: none;
+  transition: color;
+  transition-duration: 1s;
 }
 a:hover {
-  color: #ffeb9b;
+  color: #bfff67;
 }
 
 a small {
@@ -616,7 +618,7 @@ section img {
 }
 
 blockquote {
-  border-left: 3px solid #ffcc00;
+  border-left: 3px solid #659e10;
   margin: 0;
   padding: 0 0 0 20px;
   font-style: italic;
@@ -725,6 +727,7 @@ dt {
   text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2);
   font-size: 14px;
 }
+#footer a.button,
 #header nav li a {
   color: white;
   border: 1px solid #5d910b;
@@ -751,7 +754,13 @@ dt {
   font-size: 14px;
   display: inline-block;
   text-align: center;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -ms-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
 }
+#footer a.button:hover,
 #header nav li a:hover {
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #749619), color-stop(100%, #527f0e));
   background: -webkit-linear-gradient(#749619, #527f0e);
@@ -765,6 +774,11 @@ dt {
   -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0);
   -o-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0);
   box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0);
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -ms-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
 }
 #header nav li.fork {
   float: left;
@@ -806,6 +820,11 @@ section #title p {
   font-size: 18px;
   text-align: center;
 }
+section #title p.version-number {
+  text-align: right;
+  margin-top: -20px;
+  color: #659e10;
+}
 section #title .credits {
   font-size: 11px;
   font-family: 'OpenSansRegular', "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -818,6 +837,39 @@ section #title .credits.left {
 }
 section #title .credits.right {
   float: right;
+}
+
+#middle {
+  background-color: #659e10;
+  border-top: 5px solid #7aba14;
+  border-bottom: 5px solid #7bba13;
+  padding:10px 0 30px;
+  box-shadow: 0 0 3px 0px #7bba13;
+}
+#middle p{
+  text-align: center;
+  color: #333;
+  font-weight: 700;
+  font-size: 20px;
+  padding-top: 10px;
+}
+#middle img{
+  width: 650px;
+  margin: 0px auto;
+  display: block;
+  padding: 5px;
+  background-color: white;
+  border: 1px solid #696969;
+  box-shadow: 0 0 7px 3px #696969;
+}
+#footer{
+  text-align: center;
+}
+#footer a.button{
+  font-size: 25px;
+  padding: 20px;
+  cursor: pointer;
+  margin: 50px 0;
 }
 
 @media print, screen and (max-width: 720px) {
