@@ -157,6 +157,10 @@ var build = function() {
     var packager = require('electron-packager')
     packager({dir: 'app', name: "AutoDownloadManager", platform: 'darwin', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.icns", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
   }
+  if (process.platform == 'win32') {
+    var packager = require('electron-packager')
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
+  }
 };
 
 gulp.task('package', ['min-all'], build);
