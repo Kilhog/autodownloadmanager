@@ -4,7 +4,11 @@ Version Beta
 
 ## Download
 
-### OSX ~ [Télécharger v.0.9.0](https://github.com/Kilhog/autodownloadmanager/blob/master/build/AutoDownloadManager_0_9_0.app.tar.gz?raw=true)
+### OSX ~ [Télécharger v.0.9.1](https://github.com/HKFXTeam/AutoDownloadManager/blob/master/build/AutoDownloadManager-darwin-x64.zip?raw=true)
+### Windows 32 ~ [Télécharger v.0.9.1](https://github.com/HKFXTeam/AutoDownloadManager/blob/master/build/AutoDownloadManager-win32-ia32.zip?raw=true)
+### Windows 64 ~ [Télécharger v.0.9.1](https://github.com/HKFXTeam/AutoDownloadManager/blob/master/build/AutoDownloadManager-win32-x64.zip?raw=true)
+### Linux 32 ~ [Télécharger v.0.9.1](https://github.com/HKFXTeam/AutoDownloadManager/blob/master/build/AutoDownloadManager-linux-ia32.zip?raw=true)
+### Linux 64 ~ [Télécharger v.0.9.1](https://github.com/HKFXTeam/AutoDownloadManager/blob/master/build/AutoDownloadManager-linux-x64.zip?raw=true)
 
 Auto Download Manager est un outil qui permet de gérer vos séries automatiquement.
 En gros le principe est le suivant:
@@ -15,8 +19,6 @@ En gros le principe est le suivant:
 * Vous pouvez connecter l'application à Transmission pour lancer les torrents en 1-click
 * Vous pouvez télécharger les sous-tires VF (Recherche sur addic7ed.com)
 * Vous pouvez marqué un épisode comme "vue" (Directement synchronisé avec votre compte Betaseries)
-
-Actuellement l'application n'est pas "packagé" donc vous devez utiliser cette procédure ci-dessous pour démarrer l'application.
 
 ![Imgur](http://i.imgur.com/KmVWWjH.png)
 
