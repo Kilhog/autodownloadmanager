@@ -185,7 +185,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
 
       $mdDialog.show({
         controller: 'ModalChangeTargetCtrl',
-        templateUrl: 'dist/html/modal_change_target.html',
+        templateUrl: 'partial/modal_change_target.html',
         targetEvent: ev,
         clickOutsideToClose: true,
         resolve: {
@@ -209,7 +209,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
     $scope.showListBottomSheet = function ($index, $index2, episode) {
       $scope.alert = '';
       $mdBottomSheet.show({
-        templateUrl: 'dist/html/bottom-sheet-list-template.html',
+        templateUrl: 'partial/bottom-sheet-list-template.html',
         controller: 'ListBottomSheetCtrl',
         resolve: {
           episode: function () {

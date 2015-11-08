@@ -1,15 +1,15 @@
 'use strict';
 
-var apiBetaseries = require("./dist/js/api-betaseries");
-var apiGetStrike = require("./dist/js/api-getstrike");
-var apiKickAss = require("./dist/js/api-kat.js");
-var apiTorrent = require("./dist/js/api-torrent.js");
-var apiTransmission = require("./dist/js/api-transmission");
-var apiDblite = require("./dist/js/api-dblite");
-var apiAddicted = require("./dist/js/api-addicted");
-var apiT411 = require("./dist/js/api-t411");
-var apiRarBg = require("./dist/js/api-rarbg");
-var utils = require("./dist/js/api-utils.js");
+var apiBetaseries = require("./js/api-betaseries");
+var apiGetStrike = require("./js/api-getstrike");
+var apiKickAss = require("./js/api-kat.js");
+var apiTorrent = require("./js/api-torrent.js");
+var apiTransmission = require("./js/api-transmission");
+var apiDblite = require("./js/api-dblite");
+var apiAddicted = require("./js/api-addicted");
+var apiT411 = require("./js/api-t411");
+var apiRarBg = require("./js/api-rarbg");
+var utils = require("./js/api-utils.js");
 
 var request = require('superagent');
 var ipc = require('ipc');
@@ -40,19 +40,19 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       .state("main", {
         controller: 'mainCtrl',
         url: "/main",
-        templateUrl: 'dist/html/main.html'
+        templateUrl: 'partial/main.html'
       })
       .state("main.reglages", {
         controller: 'reglagesCtrl',
         parent: 'main',
         url: "/reglages",
-        templateUrl: 'dist/html/reglages.html'
+        templateUrl: 'partial/reglages.html'
       })
       .state("main.manager", {
         controller: 'managerCtrl',
         parent: 'main',
         url: "/manager",
-        templateUrl: 'dist/html/manager.html'
+        templateUrl: 'partial/manager.html'
       });
   }
 ]).filter('numberFixedLen', function () {
