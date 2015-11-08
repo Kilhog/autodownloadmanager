@@ -10,6 +10,7 @@ var exec = require('child_process').exec;
 var execSync = require('sync-exec');
 var babel = require('gulp-babel');
 var pjson = require('./package.json');
+var packager = require('electron-packager');
 
 var css = [
   './app-raw/css/styles.css'
@@ -154,11 +155,11 @@ function pExec(cmd) {
 
 var build = function() {
   if (process.platform == 'darwin') {
-    var packager = require('electron-packager')
     packager({dir: 'app', name: "AutoDownloadManager", platform: 'darwin', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.icns", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'linux', arch: 'all', version: '0.31.2', 'app-version': pjson.version, out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
   }
   if (process.platform == 'win32') {
-    var packager = require('electron-packager')
     packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
   }
 };

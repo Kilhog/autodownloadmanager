@@ -3,6 +3,7 @@ var BrowserWindow = require('browser-window');
 var ipc = require('ipc');
 var dialog = require('dialog');
 var globalShortcut = require('global-shortcut');
+var pjson = require('./package.json');
 
 app.commandLine.appendSwitch('--enable-viewport-meta', 'true');
 
@@ -47,6 +48,10 @@ app.on('ready', function() {
   ipc.on('dialog-selection-dossier', function(event, arg){
     var res = dialog.showOpenDialog({ properties: [ 'openDirectory', 'multiSelections' ], title: 'Choisir un dossier pour les sous-titres'});
     event.sender.send('dialog-selection-dossier-reply', res);
+  });
+
+  ipc.on('getVersionNumber', function(event) {
+    event.sender.send('versionNumber', pjson.version);
   });
 
   // Emitted when the window is closed.

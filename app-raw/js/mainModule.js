@@ -148,6 +148,14 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     });
 }]).controller('StateCtrl', ['$scope', 'stateSites', function ($scope, stateSites) {
     $scope.states = stateSites;
+}]).controller('versionNumber', ['$scope', '$http', function($scope, $http) {
+  ipc.send('getVersionNumber');
+  ipc.on('versionNumber', function(vn) {
+    $scope.versionNumber = vn;
+    if(!$scope.$$phase) {
+      $scope.$apply();
+    }
+  });
 }]).directive('ngRightClick', ['$parse', function($parse) {
   return function(scope, element, attrs) {
     var fn = $parse(attrs.ngRightClick);
