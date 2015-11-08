@@ -20,7 +20,6 @@
   src: url("../fonts/OpenSans-Regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Regular-webfont.woff") format("woff"), url("../fonts/OpenSans-Regular-webfont.ttf") format("truetype"), url("../fonts/OpenSans-Regular-webfont.svg#OpenSansRegular") format("svg");
   font-weight: normal;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
 }
 
 @font-face {
@@ -29,7 +28,6 @@
   src: url("../fonts/OpenSans-Italic-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Italic-webfont.woff") format("woff"), url("../fonts/OpenSans-Italic-webfont.ttf") format("truetype"), url("../fonts/OpenSans-Italic-webfont.svg#OpenSansItalic") format("svg");
   font-weight: normal;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
 }
 
 @font-face {
@@ -38,7 +36,6 @@
   src: url("../fonts/OpenSans-Semibold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Semibold-webfont.woff") format("woff"), url("../fonts/OpenSans-Semibold-webfont.ttf") format("truetype"), url("../fonts/OpenSans-Semibold-webfont.svg#OpenSansSemibold") format("svg");
   font-weight: normal;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
 }
 
 @font-face {
@@ -47,7 +44,6 @@
   src: url("../fonts/OpenSans-SemiboldItalic-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-SemiboldItalic-webfont.woff") format("woff"), url("../fonts/OpenSans-SemiboldItalic-webfont.ttf") format("truetype"), url("../fonts/OpenSans-SemiboldItalic-webfont.svg#OpenSansSemiboldItalic") format("svg");
   font-weight: normal;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
 }
 
 @font-face {
@@ -56,7 +52,6 @@
   src: url("../fonts/OpenSans-Bold-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-Bold-webfont.woff") format("woff"), url("../fonts/OpenSans-Bold-webfont.ttf") format("truetype"), url("../fonts/OpenSans-Bold-webfont.svg#OpenSansBold") format("svg");
   font-weight: normal;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
 }
 
 @font-face {
@@ -65,7 +60,6 @@
   src: url("../fonts/OpenSans-BoldItalic-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/OpenSans-BoldItalic-webfont.woff") format("woff"), url("../fonts/OpenSans-BoldItalic-webfont.ttf") format("truetype"), url("../fonts/OpenSans-BoldItalic-webfont.svg#OpenSansBoldItalic") format("svg");
   font-weight: normal;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
 }
 
 /* normalize.css 2012-02-07T12:37 UTC - https://github.com/necolas/normalize.css */
@@ -82,7 +76,6 @@ figcaption,
 figure,
 footer,
 header,
-hgroup,
 nav,
 section,
 summary {
@@ -275,7 +268,6 @@ q {
 q:before,
 q:after {
   content: '';
-  content: none;
 }
 
 small {
@@ -334,7 +326,6 @@ ul {
 nav ul,
 nav ol {
   list-style: none;
-  list-style-image: none;
 }
 
 /* =============================================================================
@@ -390,7 +381,7 @@ fieldset {
 
 /*
  * 1. Corrects color not being inherited in IE6/7/8/9
- * 2. Corrects text not wrapping in FF3 
+ * 2. Corrects text not wrapping in FF3
  * 3. Corrects alignment displayed oddly in IE6/7
  */
 legend {
@@ -529,8 +520,8 @@ table {
 }
 
 body {
-  padding: 0px 0 20px 0px;
-  margin: 0px;
+  padding: 0 0 20px 0;
+  margin: 0;
   font: 14px/1.5 "OpenSansRegular", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #f0e7d5;
   font-weight: normal;
@@ -712,7 +703,6 @@ dt {
 }
 #header nav {
   max-width: 650px;
-  margin: 0 auto;
   padding: 0 10px;
   background: blue;
   margin: 6px auto;
@@ -864,6 +854,9 @@ section #title .credits.right {
 }
 #footer{
   text-align: center;
+  background: #353535 url("../images/nav-bg.gif") repeat scroll 0 0;
+  border-bottom: 4px solid #434343;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 #footer a.button{
   font-size: 25px;
@@ -871,6 +864,24 @@ section #title .credits.right {
   cursor: pointer;
   margin: 50px 0;
 }
+#footer-2{
+  text-align: center;
+  padding: 15px;
+}
+#footer-2 .col-main{
+  padding: 10px 0;
+  overflow: hidden;
+}
+#footer-2 .col-main .col-1-2{
+  width: 50%;
+  float: left;
+}
+#footer-2 .col-main .col-1-2{width: 50%;float: left}
+#footer-2 .col-main .col-1-2 .pict{width: 50%;float: left}
+#footer-2 .col-main .col-1-2 .pict img{width: 150px; float: right}
+#footer-2 .col-main .col-1-2 .resume{width: 46%;float: left;text-align: left;padding-left: 15px;}
+#footer-2 .col-main .col-1-2 .resume a.usr{font-size: 25px}
+
 
 @media print, screen and (max-width: 720px) {
   #title .credits {
