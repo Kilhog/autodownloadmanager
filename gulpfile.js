@@ -153,21 +153,9 @@ function pExec(cmd) {
 };
 
 var build = function() {
-  var application = "AutoDownloadManager";
-  var applicationName = application + "_" + pjson.version.replace(/\./g, '_');
-  var out = "./build/";
-  var path = out + applicationName + ".app";
-
   if (process.platform == 'darwin') {
-    pExec("cp -R ./node_modules/electron-prebuilt/dist/Electron.app " + path);
-    pExec("rm -rf " + path + "/Contents/Resources/default_app");
-    pExec("rm -rf " + path + "/Contents/Resources/atom.icns");
-    pExec("sed -i '' 's/Electron/AutoDownloadManager/g' " + path + '/Contents/Info.plist')
-    pExec("mv " + path + "/Contents/MacOS/Electron " + path + "/Contents/MacOS/AutoDownloadManager");
-    pExec("cp img/atom.icns " + path + '/Contents/Resources/atom.icns');
-    pExec("cp -R app " + path + '/Contents/Resources/');
-    pExec("cd " + out + " && tar -zcvf " + applicationName + ".app.tar.gz " + applicationName + ".app/*");
-    pExec("rm -rf " + path);
+    var packager = require('electron-packager')
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'darwin', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.icns", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
   }
 };
 
