@@ -864,6 +864,13 @@ section #title .credits.right {
   cursor: pointer;
   margin: 50px 0;
 }
+#footer #dl-plateform a.button{
+  font-size: 15px;
+  padding: 15px;
+  cursor: pointer;
+  margin: -25px 10px 25px 10px;
+  width: 80px;
+}
 #footer-2{
   text-align: center;
   padding: 15px;

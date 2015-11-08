@@ -60,7 +60,11 @@
 </div>
 
 <div id="footer">
-  <a class="button">Télécharger la dernière version</a>
+  <a class="button button-dl">Télécharger la dernière version</a>
+  <div id="dl-plateform" style="display:none;">
+      <a class="button button-dl-lin">Linux</a>
+      <a class="button button-dl-win">Windows</a>
+  </div>
 </div>
 <div id="footer-2">
     <div class="col-main">
@@ -86,6 +90,12 @@
     <p><a href="https://github.com/HKFXTeam/AutoDownloadManager/issues" title="Reporter un bug ?">Reporter un bug ?</a> - Développé avec <span style="color: #FA597A">❤</span> par <a href="https://github.com/HKFXTeam" title="HKFX Team">HKFX Team</a></p>
 </div>
 <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+<script>
+    jQuery(".button-dl").click(function(){
+        jQuery("#dl-plateform").toggle(400);
+    });
+</script>
 
 </body>
 </html>
