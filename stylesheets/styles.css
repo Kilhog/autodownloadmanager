@@ -869,7 +869,7 @@ section #title .credits.right {
   padding: 15px;
 }
 #footer-2 .col-main{
-  padding: 10px 0;
+  padding: 10px 0px 30px;
   overflow: hidden;
 }
 #footer-2 .col-main .col-1-2{
@@ -877,10 +877,13 @@ section #title .credits.right {
   float: left;
 }
 #footer-2 .col-main .col-1-2{width: 50%;float: left}
-#footer-2 .col-main .col-1-2 .pict{width: 50%;float: left}
-#footer-2 .col-main .col-1-2 .pict img{width: 150px; float: right}
-#footer-2 .col-main .col-1-2 .resume{width: 46%;float: left;text-align: left;padding-left: 15px;}
-#footer-2 .col-main .col-1-2 .resume a.usr{font-size: 25px}
+#footer-2 .col-main .col-1-2 .pict{width: 150px;float: left}
+#footer-2 .col-main .col-1-2 .pict.right{width: 150px;float: right}
+#footer-2 .col-main .col-1-2 .pict img{width: 150px; float: left;padding-left: calc(5% - 1px); border-right: 2px solid #7bba13; border-radius:100%}
+#footer-2 .col-main .col-1-2 .pict img.right{width: 150px; float: right; padding-left: calc(5% - 1px);border-right: 2px solid #7bba13;}
+#footer-2 .col-main .col-1-2 .resume{width: 46%;float: left;text-align: left;padding-left: 15px;padding-top:5%}
+#footer-2 .col-main .col-1-2 .resume.right{width: 46%;float: right;text-align: right;padding-right: 15px;}
+#footer-2 .col-main .col-1-2 .resume a.usr{font-size: 20px; display: block;}
 
 
 @media print, screen and (max-width: 720px) {
