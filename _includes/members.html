@@ -1,0 +1,24 @@
+<div id="footerwrap">
+  <div class="container">
+      <div class="row centered">
+          <h3 class="mb" style="color: white">MEET OUR TEAM</h3>
+
+          {% for member in site.members %}
+          {% if forloop.index == 1 %}
+          <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+          {% else %}
+          <div class="col-lg-3 col-md-3 col-sm-3">
+          {% endif %}
+              <div class="he-wrap tpl6">
+              <img style="border-right: 2px solid #ffffff; border-radius: 100%;" src="{{ member.img }}" alt="">
+              </div><!-- he wrap -->
+              <h4>{{ member.name }}</h4>
+              <h5 class="ctitle">{{ member.position }}</h5>
+              <p>{{ member.text }}</p>
+              <div class="hline"></div>
+          </div><! --/col-lg-3 -->
+          {% endfor %}
+
+      </div><! --/row -->
+  </div><! --/container -->
+</div>

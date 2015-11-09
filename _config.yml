@@ -1,0 +1,36 @@
+### GENERAL SETTINGS ###
+
+# Site settings
+title: AutoDownloadManager
+description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+analytics: #Google analytics code in the format XX-nnnnnnnn-n
+baseurl: "" #important: start with /
+url: "http://yourdomain.com"
+
+# Build settings
+markdown: kramdown
+permalink: /:categories/:title
+excerpt_separator: <!--more--> #use this in posts to define how long the excerpt of the post (that is shown on the Blog page) is
+
+colors:  #in hex code if not noted else
+  primary: "#424242" #"#F70031"
+  primary_rgb: "66,66,66" #"247,0,49" #rgb of the primary. Needed in some places for the transparency effect.
+  secondary: "#CDDC39" #"#33004D"
+  link: "#428bca"
+  link_hover: "#01b2fe"
+  footer_heading: "#ffffff"
+  footer_content: "#bfc9d3"
+
+### GENERAL DATA FOR VARIOUS LOCATIONS ###
+
+# Members information. Shown on About page.
+members:
+  - name: Hadrien.D
+    position: Web Programmer
+    img: https://avatars3.githubusercontent.com/u/4997084?v=3&s=460
+  - name: Kilhog
+    position: Analyst Programmer
+    img: https://avatars2.githubusercontent.com/u/4045682?v=3&s=460
+
+# Short text about your company. Shown in footer on every page and also separately on Home and Contact page.
+about: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
