@@ -34,3 +34,10 @@ members:
 
 # Short text about your company. Shown in footer on every page and also separately on Home and Contact page.
 about: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
+
+link_img: http://img11.hostingpics.net/pics/479031687474703a2f2f692e696d6775722e636f6d2f4b6d5657576a482e706e67.png
+link_win64: "https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.1/AutoDownloadManager-win32-x64.zip"
+link_win32: "https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.1/AutoDownloadManager-win32-ia32.zip"
+link_osx: "https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.1/AutoDownloadManager-darwin-x64.zip"
+link_linux64: "https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.1/AutoDownloadManager-linux-x64.zip"
+link_linux32: "https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.1/AutoDownloadManager-linux-ia32.zip"
