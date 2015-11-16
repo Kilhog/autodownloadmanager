@@ -6,10 +6,7 @@
 
   function apiTorrent(apiTR, apiT4, apiGS, apiKA, apiRB) {
     this.apiTR = apiTR;
-    this.apiT4 = apiT4;
-    this.apiGS = apiGS;
-    this.apiKA = apiKA;
-    this.apiRB = apiRB;
+    this.allTO = {apiT4, apiGS, apiKA, apiRB};
   }
 
   apiTorrent.prototype.searchAndDownload = function(query, episodeQuality) {
@@ -49,8 +46,8 @@
           }
         };
 
-        self.apiKA.searchTheBest(query, episodeQuality).then(handleResponse, handleResponse);
-        self.apiGS.searchTheBest(query, episodeQuality).then(handleResponse, handleResponse);
+        self.allTO.apiKA.searchTheBest(query, episodeQuality).then(handleResponse, handleResponse);
+        self.allTO.apiGS.searchTheBest(query, episodeQuality).then(handleResponse, handleResponse);
       }
     );
   };
@@ -61,7 +58,7 @@
     return new Promise(
       function(resolve, reject) {
         if(torrentTracker == "t411") {
-          self.apiT4.downloadTorrent(torrentLink).then(function(path) {
+          self.allTO.apiT4.downloadTorrent(torrentLink).then(function(path) {
             if(self.apiTR.transmission_obj) {
               self.apiTR.addFile(path).then(resolve);
             } else {
@@ -92,10 +89,9 @@
       func(torrents);
     }
 
-    self.apiKA.searchAll(query).then(updateListTorrents, function() {});
-    self.apiGS.searchAll(query).then(updateListTorrents, function() {});
-    self.apiT4.searchAll(query).then(updateListTorrents, function() {});
-    self.apiRB.searchAll(query).then(updateListTorrents, function() {});
+    _.each(self.allTO, function(api) {
+      api.searchAll(query).then(updateListTorrents, function() {});
+    });
   };
 
   module.exports = apiTorrent;
