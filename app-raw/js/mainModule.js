@@ -15,7 +15,7 @@ var request = require('superagent');
 var ipc = require('ipc');
 var justOpen = true;
 
-var app = angular.module('adm-app', ["ngMaterial", "ui.router"]);
+var app = angular.module('adm-app', ["ngMaterial", "ui.router", require('ng-fx'), require('angular-animate')]);
 
 app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
