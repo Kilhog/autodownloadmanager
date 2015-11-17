@@ -97,13 +97,21 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       }
     }
 
+    function real_name_episode(episode) {
+      return new Promise(
+        function (resolve, reject) {
+          apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [episode.show.title], function (err, data) {
+            var target = data.length > 0 ? data[0][2] : episode.show.title;
+            resolve(gen_name_episode(target, episode.season, episode.episode));
+          });
+        }
+      )
+    }
+
     $scope.downloadEpisode = function (episode) {
       $scope.loadedEpisode.push(episode.id);
 
-      apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [episode.show.title], function (err, data) {
-        var target = data.length > 0 ? data[0][2] : episode.show.title,
-          name = gen_name_episode(target, episode.season, episode.episode);
-
+      real_name_episode(episode).then(function(name) {
         apiTO.searchAndDownload(name, persistContainer.episodeQuality).then(function() {
           $scope.displayToast('Torrent ajouté !');
           remove_from_loaded_episode(episode.id);
@@ -111,7 +119,14 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
           $scope.displayToast('Aucun torrent trouvé !');
           remove_from_loaded_episode(episode.id);
         });
+      });
+    };
 
+    $scope.redirectDownload = function(episode) {
+      real_name_episode(episode).then(function(name) {
+        $scope.recherche_rapide = name;
+        $scope.recherche_change();
+        $scope.selectedTabManagerIndex = 2;
       });
     };
 
