@@ -96,7 +96,7 @@ gulp.task('move-js', ['move-api'], function () {
 gulp.task('min-api', function () {
   return gulp.src([
     './app-raw/js/api-*'])
-    .pipe(babel())
+    .pipe(babel({presets: ['es2015']}))
     .pipe(uglify())
     .pipe(gulp.dest('app/js/'));
 });
@@ -109,7 +109,7 @@ gulp.task('move-api', function () {
 
 gulp.task('min-html', function() {
   return gulp.src(html)
-    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(htmlmin())
     .pipe(gulp.dest('app/partial/'));
 });
 
@@ -145,7 +145,7 @@ gulp.task('default', ['move-all'], function () {
   launch();
 });
 
-gulp.task('compile', ['min-all'], function () {
+gulp.task('min', ['min-all'], function () {
   launch();
 });
 
