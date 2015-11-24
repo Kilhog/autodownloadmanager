@@ -2,12 +2,9 @@ var gulp = require('gulp');
 var concatCss = require('gulp-concat-css');
 var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
-var clean = require('gulp-rimraf');
 var uglify = require('gulp-uglify');
 var htmlmin = require('gulp-htmlmin');
-var sys = require('sys');
 var exec = require('child_process').exec;
-var execSync = require('sync-exec');
 var babel = require('gulp-babel');
 var pjson = require('./package.json');
 var packager = require('electron-packager');
@@ -29,33 +26,17 @@ var html = [
   './app-raw/partial/*.html'
 ];
 
-var modules = [
-  './node_modules/angular/**/*',
-  './node_modules/angular-animate/**/*',
-  './node_modules/angular-aria/**/*',
-  './node_modules/angular-material/**/*',
-  './node_modules/angular-ui-router/**/*',
-  './node_modules/cheerio/**/*',
-  './node_modules/crypto-js/**/*',
-  './node_modules/curlrequest/**/*',
-  './node_modules/dblite/**/*',
-  './node_modules/font-awesome/**/*',
-  './node_modules/jquery/**/*',
-  './node_modules/moment/**/*',
-  './node_modules/path-extra/**/*',
-  './node_modules/request/**/*',
-  './node_modules/strike-api/**/*',
-  './node_modules/superagent/**/*',
-  './node_modules/t411/**/*',
-  './node_modules/transmission/**/*',
-  './node_modules/underscore/**/*'
-];
+var modules = [];
 
-var electronPrebuilt = './node_modules/electron-prebuilt/dist/Electron.app';
+for(var k in pjson.dependencies) {
+  modules.push('./node_modules/' + k + '/**/*');
+}
 
 function launch() {
   function puts(error, stdout, stderr) {
-    sys.puts(stdout);
+    console.log(stdout);
+    console.log(stderr);
+    console.log(error);
   }
 
   if (process.platform == 'darwin') {
@@ -149,18 +130,14 @@ gulp.task('min', ['min-all'], function () {
   launch();
 });
 
-function pExec(cmd) {
-  console.log(execSync(cmd).stderr);
-};
-
 var build = function() {
   if (process.platform == 'darwin') {
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'darwin', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.icns", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'linux', arch: 'all', version: '0.31.2', 'app-version': pjson.version, out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'darwin', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.icns", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'linux', arch: 'all', version: '0.31.2', 'app-version': pjson.version, out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
   }
   if (process.platform == 'win32') {
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)})
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
   }
 };
 
