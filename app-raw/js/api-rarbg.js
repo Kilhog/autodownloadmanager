@@ -4,10 +4,17 @@
   var request = require("request");
   var cheerio = require('cheerio');
   var moment = require('moment');
-  var rarbg_url = "https://rarbg.to";
+  var rarbg_api_url = "https://torrentapi.org";
 
   function apiRarBg() {
 
+  }
+
+  function bytesToSize(bytes) {
+    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) return '0 Byte';
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+    return Math.round(bytes / Math.pow(1024, i), 2) + '' + sizes[i];
   }
 
   apiRarBg.prototype.searchTheBest = function(q, episodeQuality) {
@@ -20,55 +27,47 @@
         var search_query = q.split(' ').join('+');
         var torrent_content = [];
 
-        var theJar = request.jar();
-        var options = {
-            url: rarbg_url + '/torrents.php?search=' + search_query + '&order=seeders&by=DESC',
-            headers: {
-                'Referer': rarbg_url + '/index6.php',
-                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.43 Safari/537.36'
-            },
-            jar: theJar
-        };
-        theJar.setCookie('7fAY799j=VtdTzG69', rarbg_url, {"ignoreError":true});
+        var url = rarbg_api_url + "/pubapi_v2.php?get_token=get_token&app_id=Torrentflix";
+        request(url, function (err, response, body) {
+          if (!err && response.statusCode === 200) {
 
-        request(options, function(err, response, body) {
-          if(!err && response.statusCode === 200) {
-            $ = cheerio.load(body);
+            var data = JSON.parse(body);
 
-            if($("title").text() === "Bot check !") {
-              reject();
-            }
+            var token = data.token;
+            var search_url = rarbg_api_url + "/pubapi_v2.php?mode=search&search_string=" + search_query + "&sort=seeders&format=json_extended&token=" + token;
 
-            if($('.lista2t tr').length > 1) {
-              $('.lista2t tr').each(function(index, torrents) {
-                  let td = $(this).children('td.lista');
-                  let links = $(torrents).find('a');
+            request(search_url, function (err, response, body) {
+              if (!err && response.statusCode === 200) {
 
-                  $(links).each(function(i, link) {
-                    if($(link).attr('href').indexOf("/torrent/") > -1 && $(link).attr('href').indexOf("#comments") < 1) {
-                      let rarbg_link = $(link).attr('href');
-                      let torrent_title = $(link).text();
+                data = JSON.parse(body);
 
-                      let rarbg_id = rarbg_link.split('/torrent/').join('');
-                      let rarbg_file = encodeURIComponent(torrent_title) + "-[rarbg.com].torrent";
+                for(var torrent in data.torrent_results){
 
-                      torrent_content.push({
-                        title: torrent_title,
-                        category: "",
-                        seeds: $(td).eq(4).text(),
-                        leechs: $(td).eq(5).text(),
-                        size: $(td).eq(3).text(),
-                        torrentLink: rarbg_url + "/download.php?id=" + rarbg_id + "&f=" +rarbg_file,
-                        torrent_site: rarbg_url + rarbg_link,
-                        tracker: "rarbg"
-                      });
-                    }
-                  });
-              });
-              resolve(torrent_content);
-            } else {
-              reject();
-            }
+                  var title = data.torrent_results[torrent].title;
+                  var torrent_link = data.torrent_results[torrent].download;
+                  var seeds = data.torrent_results[torrent].seeders;
+                  var leechs = data.torrent_results[torrent].leechers;
+                  var size = bytesToSize(data.torrent_results[torrent].size);
+
+                  var data_content = {
+                    title: title,
+                    category: "",
+                    seeds: seeds,
+                    leechs: leechs,
+                    size: size,
+                    torrentLink: torrent_link,
+                    tracker: "rarbg"
+                  };
+
+                  torrent_content.push(data_content);
+                }
+
+                resolve(torrent_content);
+              } else {
+                reject();
+              }
+            });
+
           } else {
             reject();
           }
