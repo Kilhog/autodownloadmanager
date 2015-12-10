@@ -8,6 +8,7 @@ var exec = require('child_process').exec;
 var babel = require('gulp-babel');
 var pjson = require('./package.json');
 var packager = require('electron-packager');
+var spawn = require('child_process').spawn;
 
 var css = [
   './app-raw/css/styles.css'
@@ -33,19 +34,34 @@ for(var k in pjson.dependencies) {
 }
 
 function launch() {
-  function puts(error, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    console.log(error);
-  }
+
+  var cmd = "",
+    pathApp = "./app/";
 
   if (process.platform == 'darwin') {
-    exec("./node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron ./app/", puts);
+    cmd = "./node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron";
   } else if (process.platform == 'linux') {
-    exec("./node_modules/electron-prebuilt/dist/electron ./app/", puts);
+    cmd = "./node_modules/electron-prebuilt/dist/electron";
   } else if (process.platform == 'win32') {
-    exec(".\\node_modules\\electron-prebuilt\\dist\\electron.exe .\\app\\", puts);
+    cmd = ".\\node_modules\\electron-prebuilt\\dist\\electron.exe";
+    pathApp = ".\\app\\";
   }
+
+  var electron = spawn(cmd, [pathApp]);
+
+
+  electron.stdout.on('data', function (data) {
+    console.log(String(data));
+  });
+
+  electron.stderr.on('data', function (data) {
+    console.log(String(data));
+  });
+
+  electron.on('exit', function (code) {
+    console.log('child process exited with code ' + String(code));
+  });
+
 }
 
 gulp.task('min-css', function () {
