@@ -1,6 +1,6 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
-var ipc = require('ipc');
+var ipc = require('electron').ipcMain;
 var dialog = require('dialog');
 var globalShortcut = require('global-shortcut');
 var pjson = require('./package.json');

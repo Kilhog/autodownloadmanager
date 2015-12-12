@@ -9,6 +9,7 @@ var babel = require('gulp-babel');
 var pjson = require('./package.json');
 var packager = require('electron-packager');
 var spawn = require('child_process').spawn;
+var fs = require('fs');
 
 var css = [
   './app-raw/css/styles.css'
@@ -31,6 +32,16 @@ var modules = [];
 
 for(var k in pjson.dependencies) {
   modules.push('./node_modules/' + k + '/**/*');
+}
+
+function launchDarwin() {
+  try {
+    fs.symlinkSync(__dirname + "/app", __dirname + "/node_modules/electron-prebuilt/dist/Electron.app/Contents/Resources/app");
+  } catch (e) {}
+
+  var cmd = "open -a finder ./node_modules/electron-prebuilt/dist/Electron.app";
+
+  exec(cmd);
 }
 
 function launch() {
@@ -142,18 +153,22 @@ gulp.task('default', ['move-all'], function () {
   launch();
 });
 
+gulp.task('darwin', ['move-all'], function () {
+  launchDarwin();
+});
+
 gulp.task('min', ['min-all'], function () {
   launch();
 });
 
 var build = function() {
   if (process.platform == 'darwin') {
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'darwin', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.icns", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'linux', arch: 'all', version: '0.31.2', 'app-version': pjson.version, out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'darwin', arch: 'all', version: '0.36.0', 'app-version': pjson.version, icon: "img/atom.icns", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.36.0', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'linux', arch: 'all', version: '0.36.0', 'app-version': pjson.version, out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
   }
   if (process.platform == 'win32') {
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.31.2', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
+    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.36.0', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
   }
 };
 

@@ -129,7 +129,7 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
       ipc.send('dialog-selection-dossier');
     };
 
-    ipc.on('dialog-selection-dossier-reply', function (arg) {
+    ipc.on('dialog-selection-dossier-reply', function (event, arg) {
       var strPath = arg[0];
       $scope.pathDownloadFolder = persistContainer.pathDownloadFolder = strPath;
       $scope.$apply();

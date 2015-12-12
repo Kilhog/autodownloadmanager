@@ -12,7 +12,7 @@ var apiRarBg = require("./js/api-rarbg");
 var utils = require("./js/api-utils.js");
 
 var request = require('superagent');
-var ipc = require('ipc');
+var ipc = require('electron').ipcRenderer;
 var justOpen = true;
 
 var app = angular.module('adm-app', ["ngMaterial", "ui.router", require('ng-fx'), require('angular-animate')]);
@@ -150,7 +150,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
     $scope.states = stateSites;
 }]).controller('versionNumber', ['$scope', '$http', function($scope, $http) {
   ipc.send('getVersionNumber');
-  ipc.on('versionNumber', function(vn) {
+  ipc.on('versionNumber', function(event, vn) {
     $scope.versionNumber = vn;
     if(!$scope.$$phase) {
       $scope.$apply();
