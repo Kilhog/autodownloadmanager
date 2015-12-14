@@ -4,11 +4,11 @@ Version Beta
 
 ## Download
 
-#### OSX ~ [Télécharger v.0.9.1](https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.1/AutoDownloadManager-darwin-x64.zip)
-#### Windows 32 ~ [Télécharger v.0.9.1](https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.1/AutoDownloadManager-win32-ia32.zip)
-#### Windows 64 ~ [Télécharger v.0.9.1](https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.1/AutoDownloadManager-win32-x64.zip)
-#### Linux 32 ~ [Télécharger v.0.9.1](https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.1/AutoDownloadManager-linux-ia32.zip)
-#### Linux 64 ~ [Télécharger v.0.9.1](https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.1/AutoDownloadManager-linux-x64.zip)
+#### OSX ~ [Télécharger v.0.9.2](https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.2/AutoDownloadManager-darwin-x64.zip)
+#### Windows 32 ~ [Télécharger v.0.9.2](https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.2/AutoDownloadManager-win32-ia32.zip)
+#### Windows 64 ~ [Télécharger v.0.9.2](https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.2/AutoDownloadManager-win32-x64.zip)
+#### Linux 32 ~ [Télécharger v.0.9.2](https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.2/AutoDownloadManager-linux-ia32.zip)
+#### Linux 64 ~ [Télécharger v.0.9.2](https://github.com/HKFXTeam/AutoDownloadManager/releases/download/0.9.2/AutoDownloadManager-linux-x64.zip)
 
 Auto Download Manager est un outil qui permet de gérer vos séries automatiquement.
 En gros le principe est le suivant:
