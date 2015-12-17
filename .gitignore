@@ -4,3 +4,4 @@ node_modules/
 app/
 build/
 app-raw/node_modules
+app-raw/package.json
