@@ -35,7 +35,7 @@
         var handleResponse = function(torrent) {
           nbCallDone += 1;
 
-          if(torrent && ((currentBestTorrent && currentBestTorrent.seeds < torrent.seeds) || !currentBestTorrent)) {
+          if(torrent && ((currentBestTorrent && currentBestTorrent.seeds < torrent.seeds) || !currentBestTorrent) && torrent.torrentLink) {
             currentBestTorrent = torrent;
           }
 
