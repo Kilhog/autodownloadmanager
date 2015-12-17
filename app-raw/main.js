@@ -1,8 +1,9 @@
-var app = require('app');
-var BrowserWindow = require('browser-window');
-var ipc = require('electron').ipcMain;
-var dialog = require('dialog');
-var globalShortcut = require('global-shortcut');
+const electron = require('electron');
+const app = electron.app;
+const globalShortcut = electron.globalShortcut;
+const ipc = electron.ipcMain;
+const BrowserWindow = electron.BrowserWindow;
+const dialog = electron.dialog;
 var pjson = require('./package.json');
 
 app.commandLine.appendSwitch('--enable-viewport-meta', 'true');
@@ -23,14 +24,14 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({"show": false, "min-width": 750, width: 800, "min-height": 400, height: 800, frame: false, center: true, resizable: true, title: "AutoDownloadManager"});
-  mainWindow.openDevTools();
+  //mainWindow.openDevTools();
 
   // Show the window when angular is ready
   ipc.on('dom-ready', function() {
     mainWindow.show();
   });
 
-  mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   ipc.on('minimize-window', function(event) {
     mainWindow.minimize();
