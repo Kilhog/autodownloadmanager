@@ -32,19 +32,19 @@
               <div flex="30">
                 <div ng-if="hoverCondition[$index] && loadedEpisode.indexOf(unseen.id) == -1">
                   <md-button ng-disabled="!user.token" aria-label="Marquer comme vu" ng-click="seenEpisode($parent.$parent.$parent.$index, $index)" class="md-fab md-xs md-accent" style="margin-left: 3px !important;">
-                    <md-tooltip md-direction="right" md-autohide="true">
+                    <md-tooltip>
                       Marquer comme vu
                     </md-tooltip>
                     <md-icon md-font-icon="fa fa-eye"></md-icon>
                   </md-button>
                   <md-button aria-label="Télécharger" ng-click="downloadEpisode(unseen)" ng-right-click="redirectDownload(unseen)" class="md-fab md-xs md-accent">
-                    <md-tooltip md-direction="right" md-autohide="true">
+                    <md-tooltip>
                       Télécharger
                     </md-tooltip>
                     <md-icon md-font-icon="fa fa-cloud-download"></md-icon>
                   </md-button>
                   <md-button aria-label="Sous-titres" ng-click="downloadStr(unseen, $index)" ng-right-click="redirectStr(unseen)" class="md-fab md-xs md-accent">
-                    <md-tooltip md-direction="right" md-autohide="true">
+                    <md-tooltip>
                       Sous-titres
                     </md-tooltip>
                     <md-icon md-font-icon="fa fa-align-center"></md-icon>
