@@ -11,17 +11,6 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       }
     });
 
-
-
-    /**
-     * Permet d'afficher des Toasts
-     * @param msg - Message à afficher
-     * @param type 'error' || 'success' || undefined
-     */
-    $scope.displayToast = function (msg, type) {
-      toastFact.show(msg, type);
-    };
-
     $timeout(function() {
       ipc.send('dom-ready');
     }, 0);
@@ -53,7 +42,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
         $scope.episodesUnseen = apiBT.episodesUnseen;
         $scope.$apply();
         if (res) {
-          $scope.displayToast('Synchronisation terminée');
+          toastFact.show('Synchronisation terminée');
 
           $.each($scope.episodesUnseen.shows, function (index, elm) {
             apiDB.query('SELECT * FROM search_for_torrent WHERE origin = ?', [elm.title], function (err, data) {
@@ -73,7 +62,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
             });
           });
         } else {
-          $scope.displayToast('Synchronisation échouée');
+          toastFact.show('Synchronisation échouée');
         }
 
         $scope.synchroInProgress = false;
@@ -113,10 +102,10 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
 
       real_name_episode(episode).then(function(name) {
         apiTO.searchAndDownload(name, persistContainer.episodeQuality).then(function() {
-          $scope.displayToast('Torrent ajouté !');
+          toastFact.show('Torrent ajouté !');
           remove_from_loaded_episode(episode.id);
         }, function() {
-          $scope.displayToast('Aucun torrent trouvé !');
+          toastFact.show('Aucun torrent trouvé !');
           remove_from_loaded_episode(episode.id);
         });
       });
@@ -141,15 +130,15 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
           if (res != '') {
             utils.getParam(apiDB, 'strFolder', function(strPath) {
               apiAD.downloadStr(res, name.trim(), strPath, function () {
-                $scope.displayToast('Sous-titre récupéré');
+                toastFact.show('Sous-titre récupéré');
                 remove_from_loaded_episode(episode.id);
               }, function() {
-                $scope.displayToast('Erreur lors de la récupération des sous-titres');
+                toastFact.show('Erreur lors de la récupération des sous-titres');
                 remove_from_loaded_episode(episode.id);
               });
             })
           } else {
-            $scope.displayToast('Sous-titres non trouvés');
+            toastFact.show('Sous-titres non trouvés');
             remove_from_loaded_episode(episode.id);
           }
         });
@@ -255,9 +244,9 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
           $scope.user['done'] = true;
 
           if (apiBT.user.token) {
-            $scope.displayToast('Connecté à Betaseries');
+            toastFact.show('Connecté à Betaseries');
           } else {
-            $scope.displayToast('Identifiants Betaseries incorrect', 'error');
+            toastFact.show('Identifiants Betaseries incorrect', 'error');
           }
 
           $scope.$apply();
@@ -269,18 +258,18 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
 
         apiTR.connectToApi(function (res) {
           if (res) {
-            $scope.displayToast('Connecté à Transmission');
+            toastFact.show('Connecté à Transmission');
           } else {
-            $scope.displayToast('Erreur lors de la connection à Transmission', 'error');
+            toastFact.show('Erreur lors de la connection à Transmission', 'error');
           }
           $scope.$apply();
         });
 
         apiT4.connectToApi(function() {
           if(apiT4.t411Client.token) {
-            $scope.displayToast('Connecté à T411');
+            toastFact.show('Connecté à T411');
           } else {
-            $scope.displayToast('Erreur lors de la connection à T411', 'error');
+            toastFact.show('Erreur lors de la connection à T411', 'error');
           }
         });
 
@@ -316,7 +305,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
 
     $scope.downloadTorrent = function(torrent) {
       apiTO.download(torrent.torrentLink, torrent.tracker).then(function() {
-        $scope.displayToast('Torrent ajouté !');
+        toastFact.show('Torrent ajouté !');
       });
     };
 

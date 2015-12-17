@@ -127,12 +127,13 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   return states;
 }]).factory('toastFact', ["$mdToast", function ($mdToast) {
   return {
-    show: function (msg, type) {
-      $mdToast.show({
-        template: '<md-toast class="md-toast ' + (type || "") + '">' + msg + '</md-toast>',
-        position: 'bottom right',
-        hideDelay: 3000
-      });
+    show: function (msg) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msg)
+          .position("bottom right")
+          .hideDelay(3000)
+      );
     }
   };
 }]).controller('TabsCtrl', ['$scope', '$location', function ($scope, $location) {

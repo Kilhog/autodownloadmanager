@@ -16,15 +16,6 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
 
     $scope.config = {};
 
-    /**
-     * Permet d'afficher des Toasts
-     * @param msg - Message à afficher
-     * @param type 'error' || 'success' || undefined
-     */
-    $scope.displayToast = function (msg, type) {
-      toastFact.show(msg, type);
-    };
-
     /*
      Transmission
      */
@@ -55,9 +46,9 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
         persistContainer.apiTR.connectToApi(function (res) {
           $scope.transmission_obj = persistContainer.apiTR.transmission_obj;
           if (res) {
-            $scope.displayToast('Connecté à Transmission');
+            toastFact.show('Connecté à Transmission');
           } else {
-            $scope.displayToast('Erreur lors de la connection à Transmission', 'error');
+            toastFact.show('Erreur lors de la connection à Transmission', 'error');
           }
           $scope.$apply();
         });
@@ -87,9 +78,9 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
           $scope.user = persistContainer.apiBT.user;
 
           if (persistContainer.apiBT.user.token) {
-            $scope.displayToast('Connecté à Betaseries');
+            toastFact.show('Connecté à Betaseries');
           } else {
-            $scope.displayToast('Identifiants Betaseries incorrect', 'error');
+            toastFact.show('Identifiants Betaseries incorrect', 'error');
           }
 
           $scope.$apply();
@@ -111,7 +102,7 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
     $scope.changeQuality = function () {
       utils.setParam(persistContainer.apiDB, 'episodeQuality', $scope.config.episodeQuality, function() {
         persistContainer.episodeQuality = $scope.config.episodeQuality;
-        $scope.displayToast('Changement enregistré');
+        toastFact.show('Changement enregistré');
       });
     };
 
@@ -135,7 +126,7 @@ app.controller('reglagesCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$
       $scope.$apply();
 
       utils.setParam(persistContainer.apiDB, 'strFolder', strPath, function() {
-        $scope.displayToast('Dossier sous titres modifié');
+        toastFact.show('Dossier sous titres modifié');
       });
     });
 
