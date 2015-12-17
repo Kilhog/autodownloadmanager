@@ -1,13 +1,12 @@
 var gulp = require('gulp');
-var concatCss = require('gulp-concat-css');
 var minifyCSS = require('gulp-minify-css');
-var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var htmlmin = require('gulp-htmlmin');
 var exec = require('child_process').exec;
 var babel = require('gulp-babel');
 var pjson = require('./package.json');
 var packager = require('electron-packager');
+var install = require("gulp-install");
 var spawn = require('child_process').spawn;
 var fs = require('fs');
 
@@ -16,12 +15,7 @@ var css = [
 ];
 
 var js = [
-  './app-raw/js/mainModule.js',
-  './app-raw/js/mainCtrl.js',
-  './app-raw/js/managerCtrl.js',
-  './app-raw/js/reglagesCtrl.js',
-  './app-raw/js/modal_change_target.js',
-  './app-raw/js/episode_bottom_sheet.js'
+  './app-raw/js/*.js'
 ];
 
 var html = [
@@ -75,57 +69,24 @@ function launch() {
   electron.on('exit', function (code) {
     console.log('child process exited with code ' + String(code));
   });
-
 }
 
 gulp.task('min-css', function () {
   return gulp.src(css)
-    .pipe(concatCss('css/bundle.css'))
     .pipe(minifyCSS({keepBreaks: false, keepSpecialComments: 0, rebase: false}))
-    .pipe(gulp.dest('app/'));
+    .pipe(gulp.dest('app/css/'));
 });
 
-gulp.task('move-css', function () {
-  return gulp.src(css)
-    .pipe(concatCss('css/bundle.css'))
-    .pipe(gulp.dest('app/'));
-});
-
-gulp.task('min-js', ['min-api'], function () {
+gulp.task('min-js', function () {
   return gulp.src(js)
-    .pipe(concat('js/script.min.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('app/'));
-});
-
-gulp.task('move-js', ['move-api'], function () {
-  return gulp.src(js)
-    .pipe(concat('js/script.min.js'))
-    .pipe(gulp.dest('app/'));
-});
-
-gulp.task('min-api', function () {
-  return gulp.src([
-    './app-raw/js/api-*'])
     .pipe(babel({presets: ['es2015']}))
     .pipe(uglify())
-    .pipe(gulp.dest('app/js/'));
-});
-
-gulp.task('move-api', function () {
-  return gulp.src([
-    './app-raw/js/api-*'])
     .pipe(gulp.dest('app/js/'));
 });
 
 gulp.task('min-html', function() {
   return gulp.src(html)
     .pipe(htmlmin())
-    .pipe(gulp.dest('app/partial/'));
-});
-
-gulp.task('move-html', function() {
-  return gulp.src(html)
     .pipe(gulp.dest('app/partial/'));
 });
 
@@ -139,16 +100,7 @@ gulp.task('move-main', function() {
     .pipe(gulp.dest('app/'));
 });
 
-gulp.task('move-modules', function() {
-  return gulp.src(modules, {base: './node_modules/'})
-    .pipe(gulp.dest('app/node_modules/'));
-});
-
-gulp.task('move-all', ['move-css', 'move-js', 'move-html', 'move-lib', 'move-main', 'move-modules'], function () {
-
-});
-
-gulp.task('min-all', ['min-css', 'min-js', 'min-html', 'move-lib', 'move-main', 'move-modules'], function () {
+gulp.task('create-min-app', ['min-css', 'min-js', 'min-html', 'move-lib', 'move-main'], function () {
 
 });
 
@@ -165,21 +117,16 @@ gulp.task('darwin', ['move-package-json'], function () {
   launchDarwin();
 });
 
-gulp.task('min', ['min-all'], function () {
-  launch();
+gulp.task('install-dependencies', function() {
+  return gulp.src(['./package.json'])
+    .pipe(gulp.dest('./app/'))
+    .pipe(install({production: true}));
 });
 
 var build = function() {
-  if (process.platform == 'darwin') {
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'darwin', arch: 'all', version: '0.36.0', 'app-version': pjson.version, icon: "img/atom.icns", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.36.0', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'linux', arch: 'all', version: '0.36.0', 'app-version': pjson.version, out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
-  }
-  if (process.platform == 'win32') {
-    packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.36.0', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
-  }
+  packager({dir: 'app', name: "AutoDownloadManager", platform: 'darwin', arch: 'all', version: '0.36.0', 'app-version': pjson.version, icon: "img/atom.icns", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
+  packager({dir: 'app', name: "AutoDownloadManager", platform: 'win32', arch: 'all', version: '0.36.0', 'app-version': pjson.version, icon: "img/atom.ico", out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
+  packager({dir: 'app', name: "AutoDownloadManager", platform: 'linux', arch: 'all', version: '0.36.0', 'app-version': pjson.version, out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
 };
 
-gulp.task('package', ['min-all'], build);
-
-gulp.task('package-dev', ['move-all'], build);
+gulp.task('package', ['create-min-app', 'install-dependencies'], build);
