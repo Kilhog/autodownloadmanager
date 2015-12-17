@@ -50,8 +50,8 @@
                     <md-icon md-font-icon="fa fa-align-center"></md-icon>
                   </md-button>
                 </div>
-                <div ng-if="loadedEpisode.indexOf(unseen.id) != -1">
-                  <md-progress-circular style="height: 0;position: relative;top: 10px;left: 8px;" md-mode='indeterminate' md-diameter="10px"></md-progress-circular>
+                <div layout="row" layout-align="center center" ng-if="loadedEpisode.indexOf(unseen.id) != -1">
+                  <md-progress-circular style="height: 0;position: relative;top: 5px;" md-mode='indeterminate' md-diameter="20px"></md-progress-circular>
                 </div>
               </div>
               <div flex="70" class="ajust-text-height prevent-line-break episode-name-link" ng-click="showListBottomSheet($parent.$index, $index, unseen)">
