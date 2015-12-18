@@ -1,11 +1,10 @@
 (function() {
   var fs = require("fs");
   var querystring = require('querystring');
-  var curl = require('curlrequest');
   var cheerio = require('cheerio');
   var path = require('path');
-  var StringDecoder = require('string_decoder').StringDecoder;
   var shell = require('shell');
+  var request = require('request');
 
   function apiAddicted(apiDB) {
     this.apiDB = apiDB;
@@ -17,23 +16,23 @@
 
     var options = {
       url: this.url_addic + url_path,
-      encoding: "ISO-8859-1",
       headers: {
         'Referer': this.url_addic
       }
     };
 
-    curl.request(options, function (err, buffer) {
-
-      var decoder = new StringDecoder('utf-8');
-      var buffer_str = decoder.write(buffer);
-
-      if(buffer_str.indexOf('<!DOCTYPE html') == 0) {
-        func_err();
-      } else {
-        fs.writeFile(pathDownloadFolder + path.sep + name + ".srt", buffer, (func || Function));
-      }
-    });
+    request.get(options)
+      .pipe(fs.createWriteStream(pathDownloadFolder + path.sep + name + ".srt", {defaultEncoding: "ISO-8859-1"}))
+      .on('error', func_err)
+      .on('finish', function() {
+        fs.readFile(pathDownloadFolder + path.sep + name + ".srt", function(err, data) {
+          if(err || data.toString().startsWith("<!DOC")) {
+            func_err()
+          } else {
+            func();
+          }
+        });
+      });
   };
 
   apiAddicted.prototype.openUrl = function(query) {
@@ -47,8 +46,8 @@
     var url_with_more_download = '';
     var nb_download = 0;
 
-    curl.request({ url: this.url_addic + "/search.php?" + querystring.stringify({search: query}) }, function(err, res) {
-      var $res = cheerio.load(res);
+    request({ url: this.url_addic + "/search.php?" + querystring.stringify({search: query}) }, function(err, res, body) {
+      var $res = cheerio.load(body);
       $.each($res('div#container95m table.tabel95 tr:nth-child(2) td:nth-child(2) table tr'), function(index, elm) {
         $.each(elm.children, function(index2, elm2) {
           if(elm2.firstChild) {
