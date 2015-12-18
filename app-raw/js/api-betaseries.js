@@ -108,5 +108,10 @@
     callAPI('/episodes/watched', 'POST', {'id': episode.id, token: self.user.token}, (func || Function));
   };
 
+  apiBetaseries.prototype.unseenEpisode = function(episode, func) {
+    var self = this;
+    callAPI('/episodes/watched', 'DELETE', {'id': episode.id, token: self.user.token}, (func || Function));
+  };
+
   exports.apiBetaseries = apiBetaseries;
 })();

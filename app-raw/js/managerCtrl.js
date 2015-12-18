@@ -1,5 +1,5 @@
-app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer",
-  function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer) {
+app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$mdDialog", "$mdBottomSheet", "persistContainer", "$mdToast",
+  function ($scope, $timeout, $filter, toastFact, $mdDialog, $mdBottomSheet, persistContainer, $mdToast) {
 
     $scope.$watch('selectedTabManagerIndex', function (current, old) {
       switch (current) {
@@ -159,15 +159,23 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
      */
 
     $scope.seenEpisode = function (index, index2) {
-      var id = $scope.episodesUnseen.shows[index].unseen[index2].id;
-      $scope.loadedEpisode.push(id);
+      var episode = $scope.episodesUnseen.shows[index].unseen[index2];
+      $scope.loadedEpisode.push(episode.id);
 
-      apiBT.seenEpisode($scope.episodesUnseen.shows[index].unseen[index2], function () {
+      apiBT.seenEpisode(episode, function () {
+        $mdToast.show($mdToast.simple().textContent('Episode marqué comme vu').action('Annuler').highlightAction(false).position("bottom right")).then(function(response) {
+          if(response == 'ok') {
+            apiBT.unseenEpisode(episode, function (res, err, plop) {
+              $scope.synchroAll();
+            });
+          }
+        });
+
         $scope.episodesUnseen.shows[index].unseen.splice(index2, 1);
         if($scope.episodesUnseen.shows[index].unseen.length == 0) {
           $scope.episodesUnseen.shows.splice(index, 1);
         }
-        remove_from_loaded_episode(id);
+        remove_from_loaded_episode(episode.id);
         $scope.$apply();
       });
     };
