@@ -165,7 +165,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       apiBT.seenEpisode(episode, function () {
         $mdToast.show($mdToast.simple().textContent('Episode marqué comme vu').action('Annuler').highlightAction(false).position("bottom right")).then(function(response) {
           if(response == 'ok') {
-            apiBT.unseenEpisode(episode, function (res, err, plop) {
+            apiBT.unseenEpisode(episode, function () {
               $scope.synchroAll();
             });
           }
