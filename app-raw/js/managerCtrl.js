@@ -27,6 +27,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
     $scope.episodesUnseen = apiBT.episodesUnseen;
     $scope.episodesIncoming = $scope.episodesIncoming || {};
     $scope.loadedEpisode = [];
+    $scope.loadedFilm = [];
 
     /*
      Synchronisation
@@ -34,6 +35,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
 
     $scope.synchroAll = function () {
       $scope.synchroEpisodesUnseen();
+      $scope.synchroFilmUnseen();
     };
 
     $scope.synchroEpisodesUnseen = function () {
@@ -66,6 +68,13 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
         }
 
         $scope.synchroInProgress = false;
+        $scope.$apply();
+      });
+    };
+
+    $scope.synchroFilmUnseen = function() {
+      apiBT.synchroFilmUnseen().then(function(data) {
+        $scope.filmsUnseen = apiBT.filmsUnseen;
         $scope.$apply();
       });
     };
@@ -260,7 +269,7 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
           $scope.$apply();
 
           if (!$scope.synchroInProgress) {
-            $scope.synchroEpisodesUnseen();
+            $scope.synchroAll();
           }
         });
 

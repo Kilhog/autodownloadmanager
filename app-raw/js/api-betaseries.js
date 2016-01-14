@@ -3,11 +3,13 @@
   var querystring = require('querystring');
   var https = require('https');
   var md5 = require('crypto-js/md5');
+  var _ = require('underscore');
 
   function apiBetaseries(db) {
     this.db = db;
     this.user = {};
-    this.episodesUnseen = {}
+    this.episodesUnseen = {};
+    this.filmsUnseen = {};
   }
 
   function callAPI(path, method, data, success, error) {
@@ -101,6 +103,29 @@
         (func || Function)(false);
       }
     });
+  };
+
+  apiBetaseries.prototype.synchroFilmUnseen = function() {
+    var self = this;
+    return new Promise(
+      function(resolve, reject) {
+        callAPI('/movies/member', 'GET', {token: self.user.token}, function(data) {
+          if(data.errors.length == 0) {
+            delete self.filmsUnseen.movies;
+
+            self.filmsUnseen.movies = _.chain(data.movies).each(function(m) {
+              m.group_by_date = m.release_date.substring(0, 7);
+            }).sortBy('group_by_date').reverse().groupBy('group_by_date').value();
+
+            resolve();
+          } else {
+            reject();
+          }
+        }, function(err) {
+          reject();
+        });
+      }
+    );
   };
 
   apiBetaseries.prototype.seenEpisode = function(episode, func) {

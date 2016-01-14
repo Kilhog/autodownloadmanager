@@ -74,6 +74,59 @@
         <p style="text-align: center;">Dans la prochaine mise à jour ;)</p>
       </md-content>
     </md-tab>
+    <md-tab label="Mes films">
+      <md-content class="md-padding">
+        <div ng-if="synchroInProgress">
+          <div layout="row" layout-sm="column" layout-align="space-around">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+          </div>
+          <h3 class="synch_text">Synchronisation des films en cours</h3>
+        </div>
+        <div ng-if="!synchroInProgress && filmsUnseen.movies.length == 0" layout="row" layout-sm="column" layout-align="space-around">
+          Vous n'avez plus de films à voir
+        </div>
+        <div ng-if="!synchroInProgress && !user.token && user.done === true" layout="row" layout-sm="column" layout-align="space-around">
+          Veuillez vous connecter à votre compte BetaSeries
+        </div>
+        <div ng-if="!synchroInProgress" ng-repeat="(dateGroup, movieGroup) in filmsUnseen.movies track by $index">
+          <h4 style="margin-bottom: 0; margin-top: 0">
+            <a style="cursor: pointer">> {{dateGroup}}</a>
+          </h4>
+          <md-content layout="row" style="padding-top: 20px; padding-bottom: 20px" layout-wrap>
+            <div class="ajust-height" ng-repeat="movie in movieGroup track by $index" layout="row" flex="50" ng-mouseenter="hoverConditionFilm[$index] = true" ng-mouseleave="hoverConditionFilm[$index] = false">
+              <div flex="30">
+                <div ng-if="hoverConditionFilm[$index] && loadedFilm.indexOf(movie.id) == -1">
+                  <md-button ng-disabled="!user.token" aria-label="Marquer comme vu" ng-click="seenFilm($parent.$parent.$parent.$index, $index)" class="md-fab md-xs md-accent" style="margin-left: 3px !important;">
+                    <md-tooltip>
+                      Marquer comme vu
+                    </md-tooltip>
+                    <md-icon md-font-icon="fa fa-eye"></md-icon>
+                  </md-button>
+                  <md-button aria-label="Télécharger" ng-click="downloadFilm(movie)" ng-right-click="redirectDownloadFilm(movie)" class="md-fab md-xs md-accent">
+                    <md-tooltip>
+                      Télécharger
+                    </md-tooltip>
+                    <md-icon md-font-icon="fa fa-cloud-download"></md-icon>
+                  </md-button>
+                  <md-button aria-label="Sous-titres" ng-click="downloadStrFilm(movie, $index)" ng-right-click="redirectStrFilm(movie)" class="md-fab md-xs md-accent">
+                    <md-tooltip>
+                      Sous-titres
+                    </md-tooltip>
+                    <md-icon md-font-icon="fa fa-align-center"></md-icon>
+                  </md-button>
+                </div>
+                <div layout="row" layout-align="center center" ng-if="loadedFilm.indexOf(movie.id) != -1">
+                  <md-progress-circular style="height: 0;position: relative;top: 5px;" md-mode='indeterminate' md-diameter="20px"></md-progress-circular>
+                </div>
+              </div>
+              <div flex="70" class="ajust-text-height prevent-line-break episode-name-link" ng-click="showListBottomSheetFilm($parent.$index, $index, movie)">
+                {{movie.title}}
+              </div>
+            </div>
+          </md-content>
+        </div>
+      </md-content>
+    </md-tab>
     <md-tab label="Recherche">
       <md-content class="md-padding">
         <div class="text-center">
