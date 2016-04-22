@@ -24,7 +24,7 @@ app.on('window-all-closed', function() {
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({"show": false, "min-width": 750, width: 800, "min-height": 400, height: 800, frame: false, center: true, resizable: true, title: "AutoDownloadManager"});
-  //mainWindow.openDevTools();
+  mainWindow.openDevTools();
 
   // Show the window when angular is ready
   ipc.on('dom-ready', function() {

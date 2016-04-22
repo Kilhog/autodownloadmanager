@@ -95,6 +95,14 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       }
     }
 
+    function remove_from_loaded_film(id) {
+      for (var i=$scope.loadedFilm.length-1; i>=0; i--) {
+        if($scope.loadedFilm[i] === id) {
+          $scope.loadedFilm.splice(i, 1);
+        }
+      }
+    }
+
     function real_name_episode(episode) {
       return new Promise(
         function (resolve, reject) {
@@ -124,8 +132,14 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       real_name_episode(episode).then(function(name) {
         $scope.recherche_rapide = name;
         $scope.recherche_change();
-        $scope.selectedTabManagerIndex = 2;
+        $scope.selectedTabManagerIndex = 3;
       });
+    };
+
+    $scope.redirectDownloadFilm = function(movie) {
+      $scope.recherche_rapide = movie.original_title;
+      $scope.recherche_change();
+      $scope.selectedTabManagerIndex = 3;
     };
 
     $scope.downloadStr = function (episode) {
@@ -154,6 +168,27 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
       });
     };
 
+    $scope.downloadStrFilm = function(movie) {
+      $scope.loadedFilm.push(movie.id);
+
+      apiAD.search(movie.original_title, function(res) {
+        if (res != '') {
+          utils.getParam(apiDB, 'strFolder', function(strPath) {
+            apiAD.downloadStr(res, movie.original_title.trim(), strPath, function () {
+              toastFact.show('Sous-titre récupéré');
+              remove_from_loaded_film(movie.id);
+            }, function() {
+              toastFact.show('Erreur lors de la récupération des sous-titres');
+              remove_from_loaded_film(movie.id);
+            });
+          });
+        } else {
+          toastFact.show('Erreur lors de la récupération des sous-titres');
+          remove_from_loaded_film(movie.id);
+        }
+      });
+    };
+
     $scope.redirectStr = function(episode) {
       apiDB.query('SELECT * FROM search_for_sub WHERE origin = ?', [episode.show.title], function (err, data) {
         var target = data.length > 0 ? data[0][2] : episode.show.title,
@@ -161,6 +196,10 @@ app.controller('managerCtrl', ["$scope", "$timeout", "$filter", "toastFact", "$m
 
         apiAD.openUrl(name);
       });
+    };
+
+    $scope.redirectStrFilm = function(movie) {
+      apiAD.openUrl(movie.original_title);
     };
 
     /*
