@@ -1,7 +1,6 @@
 'use strict';
 
 var apiBetaseries = require("./js/api-betaseries");
-var apiGetStrike = require("./js/api-getstrike");
 var apiKickAss = require("./js/api-kat.js");
 var apiTorrent = require("./js/api-torrent.js");
 var apiTransmission = require("./js/api-transmission");
@@ -73,7 +72,6 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
 }).factory('stateSites', ['$interval', '$timeout', function ($interval, $timeout) {
   var states = {};
   states.addicted = false;
-  states.getStrike = false;
   states.t411 = false;
   states.kat = false;
   states.rarbg = false;
@@ -83,13 +81,7 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
       states.addicted = !err && res.statusCode == 200;
     });
   };
-
-  var checkStatesStrike = function() {
-    request.get('https://getstrike.net/torrents/').end(function (err, res) {
-      states.getStrike = !err && res.statusCode == 200;
-    });
-  };
-
+  
   var checkStatesT411 = function() {
     request.get('http://www.t411.in/').end(function (err, res) {
       states.t411 = !err && res.statusCode == 200;
@@ -111,7 +103,6 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
   var checkStates = function() {
     checkStatesKat();
     checkStatesT411();
-    checkStatesStrike();
     checkStatesAddic();
     checkStatesRarBg();
   };
@@ -120,7 +111,6 @@ app.config(["$stateProvider", "$urlRouterProvider", "$mdThemingProvider",
 
   $timeout(checkStatesKat, Math.floor((Math.random() * 2000) + 1) + 1500);
   $timeout(checkStatesT411, Math.floor((Math.random() * 2000) + 1) + 1500);
-  $timeout(checkStatesStrike, Math.floor((Math.random() * 2000) + 1) + 1500);
   $timeout(checkStatesAddic, Math.floor((Math.random() * 2000) + 1) + 1500);
   $timeout(checkStatesRarBg, Math.floor((Math.random() * 2000) + 1) + 1500);
 

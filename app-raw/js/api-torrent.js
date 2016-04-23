@@ -4,9 +4,9 @@
   var shell = require('shell');
   var _ = require('underscore');
 
-  function apiTorrent(apiTR, apiT4, apiGS, apiKA, apiRB) {
+  function apiTorrent(apiTR, apiT4, apiKA, apiRB) {
     this.apiTR = apiTR;
-    this.allTO = {apiT4, apiGS, apiKA, apiRB};
+    this.allTO = {apiT4, apiKA, apiRB};
   }
 
   apiTorrent.prototype.searchAndDownload = function(query, episodeQuality) {
@@ -28,7 +28,7 @@
     return new Promise(
       function (resolve, reject) {
 
-        var nbCall = 2,
+        var nbCall = 1,
           nbCallDone = 0,
           currentBestTorrent = null;
 
@@ -47,7 +47,6 @@
         };
 
         self.allTO.apiKA.searchTheBest(query, episodeQuality).then(handleResponse, handleResponse);
-        self.allTO.apiGS.searchTheBest(query, episodeQuality).then(handleResponse, handleResponse);
       }
     );
   };

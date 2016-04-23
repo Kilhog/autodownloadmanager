@@ -14,7 +14,7 @@ Auto Download Manager est un outil qui permet de gérer vos séries automatiquem
 En gros le principe est le suivant:
 * Vous vous connecté avec votre compte BetaSeries
 * L'application affiche les épisodes non-vues
-* Vous pouvez télécharger les épisodes non-vues (Recherche les torrents sur GetStrike & Kat.cr)
+* Vous pouvez télécharger les épisodes non-vues (Recherche les torrents sur RarBG & Kat.cr)
 * Vous pouvez sélectionner entre 480p & 720p pour les épisodes
 * Vous pouvez connecter l'application à Transmission pour lancer les torrents en 1-click
 * Vous pouvez télécharger les sous-tires VF (Recherche sur addic7ed.com)
