@@ -31,7 +31,7 @@ for(var k in pjson.dependencies) {
 
 function launchDarwin() {
   try {
-    fs.symlinkSync(__dirname + "/app-raw", __dirname + "/node_modules/electron-prebuilt/dist/Electron.app/Contents/Resources/app");
+    fs.symlinkSync(__dirname + "/app", __dirname + "/node_modules/electron-prebuilt/dist/Electron.app/Contents/Resources/app");
   } catch (e) {}
 
   var cmd = "open -a finder ./node_modules/electron-prebuilt/dist/Electron.app";
@@ -41,11 +41,11 @@ function launchDarwin() {
 
 function launch() {
   try {
-    fs.symlinkSync(__dirname + "/node_modules", __dirname + "/app-raw/node_modules");
+    fs.symlinkSync(__dirname + "/node_modules", __dirname + "/app/node_modules");
   } catch (e) {}
 
   var cmd = "",
-    pathApp = "./app-raw/";
+    pathApp = "./app/";
 
   if (process.platform == 'darwin') {
     cmd = "./node_modules/electron-prebuilt/dist/Electron.app/Contents/MacOS/Electron";
@@ -53,7 +53,7 @@ function launch() {
     cmd = "./node_modules/electron-prebuilt/dist/electron";
   } else if (process.platform == 'win32') {
     cmd = ".\\node_modules\\electron-prebuilt\\dist\\electron.exe";
-    pathApp = ".\\app-raw\\";
+    pathApp = ".\\app\\";
   }
 
   var electron = spawn(cmd, [pathApp]);
@@ -105,35 +105,15 @@ gulp.task('create-min-app', ['min-css', 'min-js', 'min-html', 'move-lib', 'move-
 
 });
 
-gulp.task('move-package-json', function() {
-  return gulp.src(["./package.json"])
-    .pipe(gulp.dest('app-raw/'));
-});
-
-gulp.task('default', ['move-package-json', 'patch-angular-material'], function () {
+gulp.task('default', ['create-min-app', 'patch-angular-material'], function () {
   launch();
 });
 
-gulp.task('darwin', ['move-package-json', 'patch-angular-material'], function () {
+gulp.task('darwin', ['create-min-app', 'patch-angular-material'], function () {
   launchDarwin();
 });
 
-gulp.task('install-dependencies', function() {
-  return gulp.src(['./package.json'])
-    .pipe(gulp.dest('./app/'))
-    .pipe(install({production: true}));
-});
-
 gulp.task('patch-angular-material', function(){
-  return gulp.src('./node_modules/angular-material/angular-material.min.css')
-    .pipe(replace('599px', '1px'))
-    .pipe(replace('600px', '2px'))
-    .pipe(replace('959px', '3px'))
-    .pipe(replace('960px', '4px'))
-    .pipe(gulp.dest('./node_modules/angular-material/'));
-});
-
-gulp.task('install-dependencies-and-patch', ['install-dependencies'], function(){
   return gulp.src('./node_modules/angular-material/angular-material.min.css')
     .pipe(replace('599px', '1px'))
     .pipe(replace('600px', '2px'))
@@ -148,4 +128,4 @@ var build = function() {
   packager({dir: 'app', name: "AutoDownloadManager", platform: 'linux', arch: 'all', version: '0.36.0', 'app-version': pjson.version, out: "build", overwrite: true}, function done (err, appPath) { console.log(err, appPath)});
 };
 
-gulp.task('package', ['create-min-app', 'install-dependencies-and-patch'], build);
+gulp.task('package', ['create-min-app', 'patch-angular-material'], build);
