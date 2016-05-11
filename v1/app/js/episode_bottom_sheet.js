@@ -1,0 +1,1 @@
+"use strict";app.controller("ListBottomSheetCtrl",["$scope","$mdBottomSheet","episode",function(o,e,t){o.episode=t,o.seenEpisode=function(){e.hide("seen")},o.downloadEpisode=function(){e.hide("download")},o.downloadStr=function(){e.hide("str")}}]);

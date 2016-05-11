@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>ADM</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="./node_modules/angular-material/angular-material.min.css">
+	<link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body ng-app="adm-app">
+	<div layout="column" layout-fill>
+		<md-toolbar style="-webkit-app-region: drag">
+			<div class="md-toolbar-tools">
+				<div class="logo-txt">ADM</div>
+				<div class="logo-icon logo-bolt-up"><i class="fa fa-bolt i-app"></i></div>
+				<div class="logo-icon logo-bolt-down"><i class="fa fa-bolt i-app"></i></div>
+
+				<div class="version-number" ng-controller="versionNumber">v{{versionNumber}}</div>
+
+				<span ng-controller="TabsCtrl" flex>
+					<md-tabs class="tab-navbar" md-selected="selectedTabIndex" style="position: relative; top: 8px; left: 4px;">
+						<md-tab label="Manager"></md-tab>
+						<md-tab label="Réglages"></md-tab>
+					</md-tabs>
+				</span>
+
+				<div style="display: inherit;" ng-controller="StateCtrl">
+					<div class="state-site" ng-class="states.t411 ? 'active' : 'desactive'">
+						T411
+					</div>
+					<div class="state-site" ng-class="states.kat ? 'active' : 'desactive'">
+						KickAss
+					</div>
+					<div class="state-site" ng-class="states.rarbg ? 'active' : 'desactive'">
+						RarBg
+					</div>
+					<div class="state-site" ng-class="states.addicted ? 'active' : 'desactive'" style="margin-right: 10px">
+						Addic7ed
+					</div>
+				</div>
+
+				<md-button style="margin-right: -2px !important" id="reduce-window-button" aria-label="Reduire" class="button-main-window">
+					<i class="fa fa-minus"></i>
+				</md-button>
+				<md-button id="close-window-button" aria-label="Fermer" class="button-main-window">
+					<i class="fa fa-times"></i>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-content>
+			<div ui-view="" id="ui-view"></div>
+		</md-content>
+	</div>
+
+	<script>
+		var $ = require('./node_modules/jquery/dist/jquery.min.js');
+	</script>
+	<script src="./node_modules/angular/angular.min.js"></script>
+	<script src="./node_modules/angular-animate/angular-animate.min.js"></script>
+	<script src="./node_modules/angular-aria/angular-aria.min.js"></script>
+	<script src="./node_modules/angular-material/angular-material.min.js"></script>
+	<script src="./node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+	<script src="./js/mainModule.js"></script>
+	<script src="./js/mainCtrl.js"></script>
+	<script src="./js/managerCtrl.js"></script>
+	<script src="./js/reglagesCtrl.js"></script>
+	<script src="./js/modal_change_target.js"></script>
+	<script src="./js/episode_bottom_sheet.js"></script>
+</body>
+</html>
