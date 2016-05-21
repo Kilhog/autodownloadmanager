@@ -5,8 +5,10 @@
 import os from 'os'; // native node.js module
 import { remote } from 'electron'; // native electron module
 import jetpack from 'fs-jetpack'; // module loaded from npm
-import { greet } from './hello_world/hello_world'; // code authored by you in this project
+import { greet } from './front/hello_world/hello_world'; // code authored by you in this project
 import env from './env';
+import * as context_menu from './front/helpers/context_menu';
+import * as external_links from './front/helpers/external_links';
 
 console.log('Loaded environment variables:', env);
 

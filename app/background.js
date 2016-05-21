@@ -4,9 +4,9 @@
 // window from here.
 
 import { app, Menu } from 'electron';
-import { devMenuTemplate } from './helpers/dev_menu_template';
-import { editMenuTemplate } from './helpers/edit_menu_template';
-import createWindow from './helpers/window';
+import { devMenuTemplate } from './back/helpers/dev_menu_template';
+import { editMenuTemplate } from './back/helpers/edit_menu_template';
+import createWindow from './back/helpers/window';
 
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
