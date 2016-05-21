@@ -10,6 +10,7 @@ var plumber = require('gulp-plumber');
 var jetpack = require('fs-jetpack');
 
 var bundle = require('./bundle');
+var webpack = require('./webpack');
 var generateSpecImportsFile = require('./generate_spec_imports');
 var utils = require('../utils');
 
@@ -20,7 +21,6 @@ var destDir = projectDir.cwd('./build');
 var paths = {
     copyFromAppDir: [
         './node_modules/**',
-        './**/*.html',
         './**/*.+(jpg|png|svg)'
     ],
 };
@@ -47,7 +47,7 @@ gulp.task('copy-watch', copyTask);
 var bundleApplication = function () {
     return Q.all([
             bundle(srcDir.path('background.js'), destDir.path('background.js')),
-            bundle(srcDir.path('app.js'), destDir.path('app.js')),
+            webpack(srcDir.path(''), destDir.path(''))
         ]);
 };
 
@@ -68,7 +68,7 @@ gulp.task('bundle-watch', bundleTask);
 
 
 var lessTask = function () {
-    return gulp.src('app/stylesheets/main.less')
+    return gulp.src('app/front/stylesheets/main.less')
         .pipe(plumber())
         .pipe(less())
         .pipe(gulp.dest(destDir.path('stylesheets')));
