@@ -16,8 +16,9 @@ module.exports = {
     ],
     loaders: [
       { test: /\.html$/, loader: "file?name=[name].[ext]" },
-      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ["babel-loader"]}
-    ],
+      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ["babel-loader"]},
+      { test: /\.less$/, loader: "style!css!less" }
+    ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx']

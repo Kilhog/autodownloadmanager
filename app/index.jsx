@@ -4,6 +4,7 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
+require("./front/stylesheets/main.less");
 import App from './front/containers/App';
 import configureStore from './front/store/configureStore';
 
