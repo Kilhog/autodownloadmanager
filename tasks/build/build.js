@@ -11,7 +11,6 @@ var jetpack = require('fs-jetpack');
 
 var bundle = require('./bundle');
 var webpack = require('./webpack');
-var generateSpecImportsFile = require('./generate_spec_imports');
 var utils = require('../utils');
 
 var projectDir = jetpack;
@@ -51,16 +50,7 @@ var bundleApplication = function () {
         ]);
 };
 
-var bundleSpecs = function () {
-    return generateSpecImportsFile().then(function (specEntryPointPath) {
-        return bundle(specEntryPointPath, destDir.path('spec.js'));
-    });
-};
-
 var bundleTask = function () {
-    if (utils.getEnvName() === 'test') {
-        return bundleSpecs();
-    }
     return bundleApplication();
 };
 gulp.task('bundle', ['clean'], bundleTask);

@@ -3,7 +3,6 @@
     "asar": "^0.11.0",
     "chai": "^3.5.0",
     "devtron": "^1.0.1",
-    "electron-mocha": "^1.0.0",
     "electron-prebuilt": "^1.0.1",
     "fs-jetpack": "^0.7.0",
     "gulp": "^3.9.0",
@@ -31,7 +30,8 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1",
-    "webpack-hot-middleware": "^2.10.0"
+    "webpack-hot-middleware": "^2.10.0",
+    "webpack-stream": "^3.2.0"
   },
   "optionalDependencies": {
     "appdmg": "^0.3.2",
@@ -43,13 +43,6 @@
     "release": "gulp release --env=production",
     "start": "gulp start",
     "pretest": "gulp build --env=test",
-    "test": "electron-mocha build --renderer",
     "install-native": "node ./tasks/install_native_module",
-    "test-re": "echo \"Error: no test specified\" && exit 1",
-    "start-re": "webpack-dev-server --hot --inline --progress --colors",
-    "build-re": "webpack --progress --colors"
-  },
-  "dependencies": {
-    "webpack-stream": "^3.2.0"
   }
 }
