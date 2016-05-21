@@ -7,16 +7,16 @@ module.exports = {
 
   output: {
     path: __dirname + "/build",
-    filename: "bundle.js",
+    filename: "bundle.js"
   },
   module: {
     preLoaders: [
         //Eslint loader
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: "eslint-loader"},
+      { test: /\.jsx?$/, exclude: /node_modules/, loader: "eslint-loader"}
     ],
     loaders: [
       { test: /\.html$/, loader: "file?name=[name].[ext]" },
-      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ["babel-loader"]},
+      { test: /\.jsx?$/, exclude: /node_modules/, loaders: ["babel-loader"]}
     ],
   },
   resolve: {
@@ -24,5 +24,5 @@ module.exports = {
   },
   eslint: {
     configFile: './.eslintrc'
-  },
+  }
 };
