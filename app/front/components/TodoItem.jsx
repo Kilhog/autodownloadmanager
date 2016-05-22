@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import TodoTextInput from './TodoTextInput';
-import { ListItem, IconButton, Styles } from 'material-ui';
-import IconMenu from 'material-ui/lib/menus/icon-menu';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import { ListItem, IconButton } from 'material-ui';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 
-import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
-import CheckBoxIcon from 'material-ui/lib/svg-icons/toggle/check-box';
-import CheckBoxBlankIcon from 'material-ui/lib/svg-icons/toggle/check-box-outline-blank';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import CheckBoxIcon from 'material-ui/svg-icons/toggle/check-box';
+import CheckBoxBlankIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 
 class TodoItem extends Component {
   constructor(props, context) {
@@ -36,7 +36,7 @@ class TodoItem extends Component {
     const rightIconMenu = (
       <IconMenu iconButtonElement={
           <IconButton>
-            <MoreVertIcon color={Styles.Colors.grey400} />
+            <MoreVertIcon color={this.props.muiTheme.palette.accent3Color} />
           </IconButton>
         }
       >
@@ -77,7 +77,8 @@ TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   editTodo: PropTypes.func.isRequired,
   deleteTodo: PropTypes.func.isRequired,
-  completeTodo: PropTypes.func.isRequired
+  completeTodo: PropTypes.func.isRequired,
+  muiTheme: PropTypes.object.isRequired
 };
 
 export default TodoItem;

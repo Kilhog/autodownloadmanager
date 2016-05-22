@@ -76,7 +76,7 @@ class MainSection extends Component {
         {this.renderToggleAll(completedCount)}
         <List className="todo-list">
           {filteredTodos.map(todo =>
-            <TodoItem key={todo.id} todo={todo} {...actions} />
+            <TodoItem key={todo.id} todo={todo} muiTheme={this.props.muiTheme} {...actions} />
           )}
         </List>
         {this.renderFooter(completedCount)}
@@ -87,7 +87,8 @@ class MainSection extends Component {
 
 MainSection.propTypes = {
   todos: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  muiTheme: PropTypes.object.isRequired
 };
 
 export default MainSection;
