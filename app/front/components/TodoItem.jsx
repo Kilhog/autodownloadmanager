@@ -36,7 +36,7 @@ class TodoItem extends Component {
     const rightIconMenu = (
       <IconMenu iconButtonElement={
           <IconButton>
-            <MoreVertIcon color={this.props.muiTheme.palette.accent3Color} />
+            <MoreVertIcon color={this.context.muiTheme.palette.accent3Color} />
           </IconButton>
         }
       >
@@ -77,7 +77,10 @@ TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   editTodo: PropTypes.func.isRequired,
   deleteTodo: PropTypes.func.isRequired,
-  completeTodo: PropTypes.func.isRequired,
+  completeTodo: PropTypes.func.isRequired
+};
+
+TodoItem.contextTypes = {
   muiTheme: PropTypes.object.isRequired
 };
 
