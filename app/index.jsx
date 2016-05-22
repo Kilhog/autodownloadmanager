@@ -3,10 +3,14 @@ import ReactDOM from "react-dom";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-
-require("./front/stylesheets/main.less");
 import App from './front/containers/App';
 import configureStore from './front/store/configureStore';
+
+// LOCAL FAIL
+import { webFrame } from 'electron';
+webFrame.setZoomLevelLimits(1, 1);
+
+require("./front/stylesheets/main.less");
 
 //Needed for React Developer Tools
 window.React = React;
