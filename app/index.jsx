@@ -7,8 +7,8 @@ import App from './front/containers/App';
 import configureStore from './front/store/configureStore';
 
 // LOCAL FAIL
-import { webFrame } from 'electron';
-webFrame.setZoomLevelLimits(1, 1);
+// import { webFrame } from 'electron';
+// webFrame.setZoomLevelLimits(1, 1);
 
 require("./front/stylesheets/main.less");
 

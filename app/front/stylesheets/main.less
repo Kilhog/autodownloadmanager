@@ -1,9 +1,118 @@
 html {
-    font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
-    font-size: 13px;
-    line-height: 20px;
-    margin: 0px;
+  font-size: 13px;
+  line-height: 20px;
+  margin: 0px;
+}
+
+a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, ul, var {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+}
+
+// Toolbar
+
+button {
+  font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+  border: 0;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.titlebar {
+  -webkit-app-region: drag;
+  pointer-events: none;
+  height: 25px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+}
+
+.titlebar-edge {
+  cursor: ns-resize;
+  height: 6px;
+  -webkit-app-region: no-drag;
+}
+
+.osx-buttons {
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  text-align: center;
+  pointer-events: auto;
+}
+
+.titlebar button {
+  -webkit-app-region: no-drag;
+}
+
+.osx-buttons button {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-clip: padding-box;
+  background-color: #535559;
+  transition: background-color .2s;
+  opacity: .7;
+  filter: alpha(opacity=70);
+}
+
+.osx-buttons button + button {
+  margin-left: 6px;
+}
+
+:hover .osx-close {
+  background-color: #fb615b !important;
+}
+
+:hover .osx-minimize {
+  background-color: #fdbd41 !important;
+}
+
+:hover .osx-maximize {
+  background-color: #33c749 !important;
+}
+
+// App Container
+
+.app {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  overflow: auto;
+  text-rendering: optimizeLegibility;
+}
+
+.flex-vertical {
+  display: flex;
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+}
+
+.flex-horizontal {
+  display: flex;
+  -webkit-box-orient: horizontal;
+  flex-direction: row;
+}
+
+.flex-spacer {
+  -webkit-box-flex: 1;
+  flex: 1;
+}
+
+.flex-vertical>.flex-spacer {
+  min-height: 1px;
 }

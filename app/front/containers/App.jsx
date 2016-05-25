@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
-import MainSection from '../components/MainSection';
+import Toolbar from '../components/Toobar';
+import GuildsWrapper from '../components/GuildsWrapper';
 import * as TodoActions from '../actions/todos';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MyRawTheme from '../material_ui_raw_theme_file';
@@ -16,8 +16,16 @@ class App extends Component {
     const { todos, actions } = this.props;
     return (
       <div>
-        <Header addTodo={actions.addTodo} />
-        <MainSection todos={todos} actions={actions} />
+        <Toolbar/>
+        <div className="app flex-vertical">
+          <div className="flex-vertical flex-spacer">
+            <section className="flex-horizontal flex-spacer">
+              <GuildsWrapper/>
+            </section>
+          </div>
+        </div>
+        {/*<Header addTodo={actions.addTodo} />*/}
+        {/*<MainSection todos={todos} actions={actions} />*/}
       </div>
     );
   }
