@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Toolbar from '../components/Toobar';
 import GuildsWrapper from '../components/GuildsWrapper';
+import ChannelsWrapper from '../components/ChannelsWrapper';
 import * as TodoActions from '../actions/todos';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MyRawTheme from '../material_ui_raw_theme_file';
@@ -21,6 +22,7 @@ class App extends Component {
           <div className="flex-vertical flex-spacer">
             <section className="flex-horizontal flex-spacer">
               <GuildsWrapper/>
+              <ChannelsWrapper/>
             </section>
           </div>
         </div>
