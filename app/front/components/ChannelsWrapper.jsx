@@ -2,13 +2,24 @@ import React, { PropTypes, Component } from 'react';
 import mui from 'material-ui';
 
 class GuildsWrapper extends Component {
+  constructor() {
+    super();
+    this.state = {isOpen : false};
+  }
+
+  onClickOpen() {
+    this.setState({isOpen: !this.state.isOpen})
+  }
+
   render() {
     return (
       <div className="flex-vertical channels-wrap">
         <div className="flex-vertical flex-spacer">
-          <div className="guild-header">
+          <div className={`guild-header ${this.state.isOpen ? 'guild-header-open' : ''}`}>
             <header><span>AperoDuCaptainWeb</span>
-              <button type="button" className="btn btn-hamburger"><span></span><span></span><span></span><span></span><span></span><span></span></button>
+              <button onClick={() => this.onClickOpen()} type="button" className={`btn btn-hamburger ${this.state.isOpen ? 'btn-hamburger-open' : ''}`}>
+                <span/><span/><span/><span/><span/><span/>
+              </button>
             </header>
             <ul>
               <li><a>Paramètres de notification</a></li>
@@ -38,7 +49,7 @@ class GuildsWrapper extends Component {
         </div>
 
         <div className="account">
-          <div className="avatar-small animate" style={{backgroundImage: "url('/assets/322c936a8c8be1b803cd94861bdfa868.png')"}}>
+          <div className="avatar-small animate" style={{backgroundImage: "url('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png')"}}>
             <div className="status status-online"></div>
           </div>
           <div className="account-details"><span className="username">Kilhog</span><span

@@ -17,7 +17,7 @@ class GuildsWrapper extends Component {
           <div className="guild selected unread">
             <div draggable="true">
               <div className="guild-inner" draggable="false" style={{borderRadius: '15px'}}>
-                <a draggable="false" className="avatar-small" href="/channels/110838748563914752/163668753874288640" style={{backgroundImage: 'url("https://cdn.discordapp.com/icons/110838748563914752/5d7eab04da5e6c5fb191cc3a016a685c.jpg")'}}/>
+                <a draggable="false" className="avatar-small" href="https://discordapp.com/assets/channels/110838748563914752/163668753874288640" style={{backgroundImage: 'url("https://cdn.discordapp.com/icons/110838748563914752/5d7eab04da5e6c5fb191cc3a016a685c.jpg")'}}/>
               </div>
             </div>
           </div>
