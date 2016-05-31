@@ -1,13 +1,11 @@
-import React, { Component, PropTypes } from "react";
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, {Component, PropTypes} from "react";
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import Toolbar from '../components/Toobar';
 import GuildsWrapper from '../components/GuildsWrapper';
 import ChannelsWrapper from '../components/ChannelsWrapper';
 import ChatWrapper from '../components/ChatWrapper';
-import Header from '../components/Header';
-import MainSection from '../components/MainSection';
-import * as TodoActions from '../actions/todos';
+import * as GeneralActions from '../actions/general';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MyRawTheme from '../material_ui_raw_theme_file';
 
@@ -17,7 +15,7 @@ class App extends Component {
   }
 
   render() {
-    const { todos, actions } = this.props;
+    const {general, actions} = this.props;
     return (
       <div>
         <Toolbar/>
@@ -25,7 +23,7 @@ class App extends Component {
           <div className="flex-vertical flex-spacer">
             <section className="flex-horizontal flex-spacer">
               <GuildsWrapper/>
-              <ChannelsWrapper/>
+              <ChannelsWrapper actions={actions} general={general}/>
               <ChatWrapper/>
             </section>
           </div>
@@ -42,19 +40,19 @@ App.childContextTypes = {
 };
 
 App.propTypes = {
-  todos: PropTypes.array.isRequired,
+  general: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    todos: state.todos
+    general: state.general
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(TodoActions, dispatch)
+    actions: bindActionCreators(GeneralActions, dispatch)
   };
 }
 
