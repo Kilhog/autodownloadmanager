@@ -1,5 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import mui from 'material-ui';
+import classnames from 'classnames';
+
 
 class GuildsWrapper extends Component {
   constructor(props, context) {
@@ -12,9 +14,9 @@ class GuildsWrapper extends Component {
     return (
       <div className="flex-vertical channels-wrap">
         <div className="flex-vertical flex-spacer">
-          <div className={`guild-header ${general.isSlidePreferenceOpen ? 'guild-header-open' : ''}`}>
-            <header><span>AperoDuCaptainWeb</span>
-              <button onClick={actions.toogleSlidePreference} type="button" className={`btn btn-hamburger ${general.isSlidePreferenceOpen ? 'btn-hamburger-open' : ''}`}>
+          <div onClick={actions.toogleSlidePreference} className={`guild-header ${general.isSlidePreferenceOpen ? 'guild-header-open' : ''}`}>
+            <header><span>AutoDownloadManager</span>
+              <button type="button" className={classnames('btn btn-hamburger', {'btn-hamburger-open': general.isSlidePreferenceOpen})}>
                 <span/><span/><span/><span/><span/><span/>
               </button>
             </header>
@@ -27,22 +29,25 @@ class GuildsWrapper extends Component {
           <div className="scroller-wrap fade dark">
             <div className="scroller guild-channels">
               <div style={{width: '100%', height: 0, visibility: 'hidden'}}></div>
-              <header><span>Salons textuels</span></header>
-              <div className="channel channel-text" draggable="true"><a draggable="false" className="" href="/channels/110838748563914752/163674317207502849"><span
-                className="channel-name">welcome</span>
-              </a></div>
-              <div className="channel channel-text selected" draggable="true"><a draggable="false" className="" href="/channels/110838748563914752/110838748563914752"><span className="channel-name">general</span>
-              </a></div>
-              <div className="channel channel-text" draggable="true"><a draggable="false" className="" href="/channels/110838748563914752/110866639448182784"><span
-                className="channel-name">videos</span>
-              </a></div>
-              <div className="channel channel-text" draggable="true"><a draggable="false" className="" href="/channels/110838748563914752/163668753874288640"><span className="channel-name">questionpouruneinsertion</span>
-              </a></div>
-              <div className="channel channel-text unread" draggable="true"><a draggable="false" className="" href="/channels/110838748563914752/118493372628467718"><span className="channel-name">wazzufs</span>
-              </a></div>
-              <div className="channel channel-text" draggable="true"><a draggable="false" className="" href="/channels/110838748563914752/128431661195984896"><span
-                className="channel-name">liens</span>
-              </a></div>
+              <header>
+                <span>Non Vus</span>
+              </header>
+              <div className="channel channel-icon btn-friends selected">
+                <a className="" href="/channels/@me">
+                  <div className="icon-friends"></div>
+                  <div className="channel-name">Amis</div>
+                </a>
+              </div>
+              <div className="channel channel-text">
+                <a>
+                  <span className="channel-name">Épisodes</span>
+                </a>
+              </div>
+              <div className="channel channel-text">
+                <a>
+                  <span className="channel-name">Films</span>
+                </a>
+              </div>
               <div style={{width: '100%', height: '86px', visibility: 'hidden'}}></div>
             </div>
           </div>

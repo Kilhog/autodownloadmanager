@@ -307,7 +307,7 @@ button:focus {
 
 .channels-wrap {
   background: #1c1e22;
-  width: 240px;
+  width: 255px;
   flex-shrink: 0;
 }
 
@@ -331,6 +331,10 @@ button:focus {
   z-index: 2;
   cursor: pointer;
   transition: background-color .15s ease;
+}
+
+.guild-header header:hover {
+  background-color: #282b30;
 }
 
 .guild-header header span {
@@ -497,6 +501,14 @@ button:focus {
   cursor: pointer;
 }
 
+.guild-header ul li:hover a {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  background-color: hsla(0,0%,100%,.04);
+  border-radius: 3px;
+}
+
 .guild-header ul a.red-highlight {
   color: #f04747;
   opacity: .6;
@@ -531,6 +543,12 @@ button:focus {
   box-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+
+.guild-channels header:hover {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
 }
 
 .guild-channels header {
@@ -594,9 +612,135 @@ button:focus {
   text-decoration: none;
   font-weight: 500;
   opacity: .3;
+  transition: opacity .15s ease;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
   filter: alpha(opacity=30);
   text-shadow: 0 1px 1px rgba(0,0,0,.25);
+}
+
+.guild-channels .channel-icon.channel.btn-friends {
+  margin-bottom: 20px;
+}
+
+.guild-channels .channel-icon.channel {
+  font-size: 14px;
+  line-height: 1.25em;
+  position: relative;
+  cursor: pointer;
+  color: #fff;
+}
+
+.guild-channels .channel-icon.channel .icon-friends {
+  background: url(https://discordapp.com/assets/78edad9e528abdda340ef4341ac52b57.svg) 50% no-repeat;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: #4f545c;
+  margin-right: 12px;
+}
+
+.guild-channels .channel-icon.channel {
+  font-size: 14px;
+  line-height: 1.25em;
+  position: relative;
+  cursor: pointer;
+  color: #fff;
+}
+
+.guild-channels .channel-icon.channel a {
+  -webkit-box-orient: horizontal;
+  -o-box-orient: horizontal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  height: 42px;
+  padding-left: 20px;
+}
+
+.guild-channels .channel-icon.channel .channel-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 5px;
+  opacity: .3;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  filter: alpha(opacity=30);
+  -webkit-box-flex: 1;
+  -o-box-flex: 1;
+  -ms-box-flex: 1;
+  box-flex: 1;
+  flex-grow: 1;
+}
+
+.guild-channels .channel-icon.channel:hover {
+  background: -webkit-linear-gradient(left,#282b30 85%,#2e3136);
+  background: linear-gradient(90deg,#282b30 85%,#2e3136);
+  color: #fff;
+}
+
+.guild-channels .channel-icon.channel:hover:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  content: ' ';
+  border-left: 2px solid rgba(114,137,218,.25);
+  pointer-events: none;
+}
+
+.guild-channels .channel-icon.channel.selected {
+  background: -webkit-linear-gradient(left,#282b30 85%,#2e3136);
+  background: linear-gradient(90deg,#282b30 85%,#2e3136);
+  color: #fff;
+  opacity: 1;
+}
+
+.guild-channels .channel-icon.channel.selected .channel-name {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+
+.guild-channels .channel-icon.channel:hover .channel-name {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+
+.guild-channels .channel-icon.channel.selected a {
+  color: #fff;
+  opacity: 1;
+}
+
+.guild-channels .channel-icon.channel:hover .icon-friends {
+  background-color: rgba(114,137,218,.25);
+}
+
+.guild-channels .channel-icon.channel.selected .icon-friends {
+  background-color: #7289da;
+}
+
+.guild-channels .channel-icon.channel.selected:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  content: ' ';
+  border-left: 2px solid #7289da;
+  pointer-events: none;
+  opacity: 1!important;
+  -ms-filter: none;
+  filter: none;
 }
 
 .guild-channels .channel-text .channel-name {
@@ -609,8 +753,6 @@ button:focus {
   text-overflow: ellipsis;
   padding-right: 5px;
   -webkit-box-flex: 1;
-  -o-box-flex: 1;
-  -ms-box-flex: 1;
   box-flex: 1;
   flex-grow: 1;
 }
@@ -645,6 +787,32 @@ button:focus {
   -ms-filter: none;
   filter: none;
   font-weight: 500;
+}
+
+.guild-channels .channel-text:hover:before {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  content: ' ';
+  border-left: 2px solid #7289da;
+  opacity: .25;
+  filter: alpha(opacity=25);
+}
+
+.guild-channels .channel-text:hover {
+  background: linear-gradient(90deg, #282b30 85%, #2e3136);
+}
+
+.guild-channels .channel-text:hover a {
+  color: #fff;
+}
+
+.guild-channels .channel a:hover {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
 }
 
 .scroller-wrap .scroller.scrolling>* {
