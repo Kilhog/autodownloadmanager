@@ -12,9 +12,9 @@ class MenusWrapper extends Component {
     const {general, actions} = this.props;
 
     return (
-      <div className="flex-vertical channels-wrap">
+      <div className="flex-vertical menus-wrap">
         <div className="flex-vertical flex-spacer">
-          <div onClick={actions.toogleSlidePreference} className={`guild-header ${general.isSlidePreferenceOpen ? 'guild-header-open' : ''}`}>
+          <div onClick={actions.toogleSlidePreference} className={`menu-header ${general.isSlidePreferenceOpen ? 'menu-header-open' : ''}`}>
             <header><span>AutoDownloadManager</span>
               <button type="button" className={classnames('btn btn-hamburger', {'btn-hamburger-open': general.isSlidePreferenceOpen})}>
                 <span/><span/><span/><span/><span/><span/>
@@ -32,7 +32,7 @@ class MenusWrapper extends Component {
                 <span>Non Vus</span>
               </header>
               <div className="channel channel-icon btn-friends selected">
-                <a className="" href="/channels/@me">
+                <a>
                   <div className="icon-friends"></div>
                   <div className="channel-name">Amis</div>
                 </a>
