@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import mui from 'material-ui';
 
-class GuildsWrapper extends Component {
+class LeftWrapper extends Component {
   render() {
     return (
       <div className="guilds-wrapper">
@@ -27,4 +27,4 @@ class GuildsWrapper extends Component {
   }
 }
 
-export default GuildsWrapper;
+export default LeftWrapper;

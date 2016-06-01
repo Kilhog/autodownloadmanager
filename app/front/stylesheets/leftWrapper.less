@@ -1,0 +1,119 @@
+@import "variables";
+
+.guilds-wrapper {
+  padding-top: 45px;
+  overflow: hidden;
+  display: flex;
+  width: 80px;
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+  background: #1e2124;
+  flex-shrink: 0;
+  .guilds {
+    padding: 0 15px 18px 15px;
+    overflow-y: scroll;
+    width: 100px;
+    -webkit-box-flex: 1;
+    flex: 1;
+    user-select: none;
+    .guild {
+      width: 50px;
+      height: 50px;
+      position: relative;
+      z-index: 1;
+      .guild-inner {
+        cursor: pointer;
+        overflow: hidden;
+        border-radius: 25px;
+        background: #2e3136;
+        font-size: 18px;
+        text-align: center;
+        line-height: 50px;
+        a {
+          color: @white;
+          display: block;
+          width: 50px;
+          height: 50px;
+        }
+      }
+      .avatar-small {
+        width: 50px;
+        height: 50px;
+        border-radius: 0;
+        background-repeat: no-repeat;
+        background-size: 50px 50px;
+        margin: 0;
+      }
+      & + .guild {
+        margin-top: 8px;
+      }
+    }
+    .friends-online {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: hsla(0, 0%, 100%, .3);
+      margin: 10px 0;
+      word-wrap: normal;
+      white-space: normal;
+      width: 50px;
+      line-height: 130%;
+      text-align: center;
+    }
+    .guild.selected {
+      &:before {
+        transition: height .25s ease-in-out, margin-top .25s ease-in-out;
+        height: 40px;
+        border-radius: 20px;
+        background: #fff;
+        margin-top: -20px;
+        content: ' ';
+        width: 12px;
+        left: -21px;
+        position: absolute;
+        top: 50%;
+      }
+    }
+    .guild.unread {
+      &:before {
+        content: ' ';
+        width: 12px;
+        height: 40px;
+        left: -21px;
+        position: absolute;
+        top: 50%;
+        border-radius: 20px;
+        margin-top: -20px;
+      }
+    }
+    .friends-icon {
+      width: 50px;
+      height: 50px;
+      background-image: url(https://discordapp.com/assets/89576a4bb71f927eb20e8aef987b499b.svg);
+      background-size: 32px 28px;
+      background-position: 50%;
+      background-repeat: no-repeat;
+    }
+  }
+  .dms {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .guild-separator {
+    height: 2px;
+    width: 50px;
+    position: relative;
+    background: none;
+    margin-bottom: 10px;
+    &:after {
+      position: absolute;
+      top: 0;
+      left: 20%;
+      right: 20%;
+      content: ' ';
+      height: 2px;
+      background: #2e3136;
+    }
+  }
+}

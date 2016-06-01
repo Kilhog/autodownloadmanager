@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Toolbar from '../components/Toobar';
-import GuildsWrapper from '../components/GuildsWrapper';
+import LeftWrapper from '../components/LeftWrapper';
 import MenusWrapper from '../components/MenusWrapper';
 import ChatWrapper from '../components/ChatWrapper';
 import * as GeneralActions from '../actions/general';
@@ -22,7 +22,7 @@ class App extends Component {
         <div className="app flex-vertical theme-dark">
           <div className="flex-vertical flex-spacer">
             <section className="flex-horizontal flex-spacer">
-              <GuildsWrapper/>
+              <LeftWrapper/>
               <MenusWrapper actions={actions} general={general}/>
               <ChatWrapper/>
             </section>

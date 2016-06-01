@@ -13,12 +13,12 @@
     -webkit-app-region: no-drag;
   }
 }
-
 .titlebar-edge {
   cursor: ns-resize;
   height: 6px;
   -webkit-app-region: no-drag;
 }
+
 
 .osx-buttons {
   position: absolute;
@@ -33,21 +33,24 @@
     background-clip: padding-box;
     background-color: #535559;
     transition: background-color .2s;
-    opacity: .8;
-    & + button {
+    opacity: .7;
+    &+button {
       margin-left: 6px;
+    }
+    &:hover {
+      opacity: 1;
     }
   }
 }
-
 &:hover {
   .osx-close {
-    background-color: #fc615d !important;
+    background-color: #fb615b!important
   }
   .osx-minimize {
-    background-color: #fec041 !important;
+    background-color: #fdbd41!important
   }
   .osx-maximize {
-    background-color: #34c749 !important;
+    background-color: #33c749!important;
   }
 }
+
