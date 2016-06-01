@@ -3,7 +3,7 @@ import mui from 'material-ui';
 import classnames from 'classnames';
 
 
-class GuildsWrapper extends Component {
+class MenusWrapper extends Component {
   constructor(props, context) {
     super(props, context);
   }
@@ -28,7 +28,6 @@ class GuildsWrapper extends Component {
           </div>
           <div className="scroller-wrap fade dark">
             <div className="scroller guild-channels">
-              <div style={{width: '100%', height: 0, visibility: 'hidden'}}></div>
               <header>
                 <span>Non Vus</span>
               </header>
@@ -48,7 +47,6 @@ class GuildsWrapper extends Component {
                   <span className="channel-name">Films</span>
                 </a>
               </div>
-              <div style={{width: '100%', height: '86px', visibility: 'hidden'}}></div>
             </div>
           </div>
         </div>
@@ -74,9 +72,9 @@ class GuildsWrapper extends Component {
   }
 }
 
-GuildsWrapper.propTypes = {
+MenusWrapper.propTypes = {
   general: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
-export default GuildsWrapper;
+export default MenusWrapper;

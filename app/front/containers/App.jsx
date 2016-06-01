@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Toolbar from '../components/Toobar';
 import GuildsWrapper from '../components/GuildsWrapper';
-import ChannelsWrapper from '../components/ChannelsWrapper';
+import MenusWrapper from '../components/MenusWrapper';
 import ChatWrapper from '../components/ChatWrapper';
 import * as GeneralActions from '../actions/general';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -23,7 +23,7 @@ class App extends Component {
           <div className="flex-vertical flex-spacer">
             <section className="flex-horizontal flex-spacer">
               <GuildsWrapper/>
-              <ChannelsWrapper actions={actions} general={general}/>
+              <MenusWrapper actions={actions} general={general}/>
               <ChatWrapper/>
             </section>
           </div>
