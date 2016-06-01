@@ -1,51 +1,18 @@
+@import "variables";
+
 body {
   margin: 0;
   padding: 0;
-  font-family: Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+  font-family: @mainFontFamily;
   overflow: hidden;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   background: transparent;
-}
-
-body {
   line-height: 1;
-  color: #000;
-  background: #fff;
+  color: @black;
 }
-
-@font-face {
-  font-family: Whitney;
-  font-style: light;
-  font-weight: 300;
-  src: url(https://discordapp.com/assets/6c6374bad0b0b6d204d8d6dc4a18d820.woff) format('woff')
-}
-
-@font-face {
-  font-family: Whitney;
-  font-style: normal;
-  font-weight: 500;
-  src: url(https://discordapp.com/assets/e8acd7d9bf6207f99350ca9f9e23b168.woff) format('woff')
-}
-
-@font-face {
-  font-family: Whitney;
-  font-style: medium;
-  font-weight: 600;
-  src: url(https://discordapp.com/assets/3bdef1251a424500c1b3a78dea9b7e57.woff) format('woff')
-}
-
-@font-face {
-  font-family: Whitney;
-  font-style: bold;
-  font-weight: 700;
-  src: url(https://discordapp.com/assets/8e12fb4f14d9c4592eb8ec9f22337b04.woff) format('woff')
-}
-
-@import "menusWrapper";
-// App
 
 a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, form, h1, h2, h3, h4, h5, h6, html, iframe, img, ins, kbd, label, legend, li, object, ol, p, pre, q, s, samp, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, ul, var {
   margin: 0;
@@ -55,89 +22,19 @@ a, abbr, acronym, address, applet, big, blockquote, body, caption, cite, code, d
   vertical-align: baseline;
 }
 
-.app a {
-  color: #00b0f4;
-  -webkit-transition: .05s;
-  transition: .05s;
-  text-decoration: none;
-}
-
-.app button {
-  cursor: pointer;
-}
-
 ol, ul {
   list-style: none;
 }
-
-// Toolbar
 
 button {
   font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
   border: 0;
   cursor: pointer;
-}
 
-button:focus {
-  outline: 0;
+  &:focus {
+    outline: 0;
+  }
 }
-
-.titlebar {
-  -webkit-app-region: drag;
-  pointer-events: none;
-  height: 25px;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3000;
-}
-
-.titlebar-edge {
-  cursor: ns-resize;
-  height: 6px;
-  -webkit-app-region: no-drag;
-}
-
-.osx-buttons {
-  position: absolute;
-  top: 10px;
-  left: 16px;
-  text-align: center;
-  pointer-events: auto;
-}
-
-.titlebar button {
-  -webkit-app-region: no-drag;
-}
-
-.osx-buttons button {
-  width: 12px;
-  height: 12px;
-  border-radius: 6px;
-  background-clip: padding-box;
-  background-color: #535559;
-  transition: background-color .2s;
-  opacity: .8;
-}
-
-.osx-buttons button + button {
-  margin-left: 6px;
-}
-
-:hover .osx-close {
-  background-color: #fc615d !important;
-}
-
-:hover .osx-minimize {
-  background-color: #fec041 !important;
-}
-
-:hover .osx-maximize {
-  background-color: #34c749 !important;
-}
-
-// App Container
 
 .app {
   position: absolute;
@@ -147,6 +44,16 @@ button:focus {
   top: 0;
   overflow: auto;
   text-rendering: optimizeLegibility;
+
+  a {
+    color: #00b0f4;
+    transition: .05s;
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
 }
 
 .flex-vertical {
@@ -166,9 +73,38 @@ button:focus {
   flex: 1;
 }
 
-.flex-vertical>.flex-spacer {
+.flex-vertical > .flex-spacer {
   min-height: 1px;
 }
+
+.scroller-wrap {
+  position: relative;
+  display: flex;
+  min-height: 1px;
+  -webkit-box-flex: 1;
+  flex: 1;
+  .scroller {
+    overflow-y: scroll;
+    min-height: 1px;
+    -webkit-box-flex: 1;
+    flex: 1;
+  }
+  .scroller.scrolling {
+    > * {
+      pointer-events: none;
+    }
+  }
+}
+
+@font-face {
+  font-family: Whitney;
+  font-style: normal;
+  font-weight: 500;
+  src: url(./assets/whitney-normal.woff) format('woff')
+}
+
+@import "menusWrapper";
+@import "toolbar";
 
 // GuildsWrapper
 
@@ -203,7 +139,7 @@ button:focus {
   font-size: 10px;
   text-transform: uppercase;
   font-weight: 600;
-  color: hsla(0,0%,100%,.3);
+  color: hsla(0, 0%, 100%, .3);
   margin: 10px 0;
   word-wrap: normal;
   white-space: normal;
@@ -244,7 +180,7 @@ button:focus {
 }
 
 .guilds-wrapper .guilds .guild.selected:before {
-  transition: height .25s ease-in-out,margin-top .25s ease-in-out;
+  transition: height .25s ease-in-out, margin-top .25s ease-in-out;
   height: 40px;
   border-radius: 20px;
   background: #fff;
@@ -287,7 +223,7 @@ button:focus {
   margin-right: 10px;
 }
 
-.guilds-wrapper .guilds .guild+.guild {
+.guilds-wrapper .guilds .guild + .guild {
   margin-top: 8px;
 }
 
@@ -302,9 +238,6 @@ button:focus {
   margin-top: -20px;
 }
 
-// ChannelWrap
-
-
 .guilds-wrapper .guilds .friends-icon {
   width: 50px;
   height: 50px;
@@ -312,255 +245,6 @@ button:focus {
   background-size: 32px 28px;
   background-position: 50%;
   background-repeat: no-repeat;
-}
-
-.scroller-wrap {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: box;
-  display: flex;
-}
-
-.scroller-wrap .scroller {
-  overflow-y: scroll;
-}
-
-.scroller-wrap .scroller.scrolling>* {
-  pointer-events: none;
-}
-
-.scroller-wrap, .scroller-wrap .scroller {
-  min-height: 1px;
-  -webkit-box-flex: 1;
-  -o-box-flex: 1;
-  box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.account {
-  height: 70px;
-  background: #282b30;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: box;
-  display: flex;
-  -webkit-box-align: center;
-  -o-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 0 10px;
-  border-top: 1px solid #1c1e22;
-  flex-shrink: 0;
-}
-
-.account .avatar-small {
-  flex-shrink: 0;
-  margin: 0;
-}
-
-.avatar-small.animate {
-  -webkit-transition: background-image .3s;
-  transition: background-image .3s;
-}
-
-.avatar-small {
-  width: 30px;
-  height: 30px;
-  background-size: 30px 30px;
-  border-radius: 20px;
-  float: left;
-  margin-top: 6px;
-  margin-right: 10px;
-}
-
-.avatar-large, .avatar-profile, .avatar-small, .avatar-xlarge, .avatar-xsmall, .avatar-xxlarge {
-  background-clip: padding-box;
-  position: relative;
-  background-color: none;
-  background-position: 50%;
-}
-
-.avatar-small.animate .status {
-  -webkit-transition: width .2s ease,right .2s ease,background-color .2s ease;
-  transition: width .2s ease,right .2s ease,background-color .2s ease;
-}
-
-.account .status {
-  border: 2px solid #282b30;
-}
-
-.avatar-small .status {
-  width: 10px;
-  height: 10px;
-  border-radius: 7px;
-  right: -3px;
-  bottom: -3px;
-}
-
-.avatar-large .status, .avatar-profile .status, .avatar-small .status, .avatar-xlarge .status, .avatar-xsmall .status, .avatar-xxlarge .status {
-  background-clip: padding-box;
-  position: absolute;
-  pointer-events: none;
-  width: 14px;
-  height: 14px;
-  border-radius: 9px;
-  right: -4px;
-  bottom: -4px;
-}
-
-.status-online {
-  background-color: #43b581;
-}
-
-.status {
-  width: 10px;
-  height: 10px;
-  border-radius: 7px;
-  display: inline-block;
-}
-
-.account .account-details {
-  padding: 0 10px;
-  -webkit-box-flex: 1;
-  -o-box-flex: 1;
-  -ms-box-flex: 1;
-  box-flex: 1;
-  flex-grow: 1;
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-.username {
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 72px;
-}
-
-.account .account-details .discriminator {
-  display: block;
-  padding-top: 1px;
-  opacity: .4;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-  filter: alpha(opacity=40);
-  font-size: 10px;
-}
-
-.account .btn-group {
-  border: 1px solid #1c1e22;
-  border-radius: 4px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.account .btn-deafen, .account .btn-mute {
-  border-right: 1px solid #1c1e22;
-}
-
-.account .btn-deafen, .account .btn-mute, .account .btn-settings {
-  -webkit-transition: background-image .5s;
-  transition: background-image .5s;
-}
-
-.account .btn-mute {
-  border-radius: 3px 0 0 3px;
-}
-
-.account .btn {
-  width: 32px;
-  height: 32px;
-  background: #2e3136;
-  position: relative;
-}
-
-.account .btn-mute:after {
-  background-image: url(https://discordapp.com/assets/c60e5f90bd86a4bcf2a60389ef6fcea1.svg);
-}
-
-.account .btn:after {
-  content: ' ';
-  background-repeat: no-repeat;
-  background-position: 50%;
-  background-size: 16px 16px;
-  margin-right: 5px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-}
-
-.account .btn-deafen:after {
-  background-image: url(https://discordapp.com/assets/0b7ed5c38508da4e4cfc72f33bae31f0.svg);
-}
-
-.account .btn-deafen, .account .btn-settings {
-  box-shadow: inset 1px 0 0 #373b42;
-}
-
-.account .btn-deafen, .account .btn-mute {
-  border-right: 1px solid #1c1e22;
-}
-
-.account .btn-deafen, .account .btn-mute, .account .btn-settings {
-  -webkit-transition: background-image .5s;
-  transition: background-image .5s;
-}
-
-.account .btn-deafen, .account .btn-settings {
-  box-shadow: inset 1px 0 0 #373b42;
-}
-
-.account .btn-settings {
-  border-radius: 0 3px 3px 0;
-}
-
-.account .btn-settings:after {
-  background-image: url(https://discordapp.com/assets/60f6b0788a5d9394b44261ef5d8ecffc.svg);
-  opacity: .2;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-  filter: alpha(opacity=20);
-}
-
-.links {
-  border-top: 1px solid #2e3136;
-  background: #282b30;
-  padding: 7px 10px;
-  font-size: 10px;
-  flex-shrink: 0;
-}
-
-.links li {
-  display: inline-block;
-}
-
-.links li a {
-  font-weight: 600;
-  color: #535559;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-}
-
-.links li+li:before {
-  content: '\2022';
-  color: #535559;
-  margin-right: 6px;
-}
-
-.links li+li {
-  margin-left: 6px;
-}
-
-.links li a:hover {
-  color: #dadddf;
 }
 
 // Scrollbar
@@ -643,16 +327,15 @@ button:focus {
   top: 0
 }
 
-
-.scroller-wrap.fade .scroller::-webkit-scrollbar-thumb,.scroller-wrap.fade .scroller::-webkit-scrollbar-track-piece {
+.scroller-wrap.fade .scroller::-webkit-scrollbar-thumb, .scroller-wrap.fade .scroller::-webkit-scrollbar-track-piece {
   visibility: hidden
 }
 
-.scroller-wrap.fade .scroller:hover:hover::-webkit-scrollbar-thumb,.scroller-wrap.fade .scroller:hover:hover::-webkit-scrollbar-track-piece,.scroller-wrap.fade:hover:hover::-webkit-scrollbar-thumb,.scroller-wrap.fade:hover:hover::-webkit-scrollbar-track-piece {
+.scroller-wrap.fade .scroller:hover:hover::-webkit-scrollbar-thumb, .scroller-wrap.fade .scroller:hover:hover::-webkit-scrollbar-track-piece, .scroller-wrap.fade:hover:hover::-webkit-scrollbar-thumb, .scroller-wrap.fade:hover:hover::-webkit-scrollbar-track-piece {
   visibility: visible
 }
 
-.scroller-wrap.fade .scroller:hover .scrollbar .thumb,.scroller-wrap.fade:hover .scrollbar .thumb {
+.scroller-wrap.fade .scroller:hover .scrollbar .thumb, .scroller-wrap.fade:hover .scrollbar .thumb {
   opacity: 1;
   -ms-filter: none;
   filter: none
@@ -667,7 +350,7 @@ button:focus {
 }
 
 .scroller-wrap.dark .scroller::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,.4);
+  background-color: rgba(0, 0, 0, .4);
   border-color: transparent
 }
 
@@ -676,7 +359,7 @@ button:focus {
   border-color: transparent
 }
 
-.scroller-wrap.dark .scrollbar,.scroller-wrap.dark .scrollbar:after {
+.scroller-wrap.dark .scrollbar, .scroller-wrap.dark .scrollbar:after {
   background-color: #2e3136
 }
 
@@ -689,11 +372,11 @@ button:focus {
 }
 
 .scroller-wrap.dark .scrollbar .thumb:after {
-  background-color: rgba(0,0,0,.4)
+  background-color: rgba(0, 0, 0, .4)
 }
 
 .scroller-wrap.light .scroller::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,.4);
+  background-color: rgba(0, 0, 0, .4);
   border-color: transparent
 }
 
@@ -702,7 +385,7 @@ button:focus {
   border-color: transparent
 }
 
-.scroller-wrap.light .scrollbar,.scroller-wrap.light .scrollbar:after {
+.scroller-wrap.light .scrollbar, .scroller-wrap.light .scrollbar:after {
   background-color: #f3f3f3
 }
 
@@ -715,7 +398,7 @@ button:focus {
 }
 
 .scroller-wrap.light .scrollbar .thumb:after {
-  background-color: rgba(0,0,0,.4)
+  background-color: rgba(0, 0, 0, .4)
 }
 
 /// ChatWrapper
@@ -737,7 +420,7 @@ button:focus {
   border-bottom: 1px solid #282b30;
 }
 
-.chat>.title-wrap>.title {
+.chat > .title-wrap > .title {
   font-size: 20px;
   line-height: 20px;
   letter-spacing: .04em;
@@ -749,7 +432,7 @@ button:focus {
   flex-direction: row;
 }
 
-.chat>.title-wrap, .chat>.title-wrap>.title {
+.chat > .title-wrap, .chat > .title-wrap > .title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: box;
@@ -765,19 +448,19 @@ button:focus {
   color: #fff;
 }
 
-.chat>.title-wrap>.title .channel-name {
+.chat > .title-wrap > .title .channel-name {
   margin-right: 5px;
   color: #4f545c;
 }
 
-.chat>.title-wrap>.title .channel-name:before {
+.chat > .title-wrap > .title .channel-name:before {
   content: '#';
   margin-right: 2px;
   color: #8a8e94;
   font-weight: 300;
 }
 
-.chat>.title-wrap .no-topic {
+.chat > .title-wrap .no-topic {
   -webkit-box-flex: 1;
   -o-box-flex: 1;
   box-flex: 1;
@@ -827,20 +510,21 @@ button:focus {
 }
 
 .theme-dark .header-toolbar button.active {
-  background-color: hsla(0,0%,100%,.2);
+  background-color: hsla(0, 0%, 100%, .2);
 }
-
-
 
 .header-toolbar button.active {
-  background-color: rgba(153,170,181,.2);
+  background-color: rgba(153, 170, 181, .2);
 }
-.header-toolbar button+button {
+
+.header-toolbar button + button {
   margin-left: 8px;
 }
+
 .app button {
   cursor: pointer;
 }
+
 .header-toolbar button {
   padding: 0;
   border-radius: 4px;
@@ -849,9 +533,11 @@ button:focus {
   height: 30px;
   -webkit-app-region: no-drag;
 }
+
 .theme-dark .header-toolbar .separator {
-  background-color: hsla(0,0%,85%,.1);
+  background-color: hsla(0, 0%, 85%, .1);
 }
+
 .header-toolbar .separator {
   background-color: #e9e7e7;
   width: 1px;
@@ -859,9 +545,9 @@ button:focus {
   margin: 0 8px;
 }
 
-.chat>.title-wrap {
+.chat > .title-wrap {
   border-bottom: 1px solid #eceeef;
-  box-shadow: 0 2px 0 hsla(200,9%,93%,.25);
+  box-shadow: 0 2px 0 hsla(200, 9%, 93%, .25);
   padding: 6px 20px;
   min-height: 57px;
   box-sizing: border-box;
@@ -875,6 +561,6 @@ button:focus {
   color: #fff;
 }
 
-.theme-dark .chat>.content, .theme-dark .friends-table, .theme-dark .messages-wrapper {
+.theme-dark .chat > .content, .theme-dark .friends-table, .theme-dark .messages-wrapper {
   background-color: #36393e;
 }

@@ -27,24 +27,24 @@ class MenusWrapper extends Component {
             </ul>
           </div>
           <div className="scroller-wrap fade dark">
-            <div className="scroller guild-channels">
+            <div className="scroller menu-items">
               <header>
                 <span>Non Vus</span>
               </header>
-              <div className="channel channel-icon btn-friends selected">
+              <div className="menu menu-icon btn-friends selected">
                 <a>
                   <div className="icon-friends"></div>
-                  <div className="channel-name">Amis</div>
+                  <div className="menu-name">Amis</div>
                 </a>
               </div>
-              <div className="channel channel-text">
+              <div className="menu menu-text">
                 <a>
-                  <span className="channel-name">Épisodes</span>
+                  <span className="menu-name">Épisodes</span>
                 </a>
               </div>
-              <div className="channel channel-text">
+              <div className="menu menu-text">
                 <a>
-                  <span className="channel-name">Films</span>
+                  <span className="menu-name">Films</span>
                 </a>
               </div>
             </div>

@@ -1,0 +1,53 @@
+@import "variables";
+
+.titlebar {
+  -webkit-app-region: drag;
+  pointer-events: none;
+  height: 25px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3000;
+  button {
+    -webkit-app-region: no-drag;
+  }
+}
+
+.titlebar-edge {
+  cursor: ns-resize;
+  height: 6px;
+  -webkit-app-region: no-drag;
+}
+
+.osx-buttons {
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  text-align: center;
+  pointer-events: auto;
+  button {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background-clip: padding-box;
+    background-color: #535559;
+    transition: background-color .2s;
+    opacity: .8;
+    & + button {
+      margin-left: 6px;
+    }
+  }
+}
+
+&:hover {
+  .osx-close {
+    background-color: #fc615d !important;
+  }
+  .osx-minimize {
+    background-color: #fec041 !important;
+  }
+  .osx-maximize {
+    background-color: #34c749 !important;
+  }
+}
