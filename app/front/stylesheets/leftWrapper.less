@@ -1,6 +1,6 @@
 @import "variables";
 
-.guilds-wrapper {
+.left-wrapper {
   padding-top: 45px;
   overflow: hidden;
   display: flex;
@@ -9,19 +9,19 @@
   flex-direction: column;
   background: #1e2124;
   flex-shrink: 0;
-  .guilds {
+  .icones-items {
     padding: 0 15px 18px 15px;
     overflow-y: scroll;
     width: 100px;
     -webkit-box-flex: 1;
     flex: 1;
     user-select: none;
-    .guild {
+    .icone-item {
       width: 50px;
       height: 50px;
       position: relative;
       z-index: 1;
-      .guild-inner {
+      .icone-item-inner {
         cursor: pointer;
         overflow: hidden;
         border-radius: 25px;
@@ -44,7 +44,7 @@
         background-size: 50px 50px;
         margin: 0;
       }
-      & + .guild {
+      & + .icone-item {
         margin-top: 8px;
       }
     }
@@ -60,7 +60,7 @@
       line-height: 130%;
       text-align: center;
     }
-    .guild.selected {
+    .icone-item.selected {
       &:before {
         transition: height .25s ease-in-out, margin-top .25s ease-in-out;
         height: 40px;
@@ -74,7 +74,7 @@
         top: 50%;
       }
     }
-    .guild.unread {
+    .icone-item.unread {
       &:before {
         content: ' ';
         width: 12px;
@@ -100,7 +100,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
   }
-  .guild-separator {
+  .icone-item-separator {
     height: 2px;
     width: 50px;
     position: relative;
