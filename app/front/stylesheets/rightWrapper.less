@@ -1,0 +1,117 @@
+@import "variables";
+
+.chat {
+  display: flex;
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+  position: relative;
+  >.title-wrap {
+    >.title {
+      font-size: 20px;
+      line-height: 20px;
+      letter-spacing: .04em;
+      font-weight: 700;
+      -webkit-box-orient: horizontal;
+      flex-direction: row;
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      flex-shrink: 0;
+      .channel-name {
+        margin-right: 5px;
+        &:before {
+          content: '#';
+          margin-right: 2px;
+          color: @beforeRightWrapperTitleName;
+          font-weight: 300;
+        }
+      }
+    }
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-bottom: 1px solid #eceeef;
+    box-shadow: 0 2px 0 hsla(200, 9%, 93%, .25);
+    padding: 6px 20px;
+    min-height: 57px;
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    .no-topic {
+      -webkit-box-flex: 1;
+      flex: 1;
+    }
+  }
+}
+.theme-dark {
+  .chat {
+    .title-wrap {
+      border-bottom: 1px solid #282b30;
+      .channel-name {
+        color: @white;
+      }
+    }
+    >.content, .title-wrap {
+      background-color: #36393e;
+    }
+  }
+  .header-toolbar {
+    button.active {
+      background-color: hsla(0, 0%, 100%, .2);
+    }
+    .separator {
+      background-color: hsla(0, 0%, 85%, .1);
+    }
+  }
+  .friends-table, .messages-wrapper {
+    background-color: #36393e;
+  }
+}
+.header-toolbar {
+  margin-left: 50px;
+  margin-right: -12px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-shrink: 0;
+  button {
+    padding: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    -webkit-app-region: no-drag;
+    span {
+      transition: opacity .2s;
+      display: block;
+      width: 30px;
+      height: 30px;
+      background-size: 26px;
+      background-position: 50%;
+      background-repeat: no-repeat;
+      opacity: .6;
+    }
+    &+button {
+      margin-left: 8px;
+    }
+  }
+  button.active {
+    background-color: rgba(153, 170, 181, .2);
+  }
+  .separator {
+    background-color: #e9e7e7;
+    width: 1px;
+    height: 22px;
+    margin: 0 8px;
+  }
+}
+.app {
+  button {
+    cursor: pointer;
+  }
+}

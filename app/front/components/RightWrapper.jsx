@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 
-class ChatWrapper extends Component {
+class RightWrapper extends Component {
   render() {
     return (
       <div className="chat flex-vertical flex-spacer">
@@ -30,4 +30,4 @@ class ChatWrapper extends Component {
   }
 }
 
-export default ChatWrapper;
+export default RightWrapper;

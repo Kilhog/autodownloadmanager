@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Toolbar from '../components/Toobar';
 import LeftWrapper from '../components/LeftWrapper';
 import MenusWrapper from '../components/MenusWrapper';
-import ChatWrapper from '../components/ChatWrapper';
+import RightWrapper from '../components/RightWrapper';
 import * as GeneralActions from '../actions/general';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MyRawTheme from '../material_ui_raw_theme_file';
@@ -24,7 +24,7 @@ class App extends Component {
             <section className="flex-horizontal flex-spacer">
               <LeftWrapper/>
               <MenusWrapper actions={actions} general={general}/>
-              <ChatWrapper/>
+              <RightWrapper/>
             </section>
           </div>
         </div>
