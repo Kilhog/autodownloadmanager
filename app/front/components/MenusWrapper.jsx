@@ -52,7 +52,7 @@ class MenusWrapper extends Component {
         </div>
 
         <div className="account">
-          <div className="avatar-small animate" style={{backgroundImage: "url('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png')"}}>
+          <div className="avatar-small animate" style={{backgroundImage: "url('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png')", backgroundSize: "30px 30px"}}>
             <div className="status status-online"></div>
           </div>
           <div className="account-details"><span className="username">Kilhog</span><span
