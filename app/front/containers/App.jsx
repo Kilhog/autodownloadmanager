@@ -5,7 +5,7 @@ import Toolbar from '../components/Toobar';
 import LeftWrapper from '../components/LeftWrapper';
 import MenusWrapper from '../components/MenusWrapper';
 import RightWrapper from '../components/RightWrapper';
-import * as GeneralActions from '../actions/general';
+import * as MenuActions from '../actions/menu';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MyRawTheme from '../material_ui_raw_theme_file';
 
@@ -15,7 +15,7 @@ class App extends Component {
   }
 
   render() {
-    const {general, actions} = this.props;
+    const {state, actions} = this.props;
     return (
       <div>
         <Toolbar/>
@@ -23,7 +23,7 @@ class App extends Component {
           <div className="flex-vertical flex-spacer">
             <section className="flex-horizontal flex-spacer">
               <LeftWrapper/>
-              <MenusWrapper actions={actions} general={general}/>
+              <MenusWrapper actions={actions} menu={state.menu}/>
               <RightWrapper/>
             </section>
           </div>
@@ -40,19 +40,19 @@ App.childContextTypes = {
 };
 
 App.propTypes = {
-  general: PropTypes.object.isRequired,
+  state: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    general: state.general
+    state
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(GeneralActions, dispatch)
+    actions: bindActionCreators(MenuActions, dispatch)
   };
 }
 

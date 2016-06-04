@@ -1,7 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import mui from 'material-ui';
 import classnames from 'classnames';
-
+import MenuItems from './MenuItems';
 
 class MenusWrapper extends Component {
   constructor(props, context) {
@@ -9,14 +9,14 @@ class MenusWrapper extends Component {
   }
 
   render() {
-    const {general, actions} = this.props;
+    const {menu, actions} = this.props;
 
     return (
       <div className="flex-vertical menus-wrap">
         <div className="flex-vertical flex-spacer">
-          <div onClick={actions.toogleSlidePreference} className={`menu-header ${general.isSlidePreferenceOpen ? 'menu-header-open' : ''}`}>
+          <div onClick={actions.toogleSlidePreference} className={`menu-header ${menu.isSlidePreferenceOpen ? 'menu-header-open' : ''}`}>
             <header><span>AutoDownloadManager</span>
-              <button type="button" className={classnames('btn btn-hamburger', {'btn-hamburger-open': general.isSlidePreferenceOpen})}>
+              <button type="button" className={classnames('btn btn-hamburger', {'btn-hamburger-open': menu.isSlidePreferenceOpen})}>
                 <span/><span/><span/><span/><span/><span/>
               </button>
             </header>
@@ -27,27 +27,7 @@ class MenusWrapper extends Component {
             </ul>
           </div>
           <div className="scroller-wrap fade dark">
-            <div className="scroller menu-items">
-              <header>
-                <span>Non Vus</span>
-              </header>
-              <div className="menu menu-icon btn-friends selected">
-                <a>
-                  <div className="icon-friends"></div>
-                  <div className="menu-name">Amis</div>
-                </a>
-              </div>
-              <div className="menu menu-text">
-                <a>
-                  <span className="menu-name">Épisodes</span>
-                </a>
-              </div>
-              <div className="menu menu-text">
-                <a>
-                  <span className="menu-name">Films</span>
-                </a>
-              </div>
-            </div>
+            <MenuItems menu={menu} actions={actions}/>
           </div>
         </div>
 
@@ -55,8 +35,7 @@ class MenusWrapper extends Component {
           <div className="avatar-small animate" style={{backgroundImage: "url('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png')", backgroundSize: "30px 30px"}}>
             <div className="status status-online"></div>
           </div>
-          <div className="account-details"><span className="username">Kilhog</span><span
-            className="discriminator">#1356</span></div>
+          <div className="account-details"><span className="username">Kilhog</span><span className="discriminator">#1356</span></div>
           <div className="btn-group">
             <button className="btn btn-mute"/>
             <button className="btn btn-deafen"/>
@@ -73,7 +52,7 @@ class MenusWrapper extends Component {
 }
 
 MenusWrapper.propTypes = {
-  general: PropTypes.object.isRequired,
+  menu: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
