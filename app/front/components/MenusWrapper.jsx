@@ -14,7 +14,7 @@ class MenusWrapper extends Component {
     return (
       <div className="flex-vertical menus-wrap">
         <div className="flex-vertical flex-spacer">
-          <div onClick={actions.toogleSlidePreference} className={`menu-header ${menu.isSlidePreferenceOpen ? 'menu-header-open' : ''}`}>
+          <div onClick={actions.toogleSlidePreference} className={classnames('menu-header', {'menu-header-open': menu.isSlidePreferenceOpen})}>
             <header><span>AutoDownloadManager</span>
               <button type="button" className={classnames('btn btn-hamburger', {'btn-hamburger-open': menu.isSlidePreferenceOpen})}>
                 <span/><span/><span/><span/><span/><span/>

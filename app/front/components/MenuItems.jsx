@@ -1,5 +1,6 @@
 import React, {PropTypes, Component} from 'react';
 import classnames from 'classnames';
+import * as _ from 'lodash';
 
 class MenusItems extends Component {
   constructor(props, context) {
@@ -11,25 +12,17 @@ class MenusItems extends Component {
 
     return (
       <div className="scroller menu-items">
-        <header>
-          <span>Non Vus</span>
-        </header>
-        <div className="menu menu-icon btn-friends selected">
-          <a>
-            <div className="icon-friends"></div>
-            <div className="menu-name">Amis</div>
-          </a>
-        </div>
-        <div className="menu menu-text">
-          <a>
-            <span className="menu-name">Épisodes</span>
-          </a>
-        </div>
-        <div className="menu menu-text">
-          <a>
-            <span className="menu-name">Films</span>
-          </a>
-        </div>
+        {_.flatMapDeep(menu.items, (i) => [i, i.items]).map((item, i) =>  {
+            switch(!!item.icon) {
+              case false:
+                return <header onClick={() => actions.changeMenu(item.id)} key={i}><span>{item.name}</span></header>;
+              default:
+                return <div onClick={() => actions.changeMenu(item.id)} key={i} className={classnames("menu menu-icon", {'selected': item.id === menu.idMenuSelected})}>
+                  <a><div className={item.icon}></div><div className="menu-name">{item.name}</div></a>
+                </div>;
+            }
+          }
+        )}
       </div>
     );
   }
