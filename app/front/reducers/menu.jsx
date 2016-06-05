@@ -1,4 +1,5 @@
 import {TOGGLE_SLIDE_PREFERENCE, CHANGE_MENU} from '../constants/ActionTypes';
+import {DISPLAY_EPISODES, DISPLAY_FILMS} from '../constants/ComponentFilters';
 
 const initialState = {
   isSlidePreferenceOpen: false,
@@ -10,11 +11,13 @@ const initialState = {
     items: [{
       id: 2,
       name: 'Épisodes',
-      icon: 'icon-episodes'
+      icon: 'icon-episodes',
+      componentFilter: DISPLAY_EPISODES
     }, {
       id: 3,
       name: 'Films',
-      icon: 'icon-films'
+      icon: 'icon-films',
+      componentFilter: DISPLAY_FILMS
     }]
   }]
 };

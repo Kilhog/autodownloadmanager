@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import {DISPLAY_EPISODES, DISPLAY_FILMS} from '../constants/ComponentFilters';
 
 class RightWrapper extends Component {
   constructor(props, context) {
@@ -31,10 +32,22 @@ class RightWrapper extends Component {
           </div>
         </div>
         <div className="content flex-spacer flex-horizontal">
-          <div className="flex-spacer flex-vertical"></div>
+          <div className="flex-spacer flex-vertical">
+            {this.renderComponentFilter()}
+          </div>
         </div>
       </div>
     );
+  }
+
+  renderComponentFilter() {
+    const {menu} = this.props;
+    switch(_.flatMapDeep(menu.items ,i => [i, i.items]).find(i => i.id === menu.idMenuSelected).componentFilter) {
+      case DISPLAY_EPISODES:
+        return <div>EPISODES</div>;
+      case DISPLAY_FILMS:
+        return <div>FILMS</div>;
+    }
   }
 }
 
