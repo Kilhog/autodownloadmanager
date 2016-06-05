@@ -2,18 +2,19 @@ import {TOGGLE_SLIDE_PREFERENCE, CHANGE_MENU} from '../constants/ActionTypes';
 
 const initialState = {
   isSlidePreferenceOpen: false,
-  idMenuSelected: 1,
+  idMenuSelected: 2,
   items: [{
     id: 1,
+    redirectId: 2, 
     name: 'Non Vus',
     items: [{
-      id: 1,
-      name: 'Épisodes',
-      icon: 'icon-friends'
-    }, {
       id: 2,
+      name: 'Épisodes',
+      icon: 'icon-episodes'
+    }, {
+      id: 3,
       name: 'Films',
-      icon: 'icon-friends'
+      icon: 'icon-films'
     }]
   }]
 };

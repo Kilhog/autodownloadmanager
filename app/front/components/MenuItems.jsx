@@ -15,9 +15,9 @@ class MenusItems extends Component {
         {_.flatMapDeep(menu.items, (i) => [i, i.items]).map((item, i) =>  {
             switch(!!item.icon) {
               case false:
-                return <header onClick={() => actions.changeMenu(item.id)} key={i}><span>{item.name}</span></header>;
+                return <header onClick={() => actions.changeMenu(item.redirectId || item.id)} key={i}><span>{item.name}</span></header>;
               default:
-                return <div onClick={() => actions.changeMenu(item.id)} key={i} className={classnames("menu menu-icon", {'selected': item.id === menu.idMenuSelected})}>
+                return <div onClick={() => actions.changeMenu(item.redirectId || item.id)} key={i} className={classnames("menu menu-icon", {'selected': item.id === menu.idMenuSelected})}>
                   <a><div className={item.icon}></div><div className="menu-name">{item.name}</div></a>
                 </div>;
             }

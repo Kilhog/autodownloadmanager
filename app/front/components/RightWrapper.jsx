@@ -1,12 +1,20 @@
 import React, { PropTypes, Component } from 'react';
 
 class RightWrapper extends Component {
+  constructor(props, context) {
+    super(props, context);
+  }
+
   render() {
+    const {menu} = this.props;
+    let nameMenu = _.flatMapDeep(menu.items ,i => [i, i.items]).find(i => i.id === menu.idMenuSelected).name;
+    let parentMenu = menu.items.find(i => _.some(i.items, ii => ii.id === menu.idMenuSelected));
+
     return (
       <div className="chat flex-vertical flex-spacer">
         <div className="title-wrap">
           <div className="title">
-            <span className="channel-name">welcome</span>
+            <span className="channel-name"><span className="parent-name">{parentMenu ? parentMenu.name + " /" : ""}</span> {nameMenu}</span>
           </div>
           <div className="no-topic"></div>
           <div className="header-toolbar">
@@ -29,5 +37,9 @@ class RightWrapper extends Component {
     );
   }
 }
+
+RightWrapper.propTypes = {
+  menu: PropTypes.object.isRequired
+};
 
 export default RightWrapper;

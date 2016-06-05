@@ -14,40 +14,59 @@ class MenusWrapper extends Component {
     return (
       <div className="flex-vertical menus-wrap">
         <div className="flex-vertical flex-spacer">
-          <div onClick={actions.toogleSlidePreference} className={classnames('menu-header', {'menu-header-open': menu.isSlidePreferenceOpen})}>
-            <header><span>AutoDownloadManager</span>
-              <button type="button" className={classnames('btn btn-hamburger', {'btn-hamburger-open': menu.isSlidePreferenceOpen})}>
-                <span/><span/><span/><span/><span/><span/>
-              </button>
-            </header>
-            <ul>
-              <li><a>Paramètres de notification</a></li>
-              <li><a>Paramètres de confidentialité</a></li>
-              <li><a className="red-highlight">Quitter le serveur</a></li>
-            </ul>
-          </div>
+          {this.renderHeader()}
           <div className="scroller-wrap fade dark">
             <MenuItems menu={menu} actions={actions}/>
           </div>
         </div>
-
-        <div className="account">
-          <div className="avatar-small animate" style={{backgroundImage: "url('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png')", backgroundSize: "30px 30px"}}>
-            <div className="status status-online"></div>
-          </div>
-          <div className="account-details"><span className="username">Kilhog</span><span className="discriminator">#1356</span></div>
-          <div className="btn-group">
-            <button className="btn btn-mute"/>
-            <button className="btn btn-deafen"/>
-            <button className="btn btn-settings"/>
-          </div>
-        </div>
-        <ul className="links">
-          <li><a>Notes de mise à jour</a></li>
-          <li><a>Télécharger les applications</a></li>
-        </ul>
+        {this.renderAccount()}
+        {this.renderLinksBottom()}
       </div>
     );
+  }
+
+  renderLinksBottom() {
+    return(
+      <ul className="links">
+        <li><a>Notes de mise à jour</a></li>
+        <li><a>Télécharger les applications</a></li>
+      </ul>
+    )
+  }
+
+  renderAccount() {
+    return(
+      <div className="account">
+        <div className="avatar-small animate" style={{backgroundImage: "url('https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png')", backgroundSize: "30px 30px"}}>
+          <div className="status status-online"></div>
+        </div>
+        <div className="account-details"><span className="username">Kilhog</span><span className="discriminator">#1356</span></div>
+        <div className="btn-group">
+          <button className="btn btn-mute"/>
+          <button className="btn btn-deafen"/>
+          <button className="btn btn-settings"/>
+        </div>
+      </div>
+    )
+  }
+
+  renderHeader() {
+    const {menu, actions} = this.props;
+
+    return(
+      <div onClick={actions.toogleSlidePreference} className={classnames('menu-header', {'menu-header-open': menu.isSlidePreferenceOpen})}>
+        <header><span>AutoDownloadManager</span>
+          <button type="button" className={classnames('btn btn-hamburger', {'btn-hamburger-open': menu.isSlidePreferenceOpen})}>
+            <span/><span/><span/><span/><span/><span/>
+          </button>
+        </header>
+        <ul>
+          <li><a>Paramètres de notification</a></li>
+          <li><a>Paramètres de confidentialité</a></li>
+          <li><a className="red-highlight">Quitter le serveur</a></li>
+        </ul>
+      </div>
+    )
   }
 }
 
