@@ -24,7 +24,7 @@ class App extends Component {
             <section className="flex-horizontal flex-spacer">
               <LeftWrapper/>
               <MenusWrapper actions={actions} menu={state.menu}/>
-              <RightWrapper menu={state.menu}/>
+              <RightWrapper state={state}/>
             </section>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import {DISPLAY_EPISODES, DISPLAY_FILMS} from '../constants/ComponentFilters';
+import EpisodesNonVus from './EpisodesNonVus'
 
 class RightWrapper extends Component {
   constructor(props, context) {
@@ -7,9 +8,9 @@ class RightWrapper extends Component {
   }
 
   render() {
-    const {menu} = this.props;
-    let nameMenu = _.flatMapDeep(menu.items ,i => [i, i.items]).find(i => i.id === menu.idMenuSelected).name;
-    let parentMenu = menu.items.find(i => _.some(i.items, ii => ii.id === menu.idMenuSelected));
+    const {state} = this.props;
+    let nameMenu = _.flatMapDeep(state.menu.items ,i => [i, i.items]).find(i => i.id === state.menu.idMenuSelected).name;
+    let parentMenu = state.menu.items.find(i => _.some(i.items, ii => ii.id === state.menu.idMenuSelected));
 
     return (
       <div className="chat flex-vertical flex-spacer">
@@ -41,10 +42,10 @@ class RightWrapper extends Component {
   }
 
   renderComponentFilter() {
-    const {menu} = this.props;
-    switch(_.flatMapDeep(menu.items ,i => [i, i.items]).find(i => i.id === menu.idMenuSelected).componentFilter) {
+    const {state} = this.props;
+    switch(_.flatMapDeep(state.menu.items ,i => [i, i.items]).find(i => i.id === state.menu.idMenuSelected).componentFilter) {
       case DISPLAY_EPISODES:
-        return <div>EPISODES</div>;
+        return <EpisodesNonVus episodesUnseen={state.episodesUnseen}/>;
       case DISPLAY_FILMS:
         return <div>FILMS</div>;
     }
@@ -52,7 +53,7 @@ class RightWrapper extends Component {
 }
 
 RightWrapper.propTypes = {
-  menu: PropTypes.object.isRequired
+  state: PropTypes.object.isRequired
 };
 
 export default RightWrapper;
