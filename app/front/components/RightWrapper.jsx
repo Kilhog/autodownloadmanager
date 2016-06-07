@@ -8,7 +8,7 @@ class RightWrapper extends Component {
   }
 
   render() {
-    const {state} = this.props;
+    const {state, actions} = this.props;
     let nameMenu = _.flatMapDeep(state.menu.items ,i => [i, i.items]).find(i => i.id === state.menu.idMenuSelected).name;
     let parentMenu = state.menu.items.find(i => _.some(i.items, ii => ii.id === state.menu.idMenuSelected));
 
@@ -42,10 +42,10 @@ class RightWrapper extends Component {
   }
 
   renderComponentFilter() {
-    const {state} = this.props;
+    const {state, actions} = this.props;
     switch(_.flatMapDeep(state.menu.items ,i => [i, i.items]).find(i => i.id === state.menu.idMenuSelected).componentFilter) {
       case DISPLAY_EPISODES:
-        return <EpisodesNonVus episodesUnseen={state.episodesUnseen}/>;
+        return <EpisodesNonVus actions={actions} episodesUnseen={state.episodesUnseen}/>;
       case DISPLAY_FILMS:
         return <div>FILMS</div>;
     }
@@ -53,7 +53,8 @@ class RightWrapper extends Component {
 }
 
 RightWrapper.propTypes = {
-  state: PropTypes.object.isRequired
+  state: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 export default RightWrapper;

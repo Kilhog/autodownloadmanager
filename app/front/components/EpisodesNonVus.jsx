@@ -2,9 +2,16 @@ import React, {PropTypes, Component} from 'react';
 import mui from 'material-ui';
 
 class EpisodesNonVus extends Component {
+  constructor(props, context) {
+    super(props, context);
+  }
+
+  componentWillMount() {
+
+  }
 
   render() {
-    const {episodesUnseen} = this.props;
+    const {episodesUnseen, actions} = this.props;
 
     return (
       <div className="container-episodes">
@@ -15,7 +22,8 @@ class EpisodesNonVus extends Component {
 }
 
 EpisodesNonVus.propTypes = {
-  episodesUnseen: PropTypes.array.isRequired
+  episodesUnseen: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 export default EpisodesNonVus;
