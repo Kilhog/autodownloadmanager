@@ -15,7 +15,14 @@ class EpisodesNonVus extends Component {
 
     return (
       <div className="container-episodes">
-           {episodesUnseen.map(i => <div key={i.id}>{i.title}</div>)}
+           {episodesUnseen.map(i =>
+             <div key={i.id}>
+               <div>
+                 <img src={i.poster}/>
+               </div>
+               {i.title}
+             </div>
+           )}
       </div>
     );
   }

@@ -3,6 +3,7 @@ const initialState = [
     "id": 7791,
     "thetvdb_id": 272644,
     "imdb_id": "tt3148266",
+    "poster": "http://ia.media-imdb.com/images/M/MV5BNDUwMjA1NjE2N15BMl5BanBnXkFtZTgwOTM5OTkzODE@._V1_SX300.jpg",
     "title": "12 Monkeys",
     "remaining": 6,
     "unseen": [
