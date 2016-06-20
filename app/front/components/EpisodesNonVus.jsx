@@ -14,13 +14,11 @@ class EpisodesNonVus extends Component {
     const {episodesUnseen, actions} = this.props;
 
     return (
-      <div className="container-episodes">
+      <div className="container-series">
            {episodesUnseen.map(i =>
              <div key={i.id}>
-               <div>
-                 <img src={i.poster}/>
-               </div>
-               {i.title}
+               <div className="poster-series"><img src={i.poster}/></div>
+               <div className="title-series">{i.title}</div>
              </div>
            )}
       </div>
